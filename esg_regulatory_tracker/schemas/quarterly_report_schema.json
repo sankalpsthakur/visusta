@@ -1,0 +1,269 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://visusta.com/schemas/quarterly-report.json",
+  "title": "QuarterlyConsolidatedReport",
+  "description": "Validated quarterly consolidation of ESG regulatory changes",
+  "type": "object",
+  "required": [
+    "report_id",
+    "reporting_period",
+    "generated_at",
+    "executive_summary",
+    "consolidated_regulations"
+  ],
+  "properties": {
+    "report_id": {
+      "type": "string",
+      "description": "Unique identifier for this quarterly report",
+      "pattern": "^Q-[0-9]{4}-Q[1-4]$"
+    },
+    "reporting_period": {
+      "type": "object",
+      "required": ["year", "quarter"],
+      "properties": {
+        "year": { "type": "integer" },
+        "quarter": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "period_label": { "type": "string" },
+        "months_covered": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1, "maximum": 12 },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "date_range": {
+          "type": "object",
+          "properties": {
+            "start_date": { "type": "string", "format": "date" },
+            "end_date": { "type": "string", "format": "date" }
+          }
+        }
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When the report was officially published"
+    },
+    "report_metadata": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "schema_version": { "type": "string" },
+        "previous_report_id": {
+          "type": ["string", "null"],
+          "description": "Reference to previous quarter's report"
+        },
+        "source_monthly_reports": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "IDs of monthly reports consolidated into this report"
+        },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "validated_by": { "type": "string" },
+            "validated_at": { "type": "string", "format": "date-time" },
+            "validation_status": {
+              "enum": ["Pending", "In Review", "Validated", "Approved"]
+            }
+          }
+        }
+      }
+    },
+    "executive_summary": {
+      "type": "object",
+      "required": ["overview"],
+      "properties": {
+        "overview": { "type": "string" },
+        "key_findings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "critical_alerts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "alert_level": { "enum": ["Critical", "High", "Medium", "Low"] },
+              "topic": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "regulation_id": { "type": "string" }
+            }
+          }
+        },
+        "trend_analysis": {
+          "type": "object",
+          "properties": {
+            "emerging_themes": { "type": "array", "items": { "type": "string" } },
+            "jurisdictional_hotspots": { "type": "array", "items": { "type": "string" } },
+            "business_implications": { "type": "string" }
+          }
+        }
+      }
+    },
+    "consolidated_regulations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "Consolidated regulation entry with quarterly perspective",
+        "required": [
+          "regulation_id",
+          "topic",
+          "current_status",
+          "title",
+          "quarterly_summary"
+        ],
+        "properties": {
+          "regulation_id": { "type": "string" },
+          "topic": {
+            "enum": ["GHG", "Packaging", "Water", "Waste", "Social/Human Rights"]
+          },
+          "current_status": {
+            "type": "string",
+            "enum": [
+              "Law Passed",
+              "Amendment in Progress",
+              "Change Under Discussion"
+            ]
+          },
+          "title": { "type": "string" },
+          "jurisdiction": {
+            "type": "object",
+            "properties": {
+              "country_code": { "type": "string" },
+              "country_name": { "type": "string" },
+              "level": { "type": "string" }
+            }
+          },
+          "quarterly_summary": {
+            "type": "object",
+            "properties": {
+              "first_appearance": {
+                "type": ["string", "null"],
+                "format": "date",
+                "description": "When this regulation first appeared in tracking"
+              },
+              "status_evolution": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "month": { "type": "integer" },
+                    "status": { "type": "string" },
+                    "change_id": { "type": "string" }
+                  }
+                }
+              },
+              "key_changes_this_quarter": { "type": "string" },
+              "business_impact_summary": { "type": "string" }
+            }
+          },
+          "consolidated_details": {
+            "type": "object",
+            "description": "Merged and validated details from monthly data",
+            "properties": {
+              "description": { "type": "string" },
+              "effective_date": { "type": "string", "format": "date" },
+              "compliance_deadline": { "type": ["string", "null"], "format": "date" },
+              "key_requirements": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "requirement_id": { "type": "string" },
+                    "description": { "type": "string" },
+                    "priority": { "type": "string" }
+                  }
+                }
+              },
+              "affected_scope": { "type": "object" },
+              "sources": { "type": "array" }
+            }
+          },
+          "monthly_sources": {
+            "type": "array",
+            "description": "References to source monthly change records",
+            "items": {
+              "type": "object",
+              "properties": {
+                "month": { "type": "integer" },
+                "change_id": { "type": "string" },
+                "change_type": { "enum": ["NEW", "UPDATED", "UNCHANGED"] }
+              }
+            }
+          },
+          "priority_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Calculated priority based on impact and urgency"
+          },
+          "action_required": {
+            "type": "string",
+            "enum": ["Immediate", "Near-term", "Monitor", "None"]
+          }
+        }
+      }
+    },
+    "topic_summaries": {
+      "type": "object",
+      "properties": {
+        "GHG": { "$ref": "#/definitions/topic_summary" },
+        "Packaging": { "$ref": "#/definitions/topic_summary" },
+        "Water": { "$ref": "#/definitions/topic_summary" },
+        "Waste": { "$ref": "#/definitions/topic_summary" },
+        "Social/Human Rights": { "$ref": "#/definitions/topic_summary" }
+      }
+    },
+    "regional_analysis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "region": { "type": "string" },
+          "country_codes": { "type": "array", "items": { "type": "string" } },
+          "total_regulations": { "type": "integer" },
+          "new_this_quarter": { "type": "integer" },
+          "key_developments": { "type": "string" }
+        }
+      }
+    },
+    "appendices": {
+      "type": "object",
+      "properties": {
+        "glossary": { "type": "array", "items": { "type": "object" } },
+        "methodology": { "type": "string" },
+        "data_quality_notes": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "topic_summary": {
+      "type": "object",
+      "properties": {
+        "total_regulations": { "type": "integer" },
+        "new_this_quarter": { "type": "integer" },
+        "status_breakdown": {
+          "type": "object",
+          "properties": {
+            "Law Passed": { "type": "integer" },
+            "Amendment in Progress": { "type": "integer" },
+            "Change Under Discussion": { "type": "integer" }
+          }
+        },
+        "summary_text": { "type": "string" },
+        "key_regulations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Regulation IDs of key regulations for this topic"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,615 @@
+{
+  "description": "Example regulatory changes for all 5 ESG topics with different status levels",
+  "examples": [
+    {
+      "change_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "regulation_id": "GHG-EU-CSRD-2024",
+      "version_sequence": 2,
+      "topic": "GHG",
+      "status": "Law Passed",
+      "change_type": "UPDATED",
+      "jurisdiction": {
+        "country_code": "EU",
+        "country_name": "European Union",
+        "level": "International",
+        "region": null
+      },
+      "title": "Corporate Sustainability Reporting Directive (CSRD) - Implementation Guidelines Update",
+      "description": "Updated technical implementation guidelines for CSRD requiring detailed Scope 1, 2, and 3 emissions disclosure. New requirements include third-party assurance for GHG data and sector-specific reporting standards for high-emitting industries.",
+      "summary_business_impact": "Large companies must now obtain external assurance for GHG emissions data, increasing compliance costs but improving data credibility.",
+      "detailed_business_impact": "Companies falling under CSRD scope (large EU entities and listed SMEs) face additional requirements: (1) mandatory limited assurance for GHG data by FY2025, (2) reasonable assurance by FY2028, (3) sector-specific GHG intensity metrics for manufacturing, energy, and transport sectors. Estimated compliance cost increase of 15-25% for first-time assurance.",
+      "compliance_deadline": "2025-01-01",
+      "effective_date": "2024-10-01",
+      "announcement_date": "2024-09-15",
+      "affected_scope": {
+        "company_size": ["Large", "Medium"],
+        "industries": ["All EU-listed companies", "Large private EU companies"],
+        "applies_to": "Companies meeting two of three criteria: €40M turnover, €20M assets, 250+ employees"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "GHG-EU-CSRD-R1",
+          "category": "Reporting",
+          "description": "Disclose Scope 1, 2, and 3 GHG emissions in metric tonnes CO2e",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "GHG-EU-CSRD-R2",
+          "category": "Assurance",
+          "description": "Obtain limited assurance from accredited third-party auditor",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "GHG-EU-CSRD-R3",
+          "category": "Documentation",
+          "description": "Maintain documented GHG calculation methodology aligned with GHG Protocol",
+          "priority": "High"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "GHG-EU-NFRD-2014",
+          "relationship_type": "Supersedes"
+        },
+        {
+          "regulation_id": "GHG-EU-ETS-2023",
+          "relationship_type": "Complements"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Official Gazette",
+          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+          "title": "CSRD Directive (EU) 2022/2464",
+          "accessed_at": "2024-09-20T10:30:00Z"
+        }
+      ],
+      "tags": ["emissions", "reporting", "assurance", "eu-taxonomy"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 9,
+        "quarter": 3
+      },
+      "recorded_at": "2024-09-20T10:30:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": {
+        "previous_change_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+        "fields_changed": [
+          {
+            "field": "key_requirements",
+            "old_value": [],
+            "new_value": [{"requirement_id": "GHG-EU-CSRD-R2", "description": "Voluntary assurance recommended"}],
+            "change_type": "modified"
+          }
+        ],
+        "change_summary": "Updated from voluntary to mandatory third-party assurance requirement"
+      }
+    },
+    {
+      "change_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+      "regulation_id": "PKG-US-EPR-CA-2024",
+      "version_sequence": 1,
+      "topic": "Packaging",
+      "status": "Amendment in Progress",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "US",
+        "country_name": "United States",
+        "level": "State",
+        "region": "California"
+      },
+      "title": "California Extended Producer Responsibility (EPR) for Packaging - SB 54 Implementation Rules",
+      "description": "Draft implementing regulations for California's Plastic Pollution Prevention and Packaging Producer Responsibility Act (SB 54). Rules establish phased recycling targets, minimum recycled content requirements, and producer financing obligations.",
+      "summary_business_impact": "Companies selling packaged products in California must join a Producer Responsibility Organization (PRO) and meet escalating recycled content targets.",
+      "detailed_business_impact": "Key requirements include: (1) 30% plastic packaging recyclability by 2028, (2) 25% post-consumer recycled content in plastic packaging by 2032, (3) mandatory participation in PRO with fees based on packaging volume and material type. Non-compliance penalties up to $50,000 per day.",
+      "compliance_deadline": "2027-01-01",
+      "effective_date": "2030-01-01",
+      "announcement_date": "2024-08-10",
+      "affected_scope": {
+        "company_size": ["All"],
+        "industries": ["Consumer Goods", "Food & Beverage", "E-commerce", "Retail"],
+        "applies_to": "Any producer selling or distributing covered packaging material in California"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "PKG-US-CA-R1",
+          "category": "Recyclability",
+          "description": "Ensure 100% of packaging is recyclable or compostable by 2032",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "PKG-US-CA-R2",
+          "category": "Recycled Content",
+          "description": "Achieve 30% post-consumer recycled plastic content by 2030",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "PKG-US-CA-R3",
+          "category": "Reporting",
+          "description": "Register with approved PRO and submit annual packaging data",
+          "priority": "High"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "PKG-US-CA-SB54-2022",
+          "relationship_type": "References"
+        },
+        {
+          "regulation_id": "PKG-EU-PPWD-2024",
+          "relationship_type": "Complements"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Government Portal",
+          "url": "https://calrecycle.ca.gov/packaging/sb54/",
+          "title": "CalRecycle SB 54 Implementation",
+          "accessed_at": "2024-09-15T14:20:00Z"
+        }
+      ],
+      "tags": ["epr", "plastic", "recycling", "extended-producer-responsibility"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 8,
+        "quarter": 3
+      },
+      "recorded_at": "2024-08-15T09:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "c3d4e5f6-a7b8-9012-cdef-345678901234",
+      "regulation_id": "WTR-IN-WaterConservation-2024",
+      "version_sequence": 1,
+      "topic": "Water",
+      "status": "Change Under Discussion",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "IN",
+        "country_name": "India",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "Draft Water Conservation and Management Amendment Bill 2024",
+      "description": "Proposed amendments to the Water (Prevention and Control of Pollution) Act, 1974, introducing mandatory water audits, zero-liquid discharge requirements for water-intensive industries, and stricter groundwater extraction permits.",
+      "summary_business_impact": "Manufacturing units in water-stressed regions may face mandatory water recycling requirements and extraction limits.",
+      "detailed_business_impact": "Key proposals: (1) mandatory annual water audits for industries using >100,000 m³/year, (2) zero-liquid discharge requirements for textile, tannery, and pharmaceutical sectors, (3) 25% reduction in groundwater extraction for industrial use in identified over-exploited blocks, (4) water use efficiency standards for cooling towers and boilers.",
+      "compliance_deadline": null,
+      "effective_date": null,
+      "announcement_date": "2024-07-22",
+      "affected_scope": {
+        "company_size": ["Large", "Medium"],
+        "industries": ["Textile", "Tannery", "Pharmaceutical", "Power Generation", "Food Processing"],
+        "applies_to": "Industrial units with water consumption exceeding specified thresholds"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "WTR-IN-R1",
+          "category": "Audit",
+          "description": "Conduct certified water audits annually by Bureau of Energy Efficiency accredited auditors",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "WTR-IN-R2",
+          "category": "Discharge",
+          "description": "Implement zero-liquid discharge systems (where applicable)",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "WTR-IN-R3",
+          "category": "Permits",
+          "description": "Obtain renewed NOC for groundwater extraction with 25% reduction in allocated quantity",
+          "priority": "High"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "WTR-IN-WPC-1974",
+          "relationship_type": "Amends"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Government Portal",
+          "url": "https://cpcb.nic.in/",
+          "title": "CPCB Draft Amendments",
+          "accessed_at": "2024-08-01T11:00:00Z"
+        }
+      ],
+      "tags": ["water-audit", "zld", "groundwater", "water-stress"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 7,
+        "quarter": 3
+      },
+      "recorded_at": "2024-08-01T11:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Under Review",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "d4e5f6a7-b8c9-0123-defa-456789012345",
+      "regulation_id": "WST-UK-WasteSep-2024",
+      "version_sequence": 1,
+      "topic": "Waste",
+      "status": "Law Passed",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "GB",
+        "country_name": "United Kingdom",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "The Waste (Circular Economy) (Amendment) Regulations 2024 - Simpler Recycling",
+      "description": "Mandatory workplace waste segregation requirements requiring all businesses to separate dry recyclables (plastic, paper, metal, glass), food waste, and general waste. Removes requirement for multiple bins if waste collector provides separation.",
+      "summary_business_impact": "All UK businesses must implement waste segregation or ensure collector provides separation services. Significant operational changes for SMEs.",
+      "detailed_business_impact": "Requirements: (1) separate collection of paper/card, plastic, metal, and glass (combined or separate), (2) separate food waste collection for businesses producing >5kg/week, (3) collection at least fortnightly for each stream, (4) no exceptions for micro-businesses. Applies to all non-domestic premises including schools, hospitals, and government buildings.",
+      "compliance_deadline": "2025-03-31",
+      "effective_date": "2024-10-01",
+      "announcement_date": "2024-05-15",
+      "affected_scope": {
+        "company_size": ["All"],
+        "industries": ["All"],
+        "applies_to": "All non-domestic premises in England including businesses, public sector, charities"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "WST-UK-R1",
+          "category": "Segregation",
+          "description": "Arrange separate collection for dry recyclables (plastic, metal, glass, paper/card)",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "WST-UK-R2",
+          "category": "Food Waste",
+          "description": "Separate food waste if generating 5kg or more per week",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "WST-UK-R3",
+          "category": "Documentation",
+          "description": "Maintain records of waste collection arrangements",
+          "priority": "Medium"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "WST-UK-WasteRegs-2011",
+          "relationship_type": "Amends"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Official Gazette",
+          "url": "https://www.legislation.gov.uk/uksi/2024/xx",
+          "title": "The Waste (Circular Economy) Regulations 2024",
+          "accessed_at": "2024-05-20T10:00:00Z"
+        }
+      ],
+      "tags": ["recycling", "waste-segregation", "simpler-recycling", "food-waste"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 5,
+        "quarter": 2
+      },
+      "recorded_at": "2024-05-20T10:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "e5f6a7b8-c9d0-1234-efab-567890123456",
+      "regulation_id": "SOC-DE-SupplyChain-2024",
+      "version_sequence": 1,
+      "topic": "Social/Human Rights",
+      "status": "Amendment in Progress",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "DE",
+        "country_name": "Germany",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "Lieferkettensorgfaltspflichtengesetz (LkSG) - Expansion Amendment Proposal",
+      "description": "Proposed amendment to expand the German Supply Chain Due Diligence Act to cover companies with 500+ employees (down from 1,000+) and extend liability to direct suppliers' environmental violations. Introduces civil liability for affected parties.",
+      "summary_business_impact": "Significant expansion of covered companies and introduction of civil liability for supply chain human rights violations.",
+      "detailed_business_impact": "Proposed changes: (1) threshold reduction to 500+ employees effective 2026, (2) inclusion of indirect suppliers in risk analysis requirements, (3) introduction of civil liability for victims to sue German companies for supply chain violations, (4) mandatory environmental due diligence for climate-related risks affecting communities, (5) expanded reporting to Federal Office for Economic Affairs and Export Control (BAFA).",
+      "compliance_deadline": "2026-01-01",
+      "effective_date": "2026-01-01",
+      "announcement_date": "2024-06-10",
+      "affected_scope": {
+        "company_size": ["Large", "Medium"],
+        "industries": ["All"],
+        "applies_to": "German companies with 500+ employees and foreign companies with German branch of 500+ employees"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "SOC-DE-LkSG-R1",
+          "category": "Risk Assessment",
+          "description": "Conduct risk analysis covering direct and indirect suppliers",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "SOC-DE-LkSG-R2",
+          "category": "Reporting",
+          "description": "Submit annual due diligence report to BAFA",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "SOC-DE-LkSG-R3",
+          "category": "Remedial Action",
+          "description": "Establish complaints mechanism accessible to indirect supplier workers",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "SOC-DE-LkSG-R4",
+          "category": "Liability",
+          "description": "Prepare for potential civil liability claims from affected parties",
+          "priority": "Medium"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "SOC-DE-LkSG-2021",
+          "relationship_type": "Amends"
+        },
+        {
+          "regulation_id": "SOC-EU-CSDDD-2024",
+          "relationship_type": "Complements"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Government Portal",
+          "url": "https://www.bmas.de/DE/Service/Gesetze/lieferkettensorgfaltspflichtengesetz.html",
+          "title": "LkSG Expansion Proposal",
+          "accessed_at": "2024-06-15T09:30:00Z"
+        }
+      ],
+      "tags": ["supply-chain", "due-diligence", "human-rights", "civil-liability", "germany"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 6,
+        "quarter": 2
+      },
+      "recorded_at": "2024-06-15T09:30:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "f6a7b8c9-d0e1-2345-fabc-678901234567",
+      "regulation_id": "SOC-BR-DecentWork-2024",
+      "version_sequence": 1,
+      "topic": "Social/Human Rights",
+      "status": "Change Under Discussion",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "BR",
+        "country_name": "Brazil",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "Proposal for Modernization of Labor Inspection System - Remote Work and Gig Economy Provisions",
+      "description": "Draft legislation updating Brazil's labor inspection framework to address modern work arrangements. Proposes new rights for platform workers, algorithmic transparency requirements, and enhanced mental health protections for remote workers.",
+      "summary_business_impact": "Companies employing remote workers or using gig/platform workers in Brazil may face new regulatory obligations.",
+      "detailed_business_impact": "Proposed provisions: (1) presumption of employment relationship for platform workers meeting dependency criteria, (2) right to disconnect for remote workers with overtime pay for after-hours communication, (3) mandatory disclosure of algorithmic management parameters to workers, (4) employer responsibility for ergonomic assessments of home workspaces, (5) mental health support obligations for high-stress remote roles.",
+      "compliance_deadline": null,
+      "effective_date": null,
+      "announcement_date": "2024-09-01",
+      "affected_scope": {
+        "company_size": ["All"],
+        "industries": ["Technology", "Transportation", "Delivery Services", "Professional Services"],
+        "applies_to": "Employers with remote workers or platform/app-based workers in Brazil"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "SOC-BR-R1",
+          "category": "Classification",
+          "description": "Review worker classification for platform/gig workers",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "SOC-BR-R2",
+          "category": "Transparency",
+          "description": "Disclose algorithmic decision-making criteria to affected workers",
+          "priority": "Medium"
+        },
+        {
+          "requirement_id": "SOC-BR-R3",
+          "category": "Remote Work",
+          "description": "Implement right-to-disconnect policies and track after-hours communication",
+          "priority": "Medium"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "SOC-BR-CLT-1943",
+          "relationship_type": "Amends"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "News",
+          "url": "https://www.gov.br/trabalho-e-emprego/",
+          "title": "Ministry of Labor and Employment Public Consultation",
+          "accessed_at": "2024-09-10T08:00:00Z"
+        }
+      ],
+      "tags": ["platform-workers", "remote-work", "gig-economy", "algorithmic-transparency", "right-to-disconnect"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 9,
+        "quarter": 3
+      },
+      "recorded_at": "2024-09-10T08:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Draft",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "a7b8c9d0-e1f2-3456-abcd-789012345678",
+      "regulation_id": "GHG-JP-CarbonMarket-2024",
+      "version_sequence": 1,
+      "topic": "GHG",
+      "status": "Change Under Discussion",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "JP",
+        "country_name": "Japan",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "GX League Carbon Pricing Mechanism - Draft Implementation Framework",
+      "description": "Proposed mandatory carbon pricing scheme for GX League participating companies, transitioning from voluntary to compulsory emissions reporting and introducing internal carbon pricing requirements for large emitters.",
+      "summary_business_impact": "Large Japanese corporations and GX League members face transition from voluntary to mandatory carbon accounting.",
+      "detailed_business_impact": "Proposed framework: (1) mandatory Scope 1 and 2 reporting for GX League companies from FY2025, (2) internal carbon pricing requirement (minimum ¥5,000/tonne CO2e) for companies with >100,000 tonnes CO2e/year, (3) emission reduction targets aligned with 1.5°C pathway, (4) third-party verification requirements, (5) linkage with existing J-Credit scheme.",
+      "compliance_deadline": null,
+      "effective_date": null,
+      "announcement_date": "2024-08-20",
+      "affected_scope": {
+        "company_size": ["Large"],
+        "industries": ["Steel", "Chemicals", "Power", "Transportation", "Manufacturing"],
+        "applies_to": "GX League member companies and large emitters (>100,000 tonnes CO2e/year)"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "GHG-JP-R1",
+          "category": "Reporting",
+          "description": "Submit verified GHG emissions data (Scope 1 and 2)",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "GHG-JP-R2",
+          "category": "Pricing",
+          "description": "Implement internal carbon pricing at minimum ¥5,000/tonne CO2e",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "GHG-JP-R3",
+          "category": "Targets",
+          "description": "Set science-based emission reduction targets",
+          "priority": "High"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "GHG-JP-GreenTransformation-2022",
+          "relationship_type": "Complements"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Government Portal",
+          "url": "https://www.meti.go.jp/policy/external_economy/trade/gx_en.html",
+          "title": "METI GX League Announcement",
+          "accessed_at": "2024-08-25T10:00:00Z"
+        }
+      ],
+      "tags": ["carbon-pricing", "gx-league", "internal-carbon-price", "japan", "emissions-trading"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 8,
+        "quarter": 3
+      },
+      "recorded_at": "2024-08-25T10:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Under Review",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "b8c9d0e1-f2a3-4567-bcde-890123456789",
+      "regulation_id": "PKG-FR-AGEC-2024",
+      "version_sequence": 2,
+      "topic": "Packaging",
+      "status": "Law Passed",
+      "change_type": "UPDATED",
+      "jurisdiction": {
+        "country_code": "FR",
+        "country_name": "France",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "Anti-Waste and Circular Economy Law (AGEC) - Packaging Extended Compliance Deadlines",
+      "description": "Updated implementation timeline for AGEC packaging provisions, extending deadlines for certain product categories while introducing earlier targets for single-use plastics. Clarifies requirements for reuse systems and bulk selling.",
+      "summary_business_impact": "Phased implementation provides more time for complex packaging redesigns but accelerates single-use plastic phase-out.",
+      "detailed_business_impact": "Updated timeline: (1) ban on single-use plastic packaging for 30 fruits and vegetables moved up to January 2025 (from 2026), (2) extended deadline for reusable packaging targets to 2030 (from 2027) for foodservice, (3) new requirements for packaging recyclability labeling by September 2025, (4) mandatory bulk selling spaces in retail >400m² from 2030.",
+      "compliance_deadline": "2025-01-01",
+      "effective_date": "2024-09-01",
+      "announcement_date": "2024-07-05",
+      "affected_scope": {
+        "company_size": ["All"],
+        "industries": ["Retail", "Food & Beverage", "E-commerce", "Foodservice"],
+        "applies_to": "Producers, importers, and distributors of packaged goods in France"
+      },
+      "key_requirements": [
+        {
+          "requirement_id": "PKG-FR-AGEC-R1",
+          "category": "Plastic Ban",
+          "description": "Phase out single-use plastic packaging for listed fresh produce",
+          "priority": "Critical"
+        },
+        {
+          "requirement_id": "PKG-FR-AGEC-R2",
+          "category": "Labeling",
+          "description": "Display Triman logo and sorting instructions on all packaging",
+          "priority": "High"
+        },
+        {
+          "requirement_id": "PKG-FR-AGEC-R3",
+          "category": "Reuse",
+          "description": "Achieve 10% reusable packaging by 2030 for foodservice",
+          "priority": "Medium"
+        }
+      ],
+      "related_regulations": [
+        {
+          "regulation_id": "PKG-FR-AGEC-2020",
+          "relationship_type": "Amends"
+        },
+        {
+          "regulation_id": "PKG-EU-PPWD-2024",
+          "relationship_type": "Complements"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "Official Gazette",
+          "url": "https://www.legifrance.gouv.fr/",
+          "title": "Ordonnance AGEC - Modification des délais",
+          "accessed_at": "2024-07-10T14:00:00Z"
+        }
+      ],
+      "tags": ["antic-gaspillage", "circular-economy", "single-use-plastic", "reuse", "triman"],
+      "reporting_period": {
+        "year": 2024,
+        "month": 7,
+        "quarter": 3
+      },
+      "recorded_at": "2024-07-10T14:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": {
+        "previous_change_id": "c9d0e1f2-a3b4-5678-cdef-901234567890",
+        "fields_changed": [
+          {
+            "field": "compliance_deadline",
+            "old_value": "2026-01-01",
+            "new_value": "2025-01-01",
+            "change_type": "modified"
+          },
+          {
+            "field": "key_requirements[2].priority",
+            "old_value": "Critical",
+            "new_value": "Medium",
+            "change_type": "modified"
+          }
+        ],
+        "change_summary": "Accelerated plastic ban deadline, extended reuse targets"
+      }
+    }
+  ]
+}

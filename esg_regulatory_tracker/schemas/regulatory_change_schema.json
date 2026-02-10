@@ -1,0 +1,225 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://visusta.com/schemas/regulatory-change.json",
+  "title": "RegulatoryChange",
+  "description": "Schema for a single regulatory change entry in the ESG tracking system",
+  "type": "object",
+  "required": [
+    "change_id",
+    "regulation_id",
+    "topic",
+    "status",
+    "jurisdiction",
+    "title",
+    "description",
+    "effective_date",
+    "reporting_period",
+    "recorded_at"
+  ],
+  "properties": {
+    "change_id": {
+      "type": "string",
+      "description": "Unique identifier for this specific change instance (UUID)",
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "regulation_id": {
+      "type": "string",
+      "description": "Persistent identifier for the regulation (remains constant across updates)"
+    },
+    "version_sequence": {
+      "type": "integer",
+      "description": "Version number for this regulation (1 = new, >1 = update)",
+      "minimum": 1
+    },
+    "topic": {
+      "type": "string",
+      "enum": ["GHG", "Packaging", "Water", "Waste", "Social/Human Rights"],
+      "description": "ESG topic category"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Law Passed",
+        "Amendment in Progress",
+        "Change Under Discussion"
+      ],
+      "description": "Current status of the regulatory change"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": ["NEW", "UPDATED", "UNCHANGED", "DEPRECATED"],
+      "description": "Type of change relative to previous reporting period"
+    },
+    "jurisdiction": {
+      "type": "object",
+      "required": ["country_code", "level"],
+      "properties": {
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2 country code"
+        },
+        "country_name": {
+          "type": "string",
+          "description": "Full country name"
+        },
+        "level": {
+          "type": "string",
+          "enum": ["Federal", "State", "Regional", "Municipal", "International"],
+          "description": "Jurisdiction level"
+        },
+        "region": {
+          "type": "string",
+          "description": "State, province, or region (if applicable)"
+        }
+      }
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "description": "Official title of the regulation or change"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Detailed description of the regulatory change"
+    },
+    "summary_business_impact": {
+      "type": "string",
+      "description": "Executive summary of business impact"
+    },
+    "detailed_business_impact": {
+      "type": "string",
+      "description": "Detailed analysis of business implications"
+    },
+    "compliance_deadline": {
+      "type": "string",
+      "format": "date",
+      "description": "Deadline for compliance (if known)"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the regulation becomes effective"
+    },
+    "announcement_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the change was announced"
+    },
+    "affected_scope": {
+      "type": "object",
+      "properties": {
+        "company_size": {
+          "type": "array",
+          "items": {
+            "enum": ["All", "Large", "Medium", "Small"]
+          }
+        },
+        "industries": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "applies_to": {
+          "type": "string",
+          "description": "Description of entities covered"
+        }
+      }
+    },
+    "key_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["requirement_id", "description"],
+        "properties": {
+          "requirement_id": {
+            "type": "string",
+            "description": "Unique identifier within this regulation"
+          },
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "priority": {
+            "enum": ["Critical", "High", "Medium", "Low"]
+          }
+        }
+      }
+    },
+    "related_regulations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "regulation_id": { "type": "string" },
+          "relationship_type": {
+            "enum": ["Amends", "Supersedes", "Complements", "Conflicts", "References"]
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_type", "url"],
+        "properties": {
+          "source_type": {
+            "enum": ["Official Gazette", "Government Portal", "News", "Legal Database", "NGO"]
+          },
+          "url": { "type": "string", "format": "uri" },
+          "title": { "type": "string" },
+          "accessed_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional categorization tags"
+    },
+    "reporting_period": {
+      "type": "object",
+      "required": ["year", "month"],
+      "properties": {
+        "year": { "type": "integer" },
+        "month": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "quarter": { "type": "integer", "minimum": 1, "maximum": 4 }
+      }
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when this record was created"
+    },
+    "recorded_by": {
+      "type": "string",
+      "description": "User or system that recorded this change"
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": ["Draft", "Under Review", "Validated", "Published"],
+      "description": "Internal validation workflow status"
+    },
+    "diff_from_previous": {
+      "type": "object",
+      "description": "Structured diff information when change_type is UPDATED",
+      "properties": {
+        "previous_change_id": { "type": "string" },
+        "fields_changed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": { "type": "string" },
+              "old_value": {},
+              "new_value": {},
+              "change_type": { "enum": ["added", "removed", "modified"] }
+            }
+          }
+        },
+        "change_summary": { "type": "string" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

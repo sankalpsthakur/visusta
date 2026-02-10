@@ -1,0 +1,144 @@
+{
+  "screening_period": "2026-02",
+  "generated_date": "2026-02-01",
+  "previous_period": "2026-01",
+  "executive_summary": "Regulatory Screening Report for 2026-02\n\u2022 3 regulations tracked\n\u2022 1 new regulations identified\n\u2022 2 changes detected (1 critical)\n\nCRITICAL ACTIONS REQUIRED:\n  - EU-CSRD-2022: Confirm compliance strategy and implementation timeline\n\nBY TOPIC (change since last period):\n  ghg: CHANGED (law_passed)\n  packaging: no change\n  water: CHANGED (change_under_discussion)\n  waste: no change\n  social_human_rights: no change\n",
+  "total_regulations_tracked": 3,
+  "total_changes_detected": 2,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "law_passed",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "water": {
+      "changed_since_last": true,
+      "level": "change_under_discussion",
+      "changes_detected": 1
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-Water-Framework",
+      "title": "Water Framework Directive Update",
+      "topic": "water",
+      "change_type": "new_regulation",
+      "severity": "info",
+      "summary": "New regulation identified: Water Framework Directive Update",
+      "action_required": "Track for potential future impact",
+      "current_status": "change_under_discussion",
+      "effective_date": null,
+      "enforcement_date": null,
+      "changes": [
+        {
+          "field": "status",
+          "old": null,
+          "new": "RegulationStatus.CHANGE_UNDER_DISCUSSION",
+          "description": "First time identified in screening"
+        }
+      ]
+    }
+  ],
+  "status_changes": [
+    {
+      "regulation_id": "EU-CSRD-2022",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "change_type": "status_promoted_to_law",
+      "severity": "critical",
+      "summary": "Status: amendment_in_progress \u2192 law_passed; Requirements updated; Enforcement: 2025-01-01",
+      "action_required": "Confirm compliance strategy and implementation timeline",
+      "current_status": "law_passed",
+      "effective_date": null,
+      "enforcement_date": "2025-01-01",
+      "changes": [
+        {
+          "field": "status",
+          "old": "RegulationStatus.AMENDMENT_IN_PROGRESS",
+          "new": "RegulationStatus.LAW_PASSED",
+          "description": "Status: amendment_in_progress \u2192 law_passed"
+        },
+        {
+          "field": "requirements",
+          "old": "Report Scope 1, 2, 3 emissions",
+          "new": "Report Scope 1, 2, 3 emissions with assurance",
+          "description": null
+        },
+        {
+          "field": "enforcement_date",
+          "old": null,
+          "new": "2025-01-01",
+          "description": null
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [
+    {
+      "regulation_id": "DE-Packaging-Act",
+      "title": "German Packaging Act",
+      "topic": "packaging",
+      "change_type": "carried_forward",
+      "severity": "info",
+      "summary": "No changes - status: law_passed",
+      "action_required": null,
+      "current_status": "law_passed",
+      "effective_date": null,
+      "enforcement_date": "2025-06-01",
+      "changes": []
+    }
+  ],
+  "critical_actions": [
+    {
+      "regulation_id": "EU-CSRD-2022",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "change_type": "status_promoted_to_law",
+      "severity": "critical",
+      "summary": "Status: amendment_in_progress \u2192 law_passed; Requirements updated; Enforcement: 2025-01-01",
+      "action_required": "Confirm compliance strategy and implementation timeline",
+      "current_status": "law_passed",
+      "effective_date": null,
+      "enforcement_date": "2025-01-01",
+      "changes": [
+        {
+          "field": "status",
+          "old": "RegulationStatus.AMENDMENT_IN_PROGRESS",
+          "new": "RegulationStatus.LAW_PASSED",
+          "description": "Status: amendment_in_progress \u2192 law_passed"
+        },
+        {
+          "field": "requirements",
+          "old": "Report Scope 1, 2, 3 emissions",
+          "new": "Report Scope 1, 2, 3 emissions with assurance",
+          "description": null
+        },
+        {
+          "field": "enforcement_date",
+          "old": null,
+          "new": "2025-01-01",
+          "description": null
+        }
+      ]
+    }
+  ]
+}

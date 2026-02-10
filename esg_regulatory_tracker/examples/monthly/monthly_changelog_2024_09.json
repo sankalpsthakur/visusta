@@ -1,0 +1,202 @@
+{
+  "report_id": "M-2024-09",
+  "reporting_period": {
+    "year": 2024,
+    "month": 9,
+    "month_name": "September",
+    "quarter": 3
+  },
+  "generated_at": "2024-10-01T00:00:00Z",
+  "generated_by": "esg-tracker-system",
+  "report_metadata": {
+    "version": "1.0.0",
+    "schema_version": "1.0",
+    "previous_report_id": "M-2024-08",
+    "data_sources": [
+      "EU EUR-Lex Database",
+      "US State Legislative Tracking",
+      "Government Portals (India, UK, Germany, Brazil, Japan, France)",
+      "NGO Monitoring Services"
+    ],
+    "notes": "September 2024 tracking includes 2 new regulations and 2 updates to existing tracked items"
+  },
+  "summary": {
+    "total_changes": 8,
+    "new_regulations": 2,
+    "updated_regulations": 2,
+    "unchanged_regulations": 4,
+    "deprecated_regulations": 0,
+    "by_topic": {
+      "GHG": 2,
+      "Packaging": 2,
+      "Water": 1,
+      "Waste": 1,
+      "Social/Human Rights": 2
+    },
+    "by_status": {
+      "Law Passed": 3,
+      "Amendment in Progress": 2,
+      "Change Under Discussion": 3
+    },
+    "by_jurisdiction": [
+      { "country_code": "EU", "count": 1 },
+      { "country_code": "US", "count": 1 },
+      { "country_code": "IN", "count": 1 },
+      { "country_code": "GB", "count": 1 },
+      { "country_code": "DE", "count": 1 },
+      { "country_code": "BR", "count": 1 },
+      { "country_code": "JP", "count": 1 },
+      { "country_code": "FR", "count": 1 }
+    ]
+  },
+  "changes": [
+    {
+      "change_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "regulation_id": "GHG-EU-CSRD-2024",
+      "version_sequence": 2,
+      "topic": "GHG",
+      "status": "Law Passed",
+      "change_type": "UPDATED",
+      "jurisdiction": {
+        "country_code": "EU",
+        "country_name": "European Union",
+        "level": "International",
+        "region": null
+      },
+      "title": "Corporate Sustainability Reporting Directive (CSRD) - Implementation Guidelines Update",
+      "description": "Updated technical implementation guidelines for CSRD requiring detailed Scope 1, 2, and 3 emissions disclosure.",
+      "effective_date": "2024-10-01",
+      "reporting_period": {
+        "year": 2024,
+        "month": 9,
+        "quarter": 3
+      },
+      "recorded_at": "2024-09-20T10:30:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": {
+        "previous_change_id": "prev-uuid-1234",
+        "fields_changed": [
+          {
+            "field": "key_requirements",
+            "old_value": [],
+            "new_value": [{"requirement_id": "GHG-EU-CSRD-R2"}],
+            "change_type": "modified"
+          }
+        ],
+        "change_summary": "Updated from voluntary to mandatory third-party assurance"
+      }
+    },
+    {
+      "change_id": "f6a7b8c9-d0e1-2345-fabc-678901234567",
+      "regulation_id": "SOC-BR-DecentWork-2024",
+      "version_sequence": 1,
+      "topic": "Social/Human Rights",
+      "status": "Change Under Discussion",
+      "change_type": "NEW",
+      "jurisdiction": {
+        "country_code": "BR",
+        "country_name": "Brazil",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "Proposal for Modernization of Labor Inspection System - Remote Work and Gig Economy Provisions",
+      "description": "Draft legislation updating Brazil's labor inspection framework for modern work arrangements.",
+      "effective_date": null,
+      "reporting_period": {
+        "year": 2024,
+        "month": 9,
+        "quarter": 3
+      },
+      "recorded_at": "2024-09-10T08:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Draft",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "c9d0e1f2-a3b4-5678-cdef-901234567890",
+      "regulation_id": "WTR-IN-WaterConservation-2024",
+      "version_sequence": 1,
+      "topic": "Water",
+      "status": "Change Under Discussion",
+      "change_type": "UNCHANGED",
+      "jurisdiction": {
+        "country_code": "IN",
+        "country_name": "India",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "Draft Water Conservation and Management Amendment Bill 2024",
+      "description": "Proposed amendments to the Water Act introducing mandatory water audits.",
+      "effective_date": null,
+      "reporting_period": {
+        "year": 2024,
+        "month": 9,
+        "quarter": 3
+      },
+      "recorded_at": "2024-09-01T10:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": null
+    },
+    {
+      "change_id": "d0e1f2a3-b4c5-6789-def0-012345678901",
+      "regulation_id": "WST-UK-WasteSep-2024",
+      "version_sequence": 1,
+      "topic": "Waste",
+      "status": "Law Passed",
+      "change_type": "UNCHANGED",
+      "jurisdiction": {
+        "country_code": "GB",
+        "country_name": "United Kingdom",
+        "level": "Federal",
+        "region": null
+      },
+      "title": "The Waste (Circular Economy) Regulations 2024 - Simpler Recycling",
+      "description": "Mandatory workplace waste segregation requirements.",
+      "effective_date": "2024-10-01",
+      "reporting_period": {
+        "year": 2024,
+        "month": 9,
+        "quarter": 3
+      },
+      "recorded_at": "2024-09-01T10:00:00Z",
+      "recorded_by": "esg-tracker-system",
+      "validation_status": "Validated",
+      "diff_from_previous": null
+    }
+  ],
+  "diff_summary": {
+    "has_changes": true,
+    "added_count": 2,
+    "modified_count": 1,
+    "removed_count": 0,
+    "unchanged_count": 4,
+    "highlights": [
+      {
+        "change_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "highlight_type": "Critical",
+        "description": "EU CSRD assurance requirements updated from voluntary to mandatory - affects all EU reporting entities"
+      },
+      {
+        "change_id": "f6a7b8c9-d0e1-2345-fabc-678901234567",
+        "highlight_type": "Trend",
+        "description": "Brazil proposes comprehensive gig worker protections - signals regional trend"
+      }
+    ]
+  },
+  "audit_log": [
+    {
+      "timestamp": "2024-10-01T00:00:00Z",
+      "action": "Created",
+      "user": "system",
+      "details": "Monthly report generated from tracked changes"
+    },
+    {
+      "timestamp": "2024-10-02T09:00:00Z",
+      "action": "Validated",
+      "user": "analyst@visusta.com",
+      "details": "Report validated for accuracy and completeness"
+    }
+  ]
+}

@@ -1,0 +1,390 @@
+{
+  "report_id": "Q-2024-Q3",
+  "reporting_period": {
+    "year": 2024,
+    "quarter": 3,
+    "period_label": "Q3 2024",
+    "months_covered": [7, 8, 9],
+    "date_range": {
+      "start_date": "2024-07-01",
+      "end_date": "2024-09-30"
+    }
+  },
+  "generated_at": "2024-10-05T10:00:00Z",
+  "published_at": "2024-10-10T12:00:00Z",
+  "report_metadata": {
+    "version": "1.0.0",
+    "schema_version": "1.0",
+    "previous_report_id": "Q-2024-Q2",
+    "source_monthly_reports": [
+      "M-2024-07",
+      "M-2024-08",
+      "M-2024-09"
+    ],
+    "validation": {
+      "validated_by": "senior.analyst@visusta.com",
+      "validated_at": "2024-10-08T15:30:00Z",
+      "validation_status": "Approved"
+    }
+  },
+  "executive_summary": {
+    "overview": "Q3 2024 saw significant regulatory activity across all five ESG topics, with 12 new or updated regulations tracked. Key developments include strengthening of EU CSRD assurance requirements, expansion of EPR frameworks in the US and EU, and emerging regulations on gig worker rights and carbon pricing in emerging markets.",
+    "key_findings": [
+      "EU CSRD assurance requirements upgraded from voluntary to mandatory - immediate compliance impact",
+      "California SB 54 implementing rules published - extended producer responsibility takes shape",
+      "Germany proposes LkSG expansion to 500+ employee companies with civil liability",
+      "Japan GX League carbon pricing framework under consultation",
+      "Brazil labor law modernization addresses gig economy and remote work",
+      "India water conservation amendments introduce ZLD requirements"
+    ],
+    "critical_alerts": [
+      {
+        "alert_level": "Critical",
+        "topic": "GHG",
+        "title": "EU CSRD Mandatory Assurance",
+        "description": "Third-party assurance for GHG data now mandatory - reporting entities must secure auditor capacity immediately",
+        "regulation_id": "GHG-EU-CSRD-2024"
+      },
+      {
+        "alert_level": "High",
+        "topic": "Packaging",
+        "title": "California EPR Implementation Timeline",
+        "description": "PRO registration opens January 2025 - companies should begin packaging data collection",
+        "regulation_id": "PKG-US-EPR-CA-2024"
+      },
+      {
+        "alert_level": "High",
+        "topic": "Social/Human Rights",
+        "title": "Germany LkSG Expansion",
+        "description": "Proposed threshold reduction to 500 employees significantly expands covered population",
+        "regulation_id": "SOC-DE-SupplyChain-2024"
+      }
+    ],
+    "trend_analysis": {
+      "emerging_themes": [
+        "Third-party assurance becoming standard for ESG disclosures",
+        "Extended Producer Responsibility frameworks expanding globally",
+        "Supply chain due diligence laws expanding coverage and introducing liability",
+        "Gig economy and remote work regulations emerging in multiple jurisdictions"
+      ],
+      "jurisdictional_hotspots": [
+        "European Union - CSRD implementation and green deal regulations",
+        "United States - State-level EPR and climate disclosure laws",
+        "Germany - Supply chain due diligence expansion",
+        "Japan - GX League and carbon pricing development"
+      ],
+      "business_implications": "Organizations should prepare for: (1) increased assurance costs for EU operations, (2) packaging data collection systems for EPR compliance, (3) expanded due diligence processes for supply chains, (4) monitoring of emerging carbon pricing schemes in Asia-Pacific"
+    }
+  },
+  "consolidated_regulations": [
+    {
+      "regulation_id": "GHG-EU-CSRD-2024",
+      "topic": "GHG",
+      "current_status": "Law Passed",
+      "title": "Corporate Sustainability Reporting Directive (CSRD)",
+      "jurisdiction": {
+        "country_code": "EU",
+        "country_name": "European Union",
+        "level": "International"
+      },
+      "quarterly_summary": {
+        "first_appearance": "2024-01-15",
+        "status_evolution": [
+          { "month": 7, "status": "Law Passed", "change_id": "prev-uuid-1234" },
+          { "month": 9, "status": "Law Passed", "change_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+        ],
+        "key_changes_this_quarter": "Assurance requirements upgraded from voluntary to mandatory; technical specifications for GHG reporting clarified",
+        "business_impact_summary": "All EU reporting entities must obtain external assurance for GHG data starting FY2025. Estimated 15-25% increase in compliance costs."
+      },
+      "consolidated_details": {
+        "description": "Mandatory sustainability reporting directive requiring detailed Scope 1, 2, and 3 emissions disclosure with third-party assurance",
+        "effective_date": "2024-10-01",
+        "compliance_deadline": "2025-01-01",
+        "key_requirements": [
+          { "requirement_id": "GHG-EU-CSRD-R1", "description": "Disclose Scope 1, 2, 3 GHG emissions", "priority": "Critical" },
+          { "requirement_id": "GHG-EU-CSRD-R2", "description": "Obtain limited assurance from accredited auditor", "priority": "Critical" }
+        ],
+        "affected_scope": {
+          "company_size": ["Large", "Medium"],
+          "applies_to": "EU companies meeting size criteria and listed SMEs"
+        },
+        "sources": [
+          { "source_type": "Official Gazette", "url": "https://eur-lex.europa.eu/", "title": "CSRD Directive" }
+        ]
+      },
+      "monthly_sources": [
+        { "month": 7, "change_id": "prev-uuid-1234", "change_type": "UNCHANGED" },
+        { "month": 8, "change_id": "prev-uuid-5678", "change_type": "UNCHANGED" },
+        { "month": 9, "change_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890", "change_type": "UPDATED" }
+      ],
+      "priority_score": 10,
+      "action_required": "Immediate"
+    },
+    {
+      "regulation_id": "PKG-US-EPR-CA-2024",
+      "topic": "Packaging",
+      "current_status": "Amendment in Progress",
+      "title": "California SB 54 EPR Implementation Rules",
+      "jurisdiction": {
+        "country_code": "US",
+        "country_name": "United States",
+        "level": "State"
+      },
+      "quarterly_summary": {
+        "first_appearance": "2024-08-15",
+        "status_evolution": [
+          { "month": 8, "status": "Amendment in Progress", "change_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012" }
+        ],
+        "key_changes_this_quarter": "Draft implementing regulations published establishing PRO framework and phased targets",
+        "business_impact_summary": "Companies selling packaged products in California must prepare for PRO registration and recycled content requirements."
+      },
+      "consolidated_details": {
+        "description": "Extended Producer Responsibility framework requiring producer financing of packaging waste management and recycled content targets",
+        "effective_date": "2030-01-01",
+        "compliance_deadline": "2027-01-01",
+        "key_requirements": [
+          { "requirement_id": "PKG-US-CA-R1", "description": "100% recyclable packaging by 2032", "priority": "Critical" },
+          { "requirement_id": "PKG-US-CA-R2", "description": "30% post-consumer recycled content by 2030", "priority": "High" }
+        ],
+        "affected_scope": {
+          "company_size": ["All"],
+          "industries": ["Consumer Goods", "Food & Beverage", "E-commerce"]
+        },
+        "sources": [
+          { "source_type": "Government Portal", "url": "https://calrecycle.ca.gov/", "title": "CalRecycle SB 54" }
+        ]
+      },
+      "monthly_sources": [
+        { "month": 8, "change_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012", "change_type": "NEW" },
+        { "month": 9, "change_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012", "change_type": "UNCHANGED" }
+      ],
+      "priority_score": 9,
+      "action_required": "Near-term"
+    },
+    {
+      "regulation_id": "WTR-IN-WaterConservation-2024",
+      "topic": "Water",
+      "current_status": "Change Under Discussion",
+      "title": "Draft Water Conservation and Management Amendment Bill 2024",
+      "jurisdiction": {
+        "country_code": "IN",
+        "country_name": "India",
+        "level": "Federal"
+      },
+      "quarterly_summary": {
+        "first_appearance": "2024-07-22",
+        "status_evolution": [
+          { "month": 7, "status": "Change Under Discussion", "change_id": "c3d4e5f6-a7b8-9012-cdef-345678901234" }
+        ],
+        "key_changes_this_quarter": "Draft bill introduced in public consultation; proposes mandatory water audits and ZLD requirements",
+        "business_impact_summary": "Water-intensive industries in India should prepare for potential mandatory water audits and reduced groundwater allocations."
+      },
+      "consolidated_details": {
+        "description": "Proposed amendments to Water Act introducing mandatory water audits, ZLD requirements, and groundwater extraction limits",
+        "effective_date": null,
+        "compliance_deadline": null,
+        "key_requirements": [
+          { "requirement_id": "WTR-IN-R1", "description": "Annual certified water audits", "priority": "High" },
+          { "requirement_id": "WTR-IN-R2", "description": "Zero-liquid discharge systems", "priority": "Critical" }
+        ],
+        "affected_scope": {
+          "company_size": ["Large", "Medium"],
+          "industries": ["Textile", "Tannery", "Pharmaceutical"]
+        },
+        "sources": [
+          { "source_type": "Government Portal", "url": "https://cpcb.nic.in/", "title": "CPCB Draft" }
+        ]
+      },
+      "monthly_sources": [
+        { "month": 7, "change_id": "c3d4e5f6-a7b8-9012-cdef-345678901234", "change_type": "NEW" },
+        { "month": 8, "change_id": "c3d4e5f6-a7b8-9012-cdef-345678901234", "change_type": "UNCHANGED" },
+        { "month": 9, "change_id": "c3d4e5f6-a7b8-9012-cdef-345678901234", "change_type": "UNCHANGED" }
+      ],
+      "priority_score": 7,
+      "action_required": "Monitor"
+    },
+    {
+      "regulation_id": "WST-UK-WasteSep-2024",
+      "topic": "Waste",
+      "current_status": "Law Passed",
+      "title": "The Waste (Circular Economy) Regulations 2024",
+      "jurisdiction": {
+        "country_code": "GB",
+        "country_name": "United Kingdom",
+        "level": "Federal"
+      },
+      "quarterly_summary": {
+        "first_appearance": "2024-05-15",
+        "status_evolution": [
+          { "month": 7, "status": "Law Passed", "change_id": "d4e5f6a7-b8c9-0123-defa-456789012345" }
+        ],
+        "key_changes_this_quarter": "No material changes; implementation timeline unchanged",
+        "business_impact_summary": "All UK businesses must implement waste segregation by March 2025."
+      },
+      "consolidated_details": {
+        "description": "Mandatory workplace waste segregation requiring separate collection of recyclables, food waste, and general waste",
+        "effective_date": "2024-10-01",
+        "compliance_deadline": "2025-03-31",
+        "key_requirements": [
+          { "requirement_id": "WST-UK-R1", "description": "Separate dry recyclables collection", "priority": "Critical" },
+          { "requirement_id": "WST-UK-R2", "description": "Separate food waste if >5kg/week", "priority": "Critical" }
+        ],
+        "affected_scope": {
+          "company_size": ["All"],
+          "industries": ["All"]
+        },
+        "sources": [
+          { "source_type": "Official Gazette", "url": "https://www.legislation.gov.uk/", "title": "Waste Regulations 2024" }
+        ]
+      },
+      "monthly_sources": [
+        { "month": 7, "change_id": "d4e5f6a7-b8c9-0123-defa-456789012345", "change_type": "UNCHANGED" },
+        { "month": 8, "change_id": "d4e5f6a7-b8c9-0123-defa-456789012345", "change_type": "UNCHANGED" },
+        { "month": 9, "change_id": "d4e5f6a7-b8c9-0123-defa-456789012345", "change_type": "UNCHANGED" }
+      ],
+      "priority_score": 8,
+      "action_required": "Near-term"
+    },
+    {
+      "regulation_id": "SOC-DE-SupplyChain-2024",
+      "topic": "Social/Human Rights",
+      "current_status": "Amendment in Progress",
+      "title": "LkSG Expansion Amendment Proposal",
+      "jurisdiction": {
+        "country_code": "DE",
+        "country_name": "Germany",
+        "level": "Federal"
+      },
+      "quarterly_summary": {
+        "first_appearance": "2024-06-10",
+        "status_evolution": [
+          { "month": 6, "status": "Amendment in Progress", "change_id": "e5f6a7b8-c9d0-1234-efab-567890123456" }
+        ],
+        "key_changes_this_quarter": "Proposed threshold reduction and civil liability introduction published",
+        "business_impact_summary": "Significant expansion of covered companies and new liability exposure for supply chain violations."
+      },
+      "consolidated_details": {
+        "description": "Proposed amendment to expand German Supply Chain Due Diligence Act coverage and introduce civil liability",
+        "effective_date": "2026-01-01",
+        "compliance_deadline": "2026-01-01",
+        "key_requirements": [
+          { "requirement_id": "SOC-DE-LkSG-R1", "description": "Risk analysis covering direct and indirect suppliers", "priority": "Critical" },
+          { "requirement_id": "SOC-DE-LkSG-R4", "description": "Prepare for civil liability claims", "priority": "Medium" }
+        ],
+        "affected_scope": {
+          "company_size": ["Large", "Medium"],
+          "applies_to": "German companies with 500+ employees"
+        },
+        "sources": [
+          { "source_type": "Government Portal", "url": "https://www.bmas.de/", "title": "LkSG Expansion" }
+        ]
+      },
+      "monthly_sources": [
+        { "month": 6, "change_id": "e5f6a7b8-c9d0-1234-efab-567890123456", "change_type": "NEW" },
+        { "month": 7, "change_id": "e5f6a7b8-c9d0-1234-efab-567890123456", "change_type": "UNCHANGED" },
+        { "month": 8, "change_id": "e5f6a7b8-c9d0-1234-efab-567890123456", "change_type": "UNCHANGED" }
+      ],
+      "priority_score": 9,
+      "action_required": "Near-term"
+    }
+  ],
+  "topic_summaries": {
+    "GHG": {
+      "total_regulations": 2,
+      "new_this_quarter": 0,
+      "status_breakdown": {
+        "Law Passed": 1,
+        "Amendment in Progress": 0,
+        "Change Under Discussion": 1
+      },
+      "summary_text": "EU CSRD assurance requirements became mandatory, significantly impacting reporting obligations. Japan GX League carbon pricing framework entered consultation phase.",
+      "key_regulations": ["GHG-EU-CSRD-2024", "GHG-JP-CarbonMarket-2024"]
+    },
+    "Packaging": {
+      "total_regulations": 2,
+      "new_this_quarter": 1,
+      "status_breakdown": {
+        "Law Passed": 1,
+        "Amendment in Progress": 1,
+        "Change Under Discussion": 0
+      },
+      "summary_text": "California SB 54 implementing rules provide clarity on EPR framework. France AGEC timeline updated with accelerated plastic ban but extended reuse targets.",
+      "key_regulations": ["PKG-US-EPR-CA-2024", "PKG-FR-AGEC-2024"]
+    },
+    "Water": {
+      "total_regulations": 1,
+      "new_this_quarter": 1,
+      "status_breakdown": {
+        "Law Passed": 0,
+        "Amendment in Progress": 0,
+        "Change Under Discussion": 1
+      },
+      "summary_text": "India water conservation amendments propose mandatory audits and ZLD requirements for water-intensive industries.",
+      "key_regulations": ["WTR-IN-WaterConservation-2024"]
+    },
+    "Waste": {
+      "total_regulations": 1,
+      "new_this_quarter": 0,
+      "status_breakdown": {
+        "Law Passed": 1,
+        "Amendment in Progress": 0,
+        "Change Under Discussion": 0
+      },
+      "summary_text": "UK Simpler Recycling regulations effective October 2024; all businesses must comply by March 2025.",
+      "key_regulations": ["WST-UK-WasteSep-2024"]
+    },
+    "Social/Human Rights": {
+      "total_regulations": 2,
+      "new_this_quarter": 2,
+      "status_breakdown": {
+        "Law Passed": 0,
+        "Amendment in Progress": 1,
+        "Change Under Discussion": 1
+      },
+      "summary_text": "Germany proposes significant LkSG expansion with civil liability. Brazil introduces comprehensive labor law modernization for gig and remote workers.",
+      "key_regulations": ["SOC-DE-SupplyChain-2024", "SOC-BR-DecentWork-2024"]
+    }
+  },
+  "regional_analysis": [
+    {
+      "region": "Europe",
+      "country_codes": ["EU", "GB", "DE", "FR"],
+      "total_regulations": 4,
+      "new_this_quarter": 1,
+      "key_developments": "EU CSRD mandatory assurance requirements; UK waste segregation effective; Germany LkSG expansion proposed; France AGEC timeline updated"
+    },
+    {
+      "region": "North America",
+      "country_codes": ["US"],
+      "total_regulations": 1,
+      "new_this_quarter": 1,
+      "key_developments": "California SB 54 implementing rules published - first comprehensive EPR framework in US"
+    },
+    {
+      "region": "Asia-Pacific",
+      "country_codes": ["IN", "JP"],
+      "total_regulations": 2,
+      "new_this_quarter": 2,
+      "key_developments": "India water conservation amendments; Japan GX League carbon pricing consultation"
+    },
+    {
+      "region": "South America",
+      "country_codes": ["BR"],
+      "total_regulations": 1,
+      "new_this_quarter": 1,
+      "key_developments": "Brazil proposes comprehensive labor law modernization addressing gig economy"
+    }
+  ],
+  "appendices": {
+    "glossary": [
+      { "term": "CSRD", "definition": "Corporate Sustainability Reporting Directive" },
+      { "term": "EPR", "definition": "Extended Producer Responsibility" },
+      { "term": "LkSG", "definition": "Lieferkettensorgfaltspflichtengesetz (German Supply Chain Act)" },
+      { "term": "PRO", "definition": "Producer Responsibility Organization" },
+      { "term": "ZLD", "definition": "Zero Liquid Discharge" },
+      { "term": "GX League", "definition": "Japan's Green Transformation initiative" }
+    ],
+    "methodology": "Quarterly reports consolidate three monthly changelogs. Regulations are deduplicated by regulation_id, with status evolution tracked across months. Priority scores calculated based on: (1) compliance deadline proximity, (2) jurisdictional coverage, (3) business impact scope.",
+    "data_quality_notes": "All regulations validated against official sources. Brazil labor law proposal remains in early consultation phase - details subject to change. Japan GX League framework is draft - final requirements may differ significantly."
+  }
+}

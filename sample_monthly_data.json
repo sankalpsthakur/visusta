@@ -1,0 +1,238 @@
+{
+  "_description": "Sample monthly changelog data for February 2026 - Demonstrates the expected JSON structure for quarterly consolidation input",
+  "_metadata": {
+    "month": "February 2026",
+    "generated_at": "2026-02-01T00:00:00",
+    "total_entries": 4,
+    "validation_status": "validated"
+  },
+  "entries": [
+    {
+      "id": "CHG-2026-015",
+      "regulation_code": "PPWR",
+      "regulation_name": "EU Packaging and Packaging Waste Regulation",
+      "reported_month": "2026-02-01",
+      "change_date": "2026-02-10",
+      "title": "ZSVR 2025 Minimum Standard Published",
+      "description": "The German Central Agency Packaging Register (ZSVR) has published the 2025 Minimum Standard for assessing the recyclability of packaging. This standard acts as a bridge to PPWR compliance, providing specific technical criteria for recyclability assessment including density thresholds for polyolefins, solubility parameters for adhesives, and guidance on acceptable additives. The standard provides clarity for manufacturers preparing for PPWR's general application in August 2026.",
+      "change_type": "guidance_publication",
+      "scope": "DE",
+      "impact_level": "HIGH",
+      "affected_areas": ["Packaging", "R&D", "Compliance"],
+      "investment_type": "Audit",
+      "status": "VALIDATED",
+      "sources": [
+        {
+          "id": "SRC-024",
+          "title": "ZSVR 2025 Minimum Standard Official Publication",
+          "url": "https://www.zsvr.de/weitere-aufgaben/mindeststandard/",
+          "publisher": "Central Agency Packaging Register (ZSVR)",
+          "publish_date": "2026-02-10",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.95
+        },
+        {
+          "id": "SRC-025",
+          "title": "Germany's 2025 Packaging Recyclability Standards Explained",
+          "url": "https://packaging-world.com/ppwr/zsvr-2025",
+          "publisher": "Packaging World",
+          "publish_date": "2026-02-12",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.8
+        }
+      ],
+      "related_entries": ["CHG-2026-001"],
+      "milestones": [
+        {
+          "date": "2026-02-10",
+          "description": "ZSVR 2025 Minimum Standard published",
+          "milestone_type": "publication",
+          "confirmed": true
+        },
+        {
+          "date": "2026-08-12",
+          "description": "PPWR General Application Date",
+          "milestone_type": "deadline",
+          "confirmed": true
+        }
+      ],
+      "executive_summary": "German ZSVR standard provides interim technical guidance for PPWR recyclability assessment, offering a compliance bridge until August 2026.",
+      "action_items": [
+        "Compare current packaging portfolio against ZSVR 2025 criteria",
+        "Identify packaging formats at risk of Grade D or E classification",
+        "Schedule supplier audits for non-compliant materials"
+      ]
+    },
+    {
+      "id": "CHG-2026-016",
+      "regulation_code": "HAMBURG-WW",
+      "regulation_name": "Hamburg Industrial Wastewater Fee Restructuring",
+      "reported_month": "2026-02-01",
+      "change_date": "2026-01-01",
+      "title": "Municipal Fee Increases Effective - First Invoicing",
+      "description": "The Free and Hanseatic City of Hamburg's municipal fee increases have taken effect on January 1, 2026. February 2026 represents the first invoicing cycle under the new rates. The Schmutzwassergebühr (foul water fee) and Niederschlagswassergebühr (rainwater fee) have both increased by approximately 3.3%. First invoices should be carefully audited to verify correct application of new unit rates.",
+      "change_type": "effective_date",
+      "scope": "LOCAL",
+      "impact_level": "HIGH",
+      "affected_areas": ["Operations", "Finance", "Facilities"],
+      "investment_type": "OPEX",
+      "status": "VALIDATED",
+      "sources": [
+        {
+          "id": "SRC-001",
+          "title": "Änderung städtischer Gebühren ab 2026",
+          "url": "https://www.hamburg.de/gebuehren-2026",
+          "publisher": "Hamburg.de Official",
+          "publish_date": "2025-11-15",
+          "access_date": "2026-02-01",
+          "reliability_score": 1.0
+        },
+        {
+          "id": "SRC-002",
+          "title": "Hamburger Stadtentwässerung - Tarifinformation 2026",
+          "url": "https://www.hamburgwasser.de/tarife",
+          "publisher": "Hamburger Stadtentwässerung (HSE)",
+          "publish_date": "2025-12-01",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.95
+        }
+      ],
+      "related_entries": [],
+      "milestones": [
+        {
+          "date": "2026-01-01",
+          "description": "New fee rates effective",
+          "milestone_type": "effective",
+          "confirmed": true
+        },
+        {
+          "date": "2026-02-15",
+          "description": "First invoices under new rates",
+          "milestone_type": "milestone",
+          "confirmed": true
+        }
+      ],
+      "executive_summary": "Hamburg wastewater fee increases of 3.3% now effective, with first invoices requiring careful audit to verify correct rate application.",
+      "action_items": [
+        "Audit February 2026 utility invoices for correct rate application",
+        "Recalculate water efficiency project ROI with new rates",
+        "Update facility budget forecasts for 2026"
+      ]
+    },
+    {
+      "id": "CHG-2026-017",
+      "regulation_code": "VerpackDG",
+      "regulation_name": "German Packaging Law Implementation Act",
+      "reported_month": "2026-02-01",
+      "change_date": "2026-02-05",
+      "title": "Draft VerpackDG Advances - B2B EPR Framework Confirmed",
+      "description": "The draft Verpackungs-Durchführungsgesetz (VerpackDG) continues to advance through the legislative process. The key provision mandating Extended Producer Responsibility (EPR) for B2B packaging remains intact. The new levy of approximately €5 per tonne for non-system-participating packaging is confirmed in the latest draft. The law is expected for adoption in Q1 2026 with implementation in Q3/Q4 2026.",
+      "change_type": "legislative_progress",
+      "scope": "DE",
+      "impact_level": "CRITICAL",
+      "affected_areas": ["Logistics", "Procurement", "Finance"],
+      "investment_type": "OPEX",
+      "status": "VALIDATED",
+      "sources": [
+        {
+          "id": "SRC-011",
+          "title": "New Draft of The VerpackDG - Analysis",
+          "url": "https://recoup.eu/verpackdg-draft-2026",
+          "publisher": "Recoup",
+          "publish_date": "2026-02-05",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.9
+        },
+        {
+          "id": "SRC-013",
+          "title": "Unpacking Germany's Draft Packaging Act 2025",
+          "url": "https://complianceandrisks.com/verpackdg-analysis",
+          "publisher": "ComplianceAndRisks",
+          "publish_date": "2026-02-03",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.85
+        },
+        {
+          "id": "SRC-014",
+          "title": "Neues VerpackDG: Referentenentwurf vorgelegt",
+          "url": "https://zentek.de/verpackdg-entwurf",
+          "publisher": "ZENTEK",
+          "publish_date": "2026-02-04",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.85
+        }
+      ],
+      "related_entries": [],
+      "milestones": [
+        {
+          "date": "2026-03-31",
+          "description": "Expected adoption by Bundestag",
+          "milestone_type": "target",
+          "confirmed": false
+        },
+        {
+          "date": "2026-07-01",
+          "description": "Expected implementation start",
+          "milestone_type": "target",
+          "confirmed": false
+        }
+      ],
+      "executive_summary": "VerpackDG draft advances with B2B EPR mandate confirmed. New €5/tonne levy expected Q3/Q4 2026.",
+      "action_items": [
+        "Quantify annual B2B packaging tonnage for Hamburg and Rietberg facilities",
+        "Evaluate authorized OfH (Organisation for Producer Responsibility) membership options",
+        "Review contracts with waste management providers for OfH positioning"
+      ]
+    },
+    {
+      "id": "CHG-2026-018",
+      "regulation_code": "LkSG",
+      "regulation_name": "Supply Chain Due Diligence Act (LkSG) Amendment",
+      "reported_month": "2026-02-01",
+      "change_date": "2026-01-15",
+      "title": "LkSG Reporting Obligation Abolished - Retroactive Effect",
+      "description": "The German Federal Cabinet has passed a law amending the Supply Chain Due Diligence Act (LkSG), abolishing the reporting obligation under § 10 (2) LkSG with retroactive effect from January 1, 2023. Companies are no longer required to submit annual reports to BAFA. However, all substantive due diligence obligations remain in force: risk management systems, annual risk analyses, policy statements, and preventive/remedial measures. BAFA retains authority for risk-based controls.",
+      "change_type": "amendment",
+      "scope": "DE",
+      "impact_level": "LOW",
+      "affected_areas": ["Compliance", "Legal", "Sustainability"],
+      "investment_type": "NONE",
+      "status": "VALIDATED",
+      "sources": [
+        {
+          "id": "SRC-017",
+          "title": "Federal government abolishes reporting obligations under the LKSG",
+          "url": "https://globalnorm.com/lksg-amendment-2026",
+          "publisher": "GlobalNorm",
+          "publish_date": "2026-01-20",
+          "access_date": "2026-02-01",
+          "reliability_score": 0.9
+        },
+        {
+          "id": "SRC-017b",
+          "title": "Gesetz zur Änderung des Lieferkettensorgfaltspflichtengesetzes",
+          "url": "https://bundesrat.de/bgb1",
+          "publisher": "Bundesrat",
+          "publish_date": "2026-01-15",
+          "access_date": "2026-02-01",
+          "reliability_score": 1.0
+        }
+      ],
+      "related_entries": [],
+      "milestones": [
+        {
+          "date": "2026-01-15",
+          "description": "Cabinet passes amendment",
+          "milestone_type": "milestone",
+          "confirmed": true
+        }
+      ],
+      "executive_summary": "LkSG reporting obligation abolished retroactively from January 2023. Substantive due diligence obligations remain fully in force.",
+      "action_items": [
+        "Redirect BAFA reporting resources to CSDDD/CSRD preparation",
+        "Ensure continued compliance with substantive LkSG obligations",
+        "Update compliance documentation procedures"
+      ]
+    }
+  ]
+}

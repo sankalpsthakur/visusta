@@ -1,0 +1,59 @@
+{
+  "screening_period": "2026-01",
+  "screening_date": "2026-01-31",
+  "screened_by": "Test System",
+  "topics_covered": [
+    "ghg",
+    "packaging",
+    "water",
+    "waste",
+    "social_human_rights"
+  ],
+  "data_quality_flags": [
+    "no_items_for_topic:water",
+    "no_items_for_topic:waste",
+    "no_items_for_topic:social_human_rights"
+  ],
+  "regulations": [
+    {
+      "regulation_id": "EU-CSRD-2022",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "description": "Comprehensive sustainability reporting requirements",
+      "requirements_summary": "Report Scope 1, 2, 3 emissions",
+      "current_status": "amendment_in_progress",
+      "effective_date": null,
+      "enforcement_date": null,
+      "review_deadline": null,
+      "geographic_scope": "regional",
+      "applicable_countries": [
+        "EU"
+      ],
+      "version_date": "2026-02-01",
+      "tags": [],
+      "screening_source": "",
+      "confidence_score": 1.0,
+      "notes": ""
+    },
+    {
+      "regulation_id": "DE-Packaging-Act",
+      "title": "German Packaging Act",
+      "topic": "packaging",
+      "description": "Requirements for packaging registration and recycling",
+      "requirements_summary": "Register packaging quantities",
+      "current_status": "law_passed",
+      "effective_date": null,
+      "enforcement_date": "2025-06-01",
+      "review_deadline": null,
+      "geographic_scope": "national",
+      "applicable_countries": [
+        "DE"
+      ],
+      "version_date": "2026-02-01",
+      "tags": [],
+      "screening_source": "",
+      "confidence_score": 1.0,
+      "notes": ""
+    }
+  ]
+}

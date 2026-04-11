@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-0fd12cc8",
+  "client_id": "terra-verde",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+  "access_date": "2026-04-11",
+  "document_title": "CSRD \u2014 Corporate Sustainability Reporting Directive",
+  "snippet": "Portuguese organic food companies above thresholds must report from FY2025.",
+  "hash": "sha256:0fd12cc8a17af59944c13e402a6ee4dda9562d902be08b58b6fd04c1758b1be4",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

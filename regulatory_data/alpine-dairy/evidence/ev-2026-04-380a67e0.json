@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-380a67e0",
+  "client_id": "alpine-dairy",
+  "source_id": "bafu",
+  "source_name": "BAFU \u2014 Swiss Federal Office for the Environment",
+  "url": "https://www.bafu.admin.ch/bafu/de/home/themen/klima/fachinformationen/klimastrategie-2050.html",
+  "access_date": "2026-04-11",
+  "document_title": "BAFU Climate Strategy 2050 \u2014 Long-term Net-Zero Pathway",
+  "snippet": "Switzerland targets net-zero GHG emissions by 2050; interim milestones for industry sectors.",
+  "hash": "sha256:380a67e03fd4e4c1740aeb63cecf0b28ba8d4ef024cf2346d97b2b44561698fb",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "ghg",
+  "related_regulation_id": "CO2G-CH-2023"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-6d6e82ac",
+  "client_id": "gerold-foods",
+  "source_id": "zsvr",
+  "source_name": "ZSVR/LUCID",
+  "url": "https://www.zsvr.de/ZSVR/DE/Aufgaben/Verpackungsregister/Gebuehren/gebuehren_node.html",
+  "access_date": "2026-04-11",
+  "document_title": "LUCID Fee Schedule 2025",
+  "snippet": "Updated fee schedule for LUCID registration and annual reporting obligations.",
+  "hash": "sha256:6d6e82ac8ae33a7b9ea9187cccc7ef1847d4875f5e23b13170ac9205e202dd4e",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "packaging",
+  "related_regulation_id": "VerpackDG-2019"
+}

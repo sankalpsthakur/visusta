@@ -1,0 +1,253 @@
+{
+  "screening_period": "2026-02",
+  "generated_date": "2026-02-28",
+  "previous_period": "2026-01",
+  "client_context": {
+    "facility_line": "Munich Bread Works & Vienna Pastries, Germany / Austria",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU, German & Austrian Sustainability Frameworks for Bakery Manufacturers"
+  },
+  "executive_summary": "February 2026 is the most regulatory-intensive month in Brösel Backwaren GmbH's compliance history. The LkSG §9 supplier risk notification was issued to the Singaporean commodity trader on 5 February 2026, triggering a 30-day response window. The trader responded on 18 February offering either (1) a transition to RSPO Mass Balance certified palm oil with a EUR 0.03/kg premium, or (2) an IOI Corporation mill-level third-party audit by Control Union within 60 days. Brösel's sustainability committee convened on 25 February and approved the RSPO Mass Balance transition, effective 1 April 2026, eliminating the LkSG substantial risk classification by the audit deadline.\n\nThe EU PPWR delegated act draft published in February 2026 has confirmed Fraunhofer IVV's preliminary assessment: Munich Bread Works' PE/EVOH bread bags are Class C. The draft also clarifies that the EPR surcharge multiplier of 2.0x will apply to Class C flexible plastic food packaging from 2028, increasing Brösel's estimated German EPR contribution for bread packaging from EUR 52,000 to EUR 104,000/year. The KPMG packaging team presented two mitigation options: (1) Fraunhofer-recommended mono-PE format at 4-day shelf life reduction, or (2) compostable paper-based MAP wrapping at EUR 0.04/unit premium with Class A classification. Option 2 aligns with Brösel's artisan brand positioning.\n\nThe Austrian CSDDD transposition first reading approved in February 2026 (same as Alpine Dairy's exposure) creates new civil liability exposure for Brösel's Vienna Pastries through its CSDDD-affected ingredient sourcing. Brösel's Vienna operation sources approximately 35% of its butter requirements from a New Zealand cooperative through an Austrian importer — a supply chain flagged by Freshfields as requiring CSDDD-aligned contractual review.",
+  "sections": [
+    {
+      "heading": "Verpackungsdurchführungsgesetz Amendment",
+      "paragraphs": [
+        "Draft PPWR delegated act confirmed Class C for PE/EVOH bread bags; 2.0x EPR multiplier from 2028 doubles Munich Bread Works packaging EPR from EUR 52,000 to EUR 104,000/year. Brösel sustainability committee evaluating paper-based MAP wrapping (Class A, EUR 0.04/unit premium) vs mono-PE (Class B, 4-day shelf life reduction). Paper option aligns with artisan brand."
+      ],
+      "callout": "Conduct consumer shelf-life acceptance study for mono-PE format; commission pilot run of paper-based MAP wrapping at Munich Bread Works by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-57def54c",
+        "ev-2026-04-8c0b7cac",
+        "ev-2026-04-6afadeb8"
+      ]
+    },
+    {
+      "heading": "Austrian EPR — ARA Quantity Declaration",
+      "paragraphs": [
+        "Vienna Pastries FY2025 ARA quantity declaration submitted on 20 February 2026: 51.2t paper/board, 26.8t plastic, total 78t. Annual contribution confirmed at EUR 16,840. Q2 payment of EUR 4,210 due 30 April 2026. ARA has confirmed Vienna Pastries' material declarations are consistent with sector averages."
+      ],
+      "callout": "Process Q2 ARA payment EUR 4,210 by 30 April 2026; begin packaging composition mapping for VerpackDG-2026 PackML digital declaration due 30 June 2026.",
+      "evidence_refs": [
+        "ev-2026-04-9bdc2787",
+        "ev-2026-04-b185b439",
+        "ev-2026-04-12b6374b",
+        "ev-2026-04-6afadeb8",
+        "ev-2026-04-947268fe"
+      ]
+    },
+    {
+      "heading": "Lieferkettensorgfaltspflichtengesetz",
+      "paragraphs": [
+        "RSPO Mass Balance certified palm oil transition approved by Brösel sustainability committee on 25 February 2026, effective 1 April 2026. Additional cost: EUR 0.03/kg palm oil × estimated 180t/year = EUR 5,400/year. LkSG §9 substantial risk classification will be removed upon first RSPO-certified delivery receipt. BAFA compliance report for FY2025 in preparation with Freshfields."
+      ],
+      "callout": "Confirm RSPO Mass Balance supply contract with commodity trader; obtain first certificate of conformity by 15 April 2026; update LkSG risk assessment accordingly."
+    },
+    {
+      "heading": "Corporate Sustainability Due Diligence Directive — AT Transposition",
+      "paragraphs": [
+        "Austrian CSDDD first reading approved February 2026 creates civil liability exposure for Vienna Pastries' New Zealand butter supply chain. Freshfields identified the AT import channel as requiring CSDDD-aligned contractual due diligence clauses. New Zealand's own Modern Slavery Act equivalent (Ture Tangata) partially satisfies CSDDD labour standards for the farming level."
+      ],
+      "callout": "Add CSDDD-aligned contractual due diligence clause to Austrian butter importer supply agreement at next contract renewal (September 2026).",
+      "evidence_refs": [
+        "ev-2026-04-f08d84a8",
+        "ev-2026-04-68ce1b10",
+        "ev-2026-04-00762e31"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "DE-VerpackDG-2026",
+        "packaging",
+        "Draft PPWR delegated act confirmed Class C for PE/EVOH bread bags; 2.0x EPR multiplier from 2028 doubles Munich Bread Works packaging EPR from EUR 52,000 to EUR 104,000/year. Brösel sustainability committee evaluating paper-based MAP wrapping (Class A, EUR 0.04/unit premium) vs mono-PE (Class B, 4-day shelf life reduction). Paper option aligns with artisan brand.",
+        "Conduct consumer shelf-life acceptance study for mono-PE format; commission pilot run of paper-based MAP wrapping at Munich Bread Works by 31 March 2026."
+      ],
+      [
+        "DE-LkSG-2023",
+        "social_human_rights",
+        "RSPO Mass Balance certified palm oil transition approved by Brösel sustainability committee on 25 February 2026, effective 1 April 2026. Additional cost: EUR 0.03/kg palm oil × estimated 180t/year = EUR 5,400/year. LkSG §9 substantial risk classification will be removed upon first RSPO-certified delivery receipt. BAFA compliance report for FY2025 in preparation with Freshfields.",
+        "Confirm RSPO Mass Balance supply contract with commodity trader; obtain first certificate of conformity by 15 April 2026; update LkSG risk assessment accordingly."
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "LkSG — Supply Chain Due Diligence Act (applies from 2024 to 1,000+ employees)",
+      "url": "https://www.recht.bund.de/bgbl/1/2021/S2959/regelungstext.pdf",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "Bundes-Klimaschutzgesetz (KSG) — Federal Climate Protection Act",
+      "url": "https://www.bmuv.de/themen/klimaschutz/klimaschutzgesetz",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "PPWR — Packaging and Packaging Waste Regulation 2025/40",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "CSRD — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "Austrian Verpackungsverordnung — Packaging Ordinance (amended 2024)",
+      "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10020386",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "BAFA LkSG Compliance Framework — Food and Bakery Sector",
+      "url": "https://www.bafa.de/DE/Themen/Aussenwirtschaft_Investitionskontrolle/Lieferkettensorgfaltspflichtengesetz/lksg_node.html",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "ProgRess III — German Resource Efficiency Programme",
+      "url": "https://www.bmuv.de/themen/ressourceneffizienz",
+      "access_date": "2026-04-11"
+    },
+    {
+      "citation": "LUCID Packaging Register — Mandatory Registration",
+      "url": "https://www.zsvr.de/ZSVR/DE/Aufgaben/Verpackungsregister/LUCID/lucid_node.html",
+      "access_date": "2026-04-11"
+    }
+  ],
+  "total_regulations_tracked": 6,
+  "total_changes_detected": 4,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 2
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 2
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [
+    {
+      "regulation_id": "DE-VerpackDG-2026",
+      "title": "Verpackungsdurchführungsgesetz Amendment",
+      "topic": "packaging",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "Draft PPWR delegated act confirmed Class C for PE/EVOH bread bags; 2.0x EPR multiplier from 2028 doubles Munich Bread Works packaging EPR from EUR 52,000 to EUR 104,000/year. Brösel sustainability committee evaluating paper-based MAP wrapping (Class A, EUR 0.04/unit premium) vs mono-PE (Class B, 4-day shelf life reduction). Paper option aligns with artisan brand.",
+      "action_required": "Conduct consumer shelf-life acceptance study for mono-PE format; commission pilot run of paper-based MAP wrapping at Munich Bread Works by 31 March 2026.",
+      "current_status": "parliamentary_consultation",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "changes": [
+        {
+          "field": "mitigation_options",
+          "old": "under_assessment",
+          "new": "two_options_paper_class_A_vs_mono_PE_class_B",
+          "description": "Paper MAP Class A option vs mono-PE Class B with 4-day shelf life trade-off; pilot decision March 2026"
+        }
+      ]
+    },
+    {
+      "regulation_id": "AT-EAG-2021",
+      "title": "Austrian EPR — ARA Quantity Declaration",
+      "topic": "packaging",
+      "change_type": "status_change",
+      "severity": "low",
+      "summary": "Vienna Pastries FY2025 ARA quantity declaration submitted on 20 February 2026: 51.2t paper/board, 26.8t plastic, total 78t. Annual contribution confirmed at EUR 16,840. Q2 payment of EUR 4,210 due 30 April 2026. ARA has confirmed Vienna Pastries' material declarations are consistent with sector averages.",
+      "action_required": "Process Q2 ARA payment EUR 4,210 by 30 April 2026; begin packaging composition mapping for VerpackDG-2026 PackML digital declaration due 30 June 2026.",
+      "current_status": "declaration_submitted",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "changes": [
+        {
+          "field": "fy2025_declaration",
+          "old": "pending",
+          "new": "submitted_20_Feb_2026_78t_total",
+          "description": "FY2025 ARA declaration confirmed 78t total; EUR 16,840 annual contribution."
+        }
+      ]
+    },
+    {
+      "regulation_id": "DE-LkSG-2023",
+      "title": "Lieferkettensorgfaltspflichtengesetz",
+      "topic": "social_human_rights",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "RSPO Mass Balance certified palm oil transition approved by Brösel sustainability committee on 25 February 2026, effective 1 April 2026. Additional cost: EUR 0.03/kg palm oil × estimated 180t/year = EUR 5,400/year. LkSG §9 substantial risk classification will be removed upon first RSPO-certified delivery receipt. BAFA compliance report for FY2025 in preparation with Freshfields.",
+      "action_required": "Confirm RSPO Mass Balance supply contract with commodity trader; obtain first certificate of conformity by 15 April 2026; update LkSG risk assessment accordingly.",
+      "current_status": "rspo_transition_approved",
+      "effective_date": "2024-01-01",
+      "enforcement_date": "2024-01-01",
+      "changes": [
+        {
+          "field": "palm_oil_sourcing",
+          "old": "substantial_risk_IOI_conventional",
+          "new": "rspo_mass_balance_transition_approved_effective_april_2026",
+          "description": "RSPO MB transition approved; EUR 5,400/year premium; substantial risk classification to be removed April 2026"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive — AT Transposition",
+      "topic": "social_human_rights",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "Austrian CSDDD first reading approved February 2026 creates civil liability exposure for Vienna Pastries' New Zealand butter supply chain. Freshfields identified the AT import channel as requiring CSDDD-aligned contractual due diligence clauses. New Zealand's own Modern Slavery Act equivalent (Ture Tangata) partially satisfies CSDDD labour standards for the farming level.",
+      "action_required": "Add CSDDD-aligned contractual due diligence clause to Austrian butter importer supply agreement at next contract renewal (September 2026).",
+      "current_status": "contract_review_required",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "changes": [
+        {
+          "field": "at_csddd_exposure",
+          "old": "under_review",
+          "new": "NZ_butter_supply_chain_flagged_contract_amendment_required",
+          "description": "AT CSDDD transposition first reading; NZ butter import chain requires contractual CSDDD clause by Sep 2026"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85,
+    "sections[3]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

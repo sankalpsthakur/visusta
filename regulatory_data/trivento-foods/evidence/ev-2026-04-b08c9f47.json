@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-b08c9f47",
+  "client_id": "trivento-foods",
+  "source_id": "ministero_ambiente",
+  "source_name": "Ministero dell'Ambiente",
+  "url": "https://www.mase.gov.it/comunicati/strategia-nazionale-sviluppo-sostenibile",
+  "access_date": "2026-04-11",
+  "document_title": "Italian National Sustainable Development Strategy 2024",
+  "snippet": "Updated sustainability strategy aligning with EU Green Deal and SDGs for industry sector.",
+  "hash": "sha256:b08c9f4782ffe580345026381610a149a1850458a622404b141b1d6031469372",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.87,
+  "topic": "ghg",
+  "related_regulation_id": "IT-SNSvS-2024"
+}

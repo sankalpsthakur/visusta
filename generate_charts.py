@@ -9,18 +9,21 @@ import numpy as np
 from matplotlib.patches import FancyBboxPatch
 import os
 
-# ── Visusta Brand Palette ──────────────────────────────────────────
-PRIMARY_DARK = '#0D3B26'
-PRIMARY = '#1A6B4B'
-PRIMARY_LIGHT = '#2E8B63'
-ACCENT_GREEN = '#4CAF50'
-LIGHT_BG = '#E8F5E9'
-WARM_GRAY = '#6B7B8D'
-TEXT_DARK = '#1A1A2E'
-WHITE = '#FFFFFF'
-ALERT_RED = '#C62828'
-ALERT_AMBER = '#F57F17'
-SOFT_BLUE = '#1565C0'
+from config import get_config
+
+# ── Visusta Brand Palette — sourced from config/visusta.yaml ──────
+_colors = get_config().branding.colors
+PRIMARY_DARK  = _colors.primary_dark
+PRIMARY       = _colors.primary
+PRIMARY_LIGHT = _colors.primary_light
+ACCENT_GREEN  = _colors.accent
+LIGHT_BG      = _colors.light_bg
+WARM_GRAY     = _colors.warm_gray
+TEXT_DARK     = _colors.text
+WHITE         = '#FFFFFF'
+ALERT_RED     = _colors.alert_red
+ALERT_AMBER   = _colors.alert_amber
+SOFT_BLUE     = _colors.soft_blue
 
 plt.rcParams.update({
     'font.family': 'DejaVu Sans',

@@ -1,0 +1,7 @@
+{% if references -%}
+{% for ref in references -%}
+{{ loop.index }}. <i>{{ ref.citation }}</i>{% if ref.url %} — {{ ref.url }}{% endif %}{% if ref.access_date %} (accessed {{ ref.access_date }}){% endif %}{% if not loop.last %}<br/>{% endif %}
+{% endfor %}
+{%- else -%}
+No references cited.
+{%- endif %}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-12b6374b",
+  "client_id": "brosel-backwaren",
+  "source_id": "bmuv",
+  "source_name": "BMUV/UBA",
+  "url": "https://www.bmuv.de/themen/klimaschutz/klimaschutzgesetz",
+  "access_date": "2026-04-11",
+  "document_title": "Bundes-Klimaschutzgesetz (KSG) \u2014 Federal Climate Protection Act",
+  "snippet": "Sector budgets for German industry; bakery sector must reduce GHG 40% by 2030.",
+  "hash": "sha256:12b6374bb53a4efb0e2cc89a742a4024e6c9a9fb87740f043d60d7fa8c8ade33",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "ghg",
+  "related_regulation_id": "KSG-2021"
+}

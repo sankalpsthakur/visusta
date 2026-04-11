@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-fa367452",
+  "client_id": "terra-verde",
+  "source_id": "apa",
+  "source_name": "Ag\u00eancia Portuguesa do Ambiente",
+  "url": "https://apambiente.pt/index.php?ref=16&subref=82",
+  "access_date": "2026-04-11",
+  "document_title": "APA EMAS Registration for Portuguese Agro-food Companies",
+  "snippet": "EMAS registration reduces permit fees by 25%; simplified reporting for verified sites.",
+  "hash": "sha256:fa36745213065dca856ca2562e79bac0e332346ceca55489c21e9cf42abef718",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.83,
+  "topic": "ghg",
+  "related_regulation_id": "EMAS-PT-2024"
+}

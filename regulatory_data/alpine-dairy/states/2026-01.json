@@ -1,0 +1,93 @@
+{
+  "screening_period": "2026-01",
+  "screening_date": "2026-01-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "CH-VOCV-2025",
+      "title": "Swiss VOC Ordinance Update",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-03-01",
+      "enforcement_date": "2025-03-01",
+      "jurisdiction": "CH",
+      "citation": "SR 814.318.142.1 (revised 2025)",
+      "summary": "Cantonal inspection schedule confirmed for Q1 2026."
+    },
+    {
+      "regulation_id": "EU-CBAM-2023/956",
+      "title": "Carbon Border Adjustment Mechanism",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "low",
+      "effective_date": "2026-01-01",
+      "enforcement_date": "2026-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R0956",
+      "summary": "Implementing regulation details published January 2026; EUR 68/tCO2e ETS price baseline."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Public consultation on recyclability criteria scheduled January 2026."
+    },
+    {
+      "regulation_id": "EU-Taxonomy-2020/852",
+      "title": "EU Taxonomy Regulation — Article 8 Disclosures",
+      "topic": "water",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2023-01-01",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32020R0852",
+      "summary": "Taxonomy alignment assessment required for FY2024 CSRD disclosures; food sector TSC apply."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Supplier geolocation declarations for feed ingredients required Q1 2026."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "PwC Basel engaged for limited assurance; double materiality assessment completed."
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "status": "transposition_in_progress",
+      "severity": "high",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32024L1760",
+      "summary": "Value chain mapping for dairy input suppliers in non-OECD countries initiated."
+    }
+  ]
+}

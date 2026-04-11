@@ -1,0 +1,10 @@
+{% if executive_summary -%}
+{{ executive_summary }}
+{%- else -%}
+This Monthly Impact Report covers the regulatory developments directly affecting food manufacturing operations during <b>{{ period_display }}</b>.
+{% if stats.total_changes > 0 -%}
+The screening detected <b>{{ stats.total_changes }}</b> regulatory change{{ 's' if stats.total_changes != 1 else '' }} across <b>{{ stats.topics_changed }}</b> topic{{ 's' if stats.topics_changed != 1 else '' }}{% if stats.critical_count > 0 %}, with <b>{{ stats.critical_count }}</b> requiring immediate attention{% endif %}.
+{%- else -%}
+No regulatory changes were detected this period. All tracked regulations remain at their previous status.
+{%- endif %}
+{%- endif %}

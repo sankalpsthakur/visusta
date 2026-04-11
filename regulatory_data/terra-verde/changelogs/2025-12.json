@@ -1,0 +1,175 @@
+{
+  "screening_period": "2025-12",
+  "generated_date": "2025-12-31",
+  "previous_period": "2025-11",
+  "client_context": {
+    "facility_line": "Lisbon Juices & Porto Organic Veg, Portuguese Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Portuguese Sustainability Frameworks for Organic Food Producers"
+  },
+  "executive_summary": "December 2025 accelerates Terra Verde Organics' regulatory compliance programme across two fronts. APA registration for the PT-CO2-Tax was completed on 10 December 2025, and internal metering data has been installed at Lisbon Juices' three pasteurisation lines to enable accurate monthly Scope 1 emissions tracking. PwC Portugal has been engaged for CSRD limited assurance and ESRS gap analysis.\n\nThe EU-EUDR Deforestation Regulation entered definitive applicability on 30 December 2025. Terra Verde's organic juice range uses tropical fruit concentrates including mango (India, Peru), passion fruit (Brazil, Kenya), and guava (Brazil). While mango, passion fruit, and guava are not EUDR-listed commodities themselves, the Brazilian and Peruvian sourcing regions have been flagged by the Commission's geographic risk assessment tool (TRACES NT) as 'high risk' for deforestation. Terra Verde should proactively request supplier declarations for the Brazilian concentrate origins to demonstrate good-faith compliance with EUDR's due diligence spirit, even where the specific commodities are not listed.\n\nThe Portuguese government published in December 2025 its national circular economy action plan update ('Portugal Circular 2030'), including a commitment to deposit-return scheme for beverage containers above 300ml by 2028. As Terra Verde's premium glass juice range is precisely in this segment, the company needs to engage with SIGRE (Sistema Integrado de Gestão e Recolha de Embalagens) on the deposit-return pilot programme launching in Lisbon in Q2 2026.",
+  "sections": [
+    {
+      "heading": "EU Deforestation-free Products Regulation",
+      "paragraphs": [
+        "EUDR entered definitive applicability December 2025. Terra Verde's tropical fruit concentrate supply chain (Brazilian mango and passion fruit) is not directly EUDR-listed, but Brazilian origins have been flagged as high-deforestation-risk by TRACES NT. Commission FAQ 3.7 recommends proactive supplier declarations for supply chains with high-risk geographic origins even for non-listed commodities.",
+        "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) covers cattle, cocoa, coffee, palm oil, soya, wood, rubber, and derived products. Tropical fruit concentrates are not listed commodities and Terra Verde does not have direct EUDR obligations. However, the Commission's TRACES NT risk assessment tool — which member state customs authorities use for EUDR enforcement — flags Brazil and Peru as high-risk origin countries for deforestation. Proactive supplier declarations serve as evidence of good-faith supply chain oversight and may become relevant if EUDR's Article 34 review extends product scope to include tropical fruits (a possibility signalled in the Commission's 2025 annual EUDR review report)."
+      ],
+      "callout": "Request voluntary EUDR-style due diligence declarations from Brazilian concentrate suppliers (Citrus Brasil, Ingredion Brazil) by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-4b0217f8",
+        "ev-2026-04-ba02759f"
+      ]
+    },
+    {
+      "heading": "Portuguese Carbon Tax on Industrial Emissions",
+      "paragraphs": [
+        "APA registration completed 10 December 2025. Internal metering installed at three Lisbon Juices pasteurisation lines. December 2025 monthly Scope 1 reading: 148 tCO2e, consistent with 1,776 tCO2e annualised estimate (slightly below earlier 1,850 tCO2e estimate). APA confirmed first annual declaration due 31 March 2026."
+      ],
+      "callout": "Complete FY2025 annual Scope 1 inventory for Lisbon Juices by 28 February 2026; submit APA declaration by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-0fd12cc8",
+        "ev-2026-04-fa367452",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-a73c4ff7",
+        "ev-2026-04-ab777e3f",
+        "ev-2026-04-3de138c9"
+      ]
+    },
+    {
+      "heading": "Portuguese Deposit-Return Scheme for Beverage Containers (Portugal Circular 2030)",
+      "paragraphs": [
+        "Portugal's December 2025 'Portugal Circular 2030' action plan commits to a national deposit-return scheme for beverage containers above 300ml by 2028. Terra Verde's 330ml and 750ml glass juice bottles are in scope. The Lisbon SIGRE pilot programme launching Q2 2026 will provide early operational data. Terra Verde has been invited to participate as a founding member of the SIGRE pilot."
+      ],
+      "callout": "Register for SIGRE Lisbon pilot programme by 31 January 2026; designate packaging compliance manager as deposit-return liaison.",
+      "evidence_refs": [
+        "ev-2026-04-0543fb3b",
+        "ev-2026-04-fa367452",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-a73c4ff7",
+        "ev-2026-04-ab777e3f",
+        "ev-2026-04-3de138c9"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": []
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2023/1115 — EU Deforestation-free Products Regulation",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115",
+      "access_date": "2025-12-31"
+    }
+  ],
+  "total_regulations_tracked": 4,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "change_type": "new_regulation",
+      "severity": "low",
+      "summary": "EUDR entered definitive applicability December 2025. Terra Verde's tropical fruit concentrate supply chain (Brazilian mango and passion fruit) is not directly EUDR-listed, but Brazilian origins have been flagged as high-deforestation-risk by TRACES NT. Commission FAQ 3.7 recommends proactive supplier declarations for supply chains with high-risk geographic origins even for non-listed commodities.",
+      "action_required": "Request voluntary EUDR-style due diligence declarations from Brazilian concentrate suppliers (Citrus Brasil, Ingredion Brazil) by 31 March 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "description": "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) covers cattle, cocoa, coffee, palm oil, soya, wood, rubber, and derived products. Tropical fruit concentrates are not listed commodities and Terra Verde does not have direct EUDR obligations. However, the Commission's TRACES NT risk assessment tool — which member state customs authorities use for EUDR enforcement — flags Brazil and Peru as high-risk origin countries for deforestation. Proactive supplier declarations serve as evidence of good-faith supply chain oversight and may become relevant if EUDR's Article 34 review extends product scope to include tropical fruits (a possibility signalled in the Commission's 2025 annual EUDR review report)."
+    }
+  ],
+  "status_changes": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax on Industrial Emissions",
+      "topic": "ghg",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "APA registration completed 10 December 2025. Internal metering installed at three Lisbon Juices pasteurisation lines. December 2025 monthly Scope 1 reading: 148 tCO2e, consistent with 1,776 tCO2e annualised estimate (slightly below earlier 1,850 tCO2e estimate). APA confirmed first annual declaration due 31 March 2026.",
+      "action_required": "Complete FY2025 annual Scope 1 inventory for Lisbon Juices by 28 February 2026; submit APA declaration by 31 March 2026.",
+      "current_status": "registered_metering_installed",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "changes": [
+        {
+          "field": "compliance_status",
+          "old": "registration_required",
+          "new": "registered_metering_active",
+          "description": "APA registration complete 10 December; metering confirmed 148 tCO2e in December 2025"
+        }
+      ]
+    },
+    {
+      "regulation_id": "PT-Deposit-Return-2028",
+      "title": "Portuguese Deposit-Return Scheme for Beverage Containers (Portugal Circular 2030)",
+      "topic": "packaging",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "Portugal's December 2025 'Portugal Circular 2030' action plan commits to a national deposit-return scheme for beverage containers above 300ml by 2028. Terra Verde's 330ml and 750ml glass juice bottles are in scope. The Lisbon SIGRE pilot programme launching Q2 2026 will provide early operational data. Terra Verde has been invited to participate as a founding member of the SIGRE pilot.",
+      "action_required": "Register for SIGRE Lisbon pilot programme by 31 January 2026; designate packaging compliance manager as deposit-return liaison.",
+      "current_status": "policy_announced",
+      "effective_date": "2028-01-01",
+      "enforcement_date": "2028-01-01",
+      "changes": [
+        {
+          "field": "policy_status",
+          "old": "proposed",
+          "new": "announced_pilot_launching_Q2_2026",
+          "description": "Portugal Circular 2030 committed to DRS; SIGRE Lisbon pilot Q2 2026"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

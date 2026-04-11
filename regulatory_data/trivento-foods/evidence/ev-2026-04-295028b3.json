@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-295028b3",
+  "client_id": "trivento-foods",
+  "source_id": "gazzetta_ufficiale",
+  "source_name": "Gazzetta Ufficiale della Repubblica Italiana",
+  "url": "https://www.gazzettaufficiale.it/eli/gu/2020/12/31/323/sg/pdf",
+  "access_date": "2026-04-11",
+  "document_title": "Legge di Bilancio 2021 \u2014 Plastic Tax (Art. 1, co. 634-658)",
+  "snippet": "Italian plastic tax of \u20ac0.45/kg on single-use plastic manufactured or imported; postponed to 2024.",
+  "hash": "sha256:295028b3d8129b3849edd0062417c1e0da191929d8fc84d2295b8651663b4055",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "packaging",
+  "related_regulation_id": "IT-PlasticTax-2021"
+}

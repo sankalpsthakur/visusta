@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-6e019582",
+  "client_id": "nordic-harvest",
+  "source_id": "stortinget",
+  "source_name": "Stortinget \u2014 Norwegian Parliament",
+  "url": "https://www.stortinget.no/no/Saker-og-publikasjoner/Stortingsdokumenter/Meldinger-til-Stortinget/2023-2024/Meld.-St.-25-20232024/",
+  "access_date": "2026-04-11",
+  "document_title": "Meld. St. 25 \u2014 Norwegian Circular Economy Strategy 2024",
+  "snippet": "National circular economy strategy; mandatory EPR for food packaging by 2026.",
+  "hash": "sha256:6e019582acd42136c8beb61ccb1065d972f7901b08f0a4bf0911f60503e823d8",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.85,
+  "topic": "waste",
+  "related_regulation_id": "CircularEconomy-NO-2024"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-460f31b2",
+  "client_id": "alpine-dairy",
+  "source_id": "bafu",
+  "source_name": "BAFU \u2014 Swiss Federal Office for the Environment",
+  "url": "https://www.bafu.admin.ch/bafu/de/home/themen/wasser/fachinformationen/zustand-der-gewaesser/biologischer-zustand-der-gewaesser.html",
+  "access_date": "2026-04-11",
+  "document_title": "BAFU Water Quality Monitoring \u2014 Swiss Waterbody Assessment 2025",
+  "snippet": "Monitoring framework for waterbody ecological status; discharge permit requirements for dairy.",
+  "hash": "sha256:460f31b2742ea4a99673ce8292f7ffe71af80d16611e154e581ebe226230d2d2",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.87,
+  "topic": "water",
+  "related_regulation_id": "GSchG-SR-814"
+}

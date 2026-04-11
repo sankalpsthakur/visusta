@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-fd57e3e1",
+  "client_id": "gerold-foods",
+  "source_id": "bafa",
+  "source_name": "BAFA",
+  "url": "https://www.bafa.de/DE/Themen/Aussenwirtschaft_Investitionskontrolle/Lieferkettensorgfaltspflichtengesetz/lksg_node.html",
+  "access_date": "2026-04-11",
+  "document_title": "BAFA LkSG Guidance and Compliance Framework",
+  "snippet": "BAFA enforcement authority under LkSG; guidance on risk analysis and remediation measures.",
+  "hash": "sha256:fd57e3e1b36fffb5dc565234d33a4c99274e6c588b7440957e116dc69f9e737a",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "social_human_rights",
+  "related_regulation_id": "LkSG-2021"
+}

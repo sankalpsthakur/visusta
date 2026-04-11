@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-b185b439",
+  "client_id": "brosel-backwaren",
+  "source_id": "ris",
+  "source_name": "Rechtsinformationssystem Austria",
+  "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20007045",
+  "access_date": "2026-04-11",
+  "document_title": "Austrian Klimaschutzgesetz \u2014 Climate Protection Act",
+  "snippet": "Vienna Pastries site must comply with Austrian sector GHG budget for food manufacturing.",
+  "hash": "sha256:b185b4394acd866eb31f751e20da02f98daf99af0765690f61b5e6463d462242",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.89,
+  "topic": "ghg",
+  "related_regulation_id": "AT-KSG-2011"
+}

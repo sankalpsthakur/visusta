@@ -1,0 +1,45 @@
+{
+  "screening_period": "2025-11",
+  "screening_date": "2025-11-30",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "CH-VOCV-2025",
+      "title": "Swiss VOC Ordinance Update",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-03-01",
+      "enforcement_date": "2025-03-01",
+      "jurisdiction": "CH",
+      "citation": "SR 814.318.142.1 (revised 2025)",
+      "summary": "Updated Swiss VOC Ordinance tightens emission limits for dairy manufacturing facilities."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Binding recyclability targets for all EU-market packaging; delegated acts on assessment criteria forthcoming."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "ESRS-compliant sustainability reporting for FY2024; large EU undertakings filing in 2026."
+    }
+  ]
+}

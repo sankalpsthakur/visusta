@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-4a5c05f6",
+  "client_id": "trivento-foods",
+  "source_id": "ispra",
+  "source_name": "ISPRA environmental agency",
+  "url": "https://www.isprambiente.gov.it/it/banche-dati/banche-dati-folder/acque/le-acque-superficiali",
+  "access_date": "2026-04-11",
+  "document_title": "ISPRA Surface Water Quality Monitoring 2024",
+  "snippet": "Updated WFD compliance status for Italian waterbodies; effluent discharge standards for food industry.",
+  "hash": "sha256:4a5c05f6003c92e4437f5bb57a5c72e5e74305972d819b5c21744e13b8e20ff3",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.85,
+  "topic": "water",
+  "related_regulation_id": "IT-WFD-2024"
+}

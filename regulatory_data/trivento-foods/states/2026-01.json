@@ -1,0 +1,69 @@
+{
+  "screening_period": "2026-01",
+  "screening_date": "2026-01-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "IT-Plastic-Tax-DL73",
+      "title": "Italian Plastic Tax",
+      "topic": "packaging",
+      "status": "mitigation_approved",
+      "severity": "medium",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "IT",
+      "citation": "Law 160/2019; D.Lgs. October 2025",
+      "summary": "Board approved Mater-Bi film transition eliminating EUR 171,000 liability; Huhtamaki trial April–June 2026."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "delegated_act_consultation",
+      "severity": "medium",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Glass bottle reuse modelling in progress; CONAI consortium partnership under evaluation."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "status": "enforcement_confirmed_FY2024",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464; D.Lgs. 8/2026 (IT correction)",
+      "summary": "D.Lgs. 8/2026 confirmed ANAC enforcement from July 2026; PwC Italy assurance engagement confirmed."
+    },
+    {
+      "regulation_id": "EU-Taxonomy-2020/852",
+      "title": "EU Taxonomy Regulation — Article 8 Disclosures",
+      "topic": "water",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2023-01-01",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32020R0852",
+      "summary": "Parma Pasta kiln in second efficiency quartile; transition plan required for E1 substantial contribution claim."
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "status": "transposition_consultation",
+      "severity": "high",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32024L1760",
+      "summary": "MIMIT consultation paper published February 2026; farm and cooperative contracts under review."
+    }
+  ]
+}

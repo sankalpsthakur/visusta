@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-69a26686",
+  "client_id": "gerold-foods",
+  "source_id": "bgbl",
+  "source_name": "Bundesgesetzblatt",
+  "url": "https://www.recht.bund.de/bgbl/1/2021/S2959/regelungstext.pdf",
+  "access_date": "2026-04-11",
+  "document_title": "LkSG \u2014 Lieferkettensorgfaltspflichtengesetz (Supply Chain Due Diligence Act)",
+  "snippet": "German companies with 1,000+ employees must conduct human rights and environmental due diligence.",
+  "hash": "sha256:69a2668694f7c710e31149ad1e9c115c53d0f450b56ca9919866a9aa66c0a8e9",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "social_human_rights",
+  "related_regulation_id": "LkSG-2021"
+}

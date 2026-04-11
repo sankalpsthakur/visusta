@@ -1,0 +1,69 @@
+{
+  "screening_period": "2025-12",
+  "screening_date": "2025-12-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "NO-CO2-Fiskeri-2026",
+      "title": "Norwegian Carbon Tax Extension to Fisheries and Aquaculture",
+      "topic": "ghg",
+      "status": "budget_proposal",
+      "severity": "high",
+      "effective_date": "2026-01-01",
+      "enforcement_date": "2026-01-01",
+      "jurisdiction": "NO",
+      "citation": "Prop. 1 LS (2025-2026), Chapter 8",
+      "summary": "NOK 590/tCO2e from 2026; Bergen Fish Oils fleet ~NOK 3.2-3.4m annual liability."
+    },
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "topic": "water",
+      "status": "temporary_compliance_notice",
+      "severity": "high",
+      "effective_date": "2024-07-01",
+      "enforcement_date": "2026-10-31",
+      "jurisdiction": "NO",
+      "citation": "Prop. 74 L (2023-2024), Forurensningsloven §11",
+      "summary": "Temporary compliance notice granted; Norconsult feasibility study commissioned; plan due 31 March 2026."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2030-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Reusable container pilot for EU fresh seafood exports targeted Q3 2026."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Feed supplier EUDR declarations requested; response expected Q1 2026."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "Hamburg subsidiary confirmed in-scope; KPMG Oslo DMA initiated."
+    }
+  ]
+}

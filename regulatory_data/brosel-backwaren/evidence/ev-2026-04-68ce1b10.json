@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-68ce1b10",
+  "client_id": "brosel-backwaren",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+  "access_date": "2026-04-11",
+  "document_title": "CSRD \u2014 Corporate Sustainability Reporting Directive",
+  "snippet": "Br\u00f6sel Backwaren GmbH meets CSRD scope thresholds; reporting mandatory from FY2025.",
+  "hash": "sha256:68ce1b105e63efe15f557e3c041093df307f403c0e27062196d2f94ead047afe",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.97,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

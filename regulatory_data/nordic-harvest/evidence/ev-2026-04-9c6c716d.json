@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-9c6c716d",
+  "client_id": "nordic-harvest",
+  "source_id": "lovdata",
+  "source_name": "Lovdata",
+  "url": "https://lovdata.no/dokument/NL/lov/2021-06-18-99",
+  "access_date": "2026-04-11",
+  "document_title": "\u00c5penhetsloven \u2014 Norwegian Transparency Act 2021",
+  "snippet": "Norwegian companies must conduct and publish human rights and decent work due diligence.",
+  "hash": "sha256:9c6c716d9ad1c73aafdf2b14edcf267fb6cca8f53c03ebdd8f66720d28b908be",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.97,
+  "topic": "social_human_rights",
+  "related_regulation_id": "Aapenhetsloven-2021"
+}

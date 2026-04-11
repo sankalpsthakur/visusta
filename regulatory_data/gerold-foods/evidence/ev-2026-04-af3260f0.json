@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-af3260f0",
+  "client_id": "gerold-foods",
+  "source_id": "bafa",
+  "source_name": "BAFA",
+  "url": "https://www.bafa.de/DE/Themen/Aussenwirtschaft_Investitionskontrolle/Lieferkettensorgfaltspflichtengesetz/LkSG_Fragebogen/lksg_fragebogen_node.html",
+  "access_date": "2026-04-11",
+  "document_title": "BAFA LkSG Self-Assessment Questionnaire",
+  "snippet": "Annual reporting questionnaire for companies subject to LkSG obligations.",
+  "hash": "sha256:af3260f092da301e8c99e0f158dc662b9ccb457d298d5d437b5889923face528",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "social_human_rights",
+  "related_regulation_id": "LkSG-2021"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-1c4d87cf",
+  "client_id": "gerold-foods",
+  "source_id": "unknown",
+  "source_name": "Unknown Source",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1760",
+  "access_date": "2026-04-11",
+  "document_title": "CSDDD Verification Test Record",
+  "snippet": "",
+  "hash": "sha256:1c4d87cf4c4d196e0d799246b649b1841da3dbf8700561f7e6b19b71670bd6cb",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.85,
+  "topic": "unknown",
+  "related_regulation_id": ""
+}

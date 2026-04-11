@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-9d5f1c45",
+  "client_id": "trivento-foods",
+  "source_id": "ispra",
+  "source_name": "ISPRA environmental agency",
+  "url": "https://www.isprambiente.gov.it/it/banche-dati/banche-dati-folder/aria/inventario-emissioni-in-atmosfera",
+  "access_date": "2026-04-11",
+  "document_title": "ISPRA National GHG Inventory 2024 \u2014 Food Processing Sector",
+  "snippet": "Food and beverage processing contributes 4.2% of Italian industrial GHG emissions.",
+  "hash": "sha256:9d5f1c455c34c5c0b60ad217d1658485b74a0b8cb3ad26720d3917619ce5226a",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.84,
+  "topic": "ghg",
+  "related_regulation_id": "IT-GHG-Inventory-2024"
+}

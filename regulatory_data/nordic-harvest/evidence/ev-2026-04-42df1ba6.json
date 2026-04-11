@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-42df1ba6",
+  "client_id": "nordic-harvest",
+  "source_id": "stortinget",
+  "source_name": "Stortinget \u2014 Norwegian Parliament",
+  "url": "https://www.stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Innstillinger/Stortinget/2024-2025/inns-202425-253s/",
+  "access_date": "2026-04-11",
+  "document_title": "Stortinget Prop. L \u2014 Carbon Tax Increase 2025 (NOK 952/tCO2)",
+  "snippet": "Norwegian carbon tax raised to NOK 952/tCO2 from 2025; fisheries sector partial exemption.",
+  "hash": "sha256:42df1ba6ea5e027ec271549c6bbd04c669fe5f5c930f642e99e4986478342492",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.92,
+  "topic": "ghg",
+  "related_regulation_id": "CO2-avgift-NO-2025"
+}

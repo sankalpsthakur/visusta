@@ -1,5 +1,22 @@
 # Visusta Regulatory Reports — Build Instructions
 
+## Setup
+
+### Backend
+1. Create venv: `python -m venv .venv && source .venv/bin/activate`
+2. Install deps: `pip install -r requirements.txt`
+3. Start API: `uvicorn api.main:app --port 8000 --reload`
+
+### Frontend
+1. cd frontend
+2. npm install
+3. npm run dev   (starts on :3000)
+
+### Tests
+`.venv/bin/python -m pytest tests/test_pdf_bleed.py -v`
+
+---
+
 ## Source Files
 
 | File | Purpose |

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-e37b22bb",
+  "client_id": "trivento-foods",
+  "source_id": "gazzetta_ufficiale",
+  "source_name": "Gazzetta Ufficiale della Repubblica Italiana",
+  "url": "https://www.gazzettaufficiale.it/eli/gu/2022/04/02/77/sg/pdf",
+  "access_date": "2026-04-11",
+  "document_title": "D.Lgs. 116/2020 \u2014 Italian Waste Code Reform",
+  "snippet": "Italian implementation of EU Circular Economy Package; extended producer responsibility updates.",
+  "hash": "sha256:e37b22bbdec591eedbdd51a97607a90aaf8cb505c2deb083a6e165b988d2b980",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.92,
+  "topic": "waste",
+  "related_regulation_id": "IT-WasteCode-2020"
+}

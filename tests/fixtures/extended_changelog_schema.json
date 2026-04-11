@@ -1,0 +1,271 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://visusta.io/schemas/extended-changelog/v1",
+  "title": "ExtendedChangelog",
+  "description": "Extended changelog schema for Visusta ESG regulatory intelligence reports",
+  "type": "object",
+  "required": [
+    "screening_period",
+    "generated_date",
+    "previous_period",
+    "executive_summary",
+    "sections",
+    "impact_summary_table",
+    "references",
+    "topic_change_statuses"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "screening_period": {
+      "type": "string",
+      "description": "Year-month of this screening period",
+      "pattern": "^\\d{4}-\\d{2}$",
+      "examples": ["2026-02"]
+    },
+    "generated_date": {
+      "type": "string",
+      "description": "ISO 8601 date when this report was generated",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "examples": ["2026-03-05"]
+    },
+    "previous_period": {
+      "type": "string",
+      "description": "Year-month of the prior screening period",
+      "pattern": "^\\d{4}-\\d{2}$",
+      "examples": ["2026-01"]
+    },
+    "client_context": {
+      "type": "object",
+      "description": "Client-specific contextual metadata for personalising the report",
+      "properties": {
+        "facility_line": {
+          "type": "string",
+          "description": "Human-readable facility or entity description"
+        },
+        "audience": {
+          "type": "string",
+          "description": "Target audience for this report"
+        },
+        "jurisdiction_label": {
+          "type": "string",
+          "description": "Human-readable jurisdiction scope label"
+        }
+      },
+      "additionalProperties": true
+    },
+    "executive_summary": {
+      "type": "string",
+      "description": "2-3 paragraphs of analytical prose summarising key regulatory developments"
+    },
+    "sections": {
+      "type": "array",
+      "description": "Ordered list of report sections, each covering one regulation or theme",
+      "items": {
+        "$ref": "#/definitions/Section"
+      }
+    },
+    "impact_summary_table": {
+      "$ref": "#/definitions/Table",
+      "description": "Top-level summary table listing all regulations, effects, dates, and action owners"
+    },
+    "references": {
+      "type": "array",
+      "description": "Bibliographic references cited in this report",
+      "items": {
+        "$ref": "#/definitions/Reference"
+      }
+    },
+    "topic_change_statuses": {
+      "type": "object",
+      "description": "Per-topic change flags keyed by topic slug",
+      "additionalProperties": {
+        "$ref": "#/definitions/TopicChangeStatus"
+      }
+    },
+    "new_regulations": {
+      "type": "array",
+      "description": "Regulations newly tracked this period",
+      "items": { "type": "object" }
+    },
+    "status_changes": {
+      "type": "array",
+      "description": "Regulations whose status changed this period",
+      "items": { "type": "object" }
+    },
+    "content_updates": {
+      "type": "array",
+      "description": "Non-status content changes to tracked regulations",
+      "items": { "type": "object" }
+    },
+    "critical_actions": {
+      "type": "array",
+      "description": "High-priority action items surfaced by this screening cycle",
+      "items": { "type": "object" }
+    },
+    "confidence_scores": {
+      "type": "object",
+      "description": "Per-section confidence scores produced by the generation agent (0.0-1.0)",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    "approval_state": {
+      "type": "object",
+      "description": "Human approval workflow state for this report",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "approved", "rejected"],
+          "description": "Current approval status"
+        },
+        "by": {
+          "type": "string",
+          "description": "Who approved/rejected (role or name)"
+        },
+        "at": {
+          "type": "string",
+          "description": "ISO 8601 datetime of the approval action",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": true
+    },
+    "agent_log": {
+      "type": "array",
+      "description": "Ordered log of agent actions taken during generation",
+      "items": {
+        "type": "object",
+        "properties": {
+          "agent": { "type": "string" },
+          "action": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "total_regulations_tracked": {
+      "type": "integer",
+      "description": "Total number of regulations tracked this period"
+    },
+    "total_changes_detected": {
+      "type": "integer",
+      "description": "Total number of changes detected this period"
+    }
+  },
+  "definitions": {
+    "Section": {
+      "type": "object",
+      "description": "A self-contained report section covering one regulation or theme",
+      "required": ["heading", "paragraphs"],
+      "additionalProperties": false,
+      "properties": {
+        "heading": {
+          "type": "string",
+          "description": "Section heading (regulation name and key provision)"
+        },
+        "paragraphs": {
+          "type": "array",
+          "description": "Ordered list of prose paragraphs",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "table": {
+          "oneOf": [
+            { "$ref": "#/definitions/Table" },
+            { "type": "null" }
+          ],
+          "description": "Optional structured data table within this section"
+        },
+        "callout": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ],
+          "description": "Optional highlighted callout box text (action required, deadline, etc.)"
+        },
+        "chart_ref": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ],
+          "description": "Optional reference key for a chart asset to embed"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "description": "Optional list of evidence IDs that back this section",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Table": {
+      "type": "object",
+      "description": "A structured table with headers and data rows",
+      "required": ["headers", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "type": "array",
+          "description": "Column header labels",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "rows": {
+          "type": "array",
+          "description": "Data rows; each row is an array of cell values matching headers length",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "Reference": {
+      "type": "object",
+      "description": "A bibliographic reference",
+      "required": ["citation"],
+      "additionalProperties": true,
+      "properties": {
+        "citation": {
+          "type": "string",
+          "description": "Full citation text"
+        },
+        "url": {
+          "type": "string",
+          "description": "Source URL"
+        },
+        "access_date": {
+          "type": "string",
+          "description": "ISO 8601 date the source was accessed",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        }
+      }
+    },
+    "TopicChangeStatus": {
+      "type": "object",
+      "description": "Change status for a single regulatory topic",
+      "required": ["changed_since_last", "changes_detected"],
+      "additionalProperties": true,
+      "properties": {
+        "changed_since_last": {
+          "type": "boolean",
+          "description": "Whether any change was detected versus the previous period"
+        },
+        "level": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ],
+          "description": "Severity or status label of the detected change (e.g. critical, stable, amendment_in_progress)"
+        },
+        "changes_detected": {
+          "type": "integer",
+          "description": "Count of changes detected for this topic",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

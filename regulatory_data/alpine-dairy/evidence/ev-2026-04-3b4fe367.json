@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-3b4fe367",
+  "client_id": "alpine-dairy",
+  "source_id": "ris",
+  "source_name": "Rechtsinformationssystem Austria",
+  "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20007045",
+  "access_date": "2026-04-11",
+  "document_title": "Austrian Klimaschutzgesetz (KSG) \u2014 Climate Protection Act",
+  "snippet": "Austrian climate targets aligned with EU Fit for 55; sector budgets for industry.",
+  "hash": "sha256:3b4fe367db5ee5ead673b68f65390b6c262c124aab310f19c4ab8c37aafdf15c",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.89,
+  "topic": "ghg",
+  "related_regulation_id": "AT-KSG-2011"
+}

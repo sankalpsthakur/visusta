@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-8abcf2d9",
+  "client_id": "gerold-foods",
+  "source_id": "bmuv",
+  "source_name": "BMUV/UBA",
+  "url": "https://www.bmuv.de/themen/ressourceneffizienz/nationales-ressourceneffizienzprogramm",
+  "access_date": "2026-04-11",
+  "document_title": "Nationales Ressourceneffizienzprogramm (ProgRess III)",
+  "snippet": "Germany's national resource efficiency strategy targets a 30% reduction in material footprint by 2030.",
+  "hash": "sha256:8abcf2d966d0a9ddf647cc9e0c9ea26a89eeb9490bc575e010dea4cf74201216",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.87,
+  "topic": "waste",
+  "related_regulation_id": "ProgRess-III"
+}

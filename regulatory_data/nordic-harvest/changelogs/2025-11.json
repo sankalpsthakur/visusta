@@ -1,0 +1,181 @@
+{
+  "screening_period": "2025-11",
+  "generated_date": "2025-11-30",
+  "previous_period": "2025-10",
+  "client_context": {
+    "facility_line": "Oslo Seafood & Bergen Fish Oils, Kingdom of Norway",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EEA & Norwegian Sustainability Frameworks for Seafood Processors"
+  },
+  "executive_summary": "November 2025 marks Nordic Harvest AS's first full quarter under the Norwegian Pollution Control Act amendment (NO-Forurensningsloven-2024), which entered force in July 2024. The amendment introduced stricter discharge limits for fish processing effluent containing nitrogen, phosphorus, and suspended solids — all relevant to the company's Oslo Seafood and Bergen Fish Oils facilities. The Norwegian Environment Agency (Miljødirektoratet) published its sector-specific compliance guidance for seafood processors in October 2025, and Nordic Harvest has confirmed that its Oslo Seafood plant's current phosphorus discharge levels exceed the new thresholds by approximately 15%. A capital investment in enhanced biological treatment is required.\n\nThe EU-EUDR-2023/1115 Deforestation-free Products Regulation entered definitive applicability on 30 December 2025 with important implications for Nordic Harvest's fish oil and omega-3 product lines exported to the EU. While fish itself is not a listed commodity under EUDR, the soy-based aquaculture feed used in Nordic Harvest's contracted salmon farms falls within the EUDR's cattle and soy scope. The company must conduct due diligence on the Brazilian and Argentine soy origins within its aquaculture feed supply chain before placing EU-bound products on the market.\n\nAt the EU level, the CSRD first reporting wave is underway, and Nordic Harvest's EU sales subsidiary in Hamburg will need to assess its standalone CSRD exposure. The EU PPWR's entry into force in February 2025 also affects Nordic Harvest's omega-3 capsule blister packs exported to Germany and the Netherlands.",
+  "sections": [
+    {
+      "heading": "Norwegian Pollution Control Act Amendment (Forurensningsloven §11 revision)",
+      "paragraphs": [
+        "The 2024 amendment to Norway's Pollution Control Act (Forurensningsloven) introduced revised discharge limits for industrial food processors, specifically targeting nitrogen (total N < 40 mg/L), phosphorus (total P < 1.5 mg/L), and biological oxygen demand (BOD < 30 mg/L) in wastewater discharged to fjords and coastal waters. Oslo Seafood's current phosphorus discharge of approximately 1.73 mg/L exceeds the new threshold. Non-compliance triggers a Miljødirektoratet enforcement notice within 90 days of confirmed exceedance, with daily fines of NOK 50,000 after the grace period expires.",
+        "Forurensningsloven §11 revision was adopted by Stortinget in April 2024 (Prop. 74 L (2023-2024)) and entered force 1 July 2024. The revision aligned Norwegian discharge standards with the EU Urban Wastewater Treatment Directive (2024/3019/EU) thresholds for sensitive receiving waters. The Oslo Fjord and Bergen coastal zone are classified as 'particularly sensitive water bodies' under the revision, triggering the most stringent discharge tier. Compliance pathways include: (1) physical-chemical treatment upgrade (estimated NOK 8–15 million capital cost), (2) biological nutrient removal system installation, or (3) connection to municipal wastewater network where capacity permits. Bergen Fish Oils' current discharge levels are within the new thresholds based on Q3 2025 monitoring data."
+      ],
+      "callout": "Commission feasibility study for enhanced biological phosphorus removal at Oslo Seafood by 31 January 2026; file voluntary disclosure with Miljødirektoratet by 15 December 2025.",
+      "evidence_refs": [
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-6e019582",
+        "ev-2026-04-fe8d6581",
+        "ev-2026-04-f6126b56",
+        "ev-2026-04-58a6cd37",
+        "ev-2026-04-8eae12e3",
+        "ev-2026-04-00169e92",
+        "ev-2026-04-9c6c716d",
+        "ev-2026-04-cbc4ff1a"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation",
+      "paragraphs": [
+        "PPWR applies to all packaging placed on the EU market, including Nordic Harvest's omega-3 capsule blister packs and fish oil bottling lines exported to Germany and the Netherlands. The regulation's reuse targets for tertiary/transport packaging will require Nordic Harvest to replace single-use expanded polystyrene fish boxes used for EU-bound exports with reusable alternatives by 2030. The Commission's first sector-specific guidance note for seafood packaging was published September 2025.",
+        "Regulation (EU) 2025/40 (EUR-Lex 32025R0040) introduces mandatory reuse targets for transport and secondary packaging in the food sector, with seafood specifically mentioned in Recital 47 as a priority category due to the prevalence of single-use expanded polystyrene (EPS) in cold chain logistics. The Commission's September 2025 sector guidance note recommends that seafood exporters engaging in cross-border EU trade transition to returnable insulated container systems by 2028 as a preparatory step before the 2030 mandatory reuse obligation. EPS foam boxes are classified as non-recyclable transport packaging under the draft recyclability criteria delegated act."
+      ],
+      "callout": "Initiate pilot programme for reusable insulated shipping containers for EU-bound fresh seafood exports by Q3 2026.",
+      "evidence_refs": [
+        "ev-2026-04-5afeb483",
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-8eae12e3",
+        "ev-2026-04-d7339055"
+      ]
+    },
+    {
+      "heading": "EU Deforestation-free Products Regulation",
+      "paragraphs": [
+        "EUDR's definitive applicability from December 2025 creates upstream due diligence obligations for Nordic Harvest relating to soy-based aquaculture feed. Salmon and other farmed fish species are not listed commodities under EUDR, but soy (used as 15–30% of standard salmon feed formulas) falls within scope. Nordic Harvest must trace the soy origins in its contracted hatchery and farm feed supplies and verify non-deforestation status for all post-December 2020 land parcels.",
+        "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) covers operators and traders placing relevant commodities and derived products on the EU market. While fish as an animal product is not directly listed, aquaculture feed containing soy creates an indirect EUDR exposure that the Commission's FAQ document (published November 2025) specifically addresses under Question 3.7: 'Feed manufacturers placing soy-derived feed on the EU market must comply with EUDR due diligence requirements; downstream aquaculture operators who purchase such feed should obtain supplier declarations confirming EUDR compliance.' Nordic Harvest's legal team should obtain written EUDR compliance declarations from Skretting and Cargill before the end of Q1 2026."
+      ],
+      "callout": "Request EUDR due diligence declarations and geolocation data from primary aquaculture feed suppliers (Skretting, Cargill Aqua Nutrition) by 28 February 2026.",
+      "evidence_refs": [
+        "ev-2026-04-8ce6cd4a"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "NO-Forurensningsloven-2024",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2025-11-30"
+    },
+    {
+      "citation": "Regulation (EU) 2023/1115 — EU Deforestation-free Products Regulation",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115",
+      "access_date": "2025-11-30"
+    }
+  ],
+  "total_regulations_tracked": 3,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "waste": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment (Forurensningsloven §11 revision)",
+      "topic": "water",
+      "change_type": "new_regulation",
+      "severity": "critical",
+      "summary": "The 2024 amendment to Norway's Pollution Control Act (Forurensningsloven) introduced revised discharge limits for industrial food processors, specifically targeting nitrogen (total N < 40 mg/L), phosphorus (total P < 1.5 mg/L), and biological oxygen demand (BOD < 30 mg/L) in wastewater discharged to fjords and coastal waters. Oslo Seafood's current phosphorus discharge of approximately 1.73 mg/L exceeds the new threshold. Non-compliance triggers a Miljødirektoratet enforcement notice within 90 days of confirmed exceedance, with daily fines of NOK 50,000 after the grace period expires.",
+      "action_required": "Commission feasibility study for enhanced biological phosphorus removal at Oslo Seafood by 31 January 2026; file voluntary disclosure with Miljødirektoratet by 15 December 2025.",
+      "current_status": "in_force",
+      "effective_date": "2024-07-01",
+      "enforcement_date": "2024-07-01",
+      "description": "Forurensningsloven §11 revision was adopted by Stortinget in April 2024 (Prop. 74 L (2023-2024)) and entered force 1 July 2024. The revision aligned Norwegian discharge standards with the EU Urban Wastewater Treatment Directive (2024/3019/EU) thresholds for sensitive receiving waters. The Oslo Fjord and Bergen coastal zone are classified as 'particularly sensitive water bodies' under the revision, triggering the most stringent discharge tier. Compliance pathways include: (1) physical-chemical treatment upgrade (estimated NOK 8–15 million capital cost), (2) biological nutrient removal system installation, or (3) connection to municipal wastewater network where capacity permits. Bergen Fish Oils' current discharge levels are within the new thresholds based on Q3 2025 monitoring data."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "PPWR applies to all packaging placed on the EU market, including Nordic Harvest's omega-3 capsule blister packs and fish oil bottling lines exported to Germany and the Netherlands. The regulation's reuse targets for tertiary/transport packaging will require Nordic Harvest to replace single-use expanded polystyrene fish boxes used for EU-bound exports with reusable alternatives by 2030. The Commission's first sector-specific guidance note for seafood packaging was published September 2025.",
+      "action_required": "Initiate pilot programme for reusable insulated shipping containers for EU-bound fresh seafood exports by Q3 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2030-01-01",
+      "description": "Regulation (EU) 2025/40 (EUR-Lex 32025R0040) introduces mandatory reuse targets for transport and secondary packaging in the food sector, with seafood specifically mentioned in Recital 47 as a priority category due to the prevalence of single-use expanded polystyrene (EPS) in cold chain logistics. The Commission's September 2025 sector guidance note recommends that seafood exporters engaging in cross-border EU trade transition to returnable insulated container systems by 2028 as a preparatory step before the 2030 mandatory reuse obligation. EPS foam boxes are classified as non-recyclable transport packaging under the draft recyclability criteria delegated act."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "EUDR's definitive applicability from December 2025 creates upstream due diligence obligations for Nordic Harvest relating to soy-based aquaculture feed. Salmon and other farmed fish species are not listed commodities under EUDR, but soy (used as 15–30% of standard salmon feed formulas) falls within scope. Nordic Harvest must trace the soy origins in its contracted hatchery and farm feed supplies and verify non-deforestation status for all post-December 2020 land parcels.",
+      "action_required": "Request EUDR due diligence declarations and geolocation data from primary aquaculture feed suppliers (Skretting, Cargill Aqua Nutrition) by 28 February 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "description": "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) covers operators and traders placing relevant commodities and derived products on the EU market. While fish as an animal product is not directly listed, aquaculture feed containing soy creates an indirect EUDR exposure that the Commission's FAQ document (published November 2025) specifically addresses under Question 3.7: 'Feed manufacturers placing soy-derived feed on the EU market must comply with EUDR due diligence requirements; downstream aquaculture operators who purchase such feed should obtain supplier declarations confirming EUDR compliance.' Nordic Harvest's legal team should obtain written EUDR compliance declarations from Skretting and Cargill before the end of Q1 2026."
+    }
+  ],
+  "status_changes": [],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "severity": "critical",
+      "action": "Oslo Seafood phosphorus discharge exceeds new limits — voluntary disclosure and capital investment required immediately"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

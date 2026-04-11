@@ -1,0 +1,8 @@
+{% if executive_summary -%}
+{{ executive_summary }}
+{%- else -%}
+This Quarterly Strategic Brief provides a medium-term outlook on regulatory developments. <b>{{ quarter_display }}</b> is assessed across <b>{{ months_available }}</b> of <b>{{ months_total }}</b> available monthly change log{{ 's' if months_total != 1 else '' }}.
+{% if total_changes > 0 -%}
+The quarter recorded <b>{{ total_changes }}</b> total regulatory change{{ 's' if total_changes != 1 else '' }} and <b>{{ critical_count }}</b> critical action{{ 's' if critical_count != 1 else '' }} requiring attention.
+{%- endif %}
+{%- endif %}

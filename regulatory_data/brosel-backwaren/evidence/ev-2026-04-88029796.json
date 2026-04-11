@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-88029796",
+  "client_id": "brosel-backwaren",
+  "source_id": "bmuv",
+  "source_name": "BMUV/UBA",
+  "url": "https://www.bmuv.de/themen/ressourceneffizienz",
+  "access_date": "2026-04-11",
+  "document_title": "ProgRess III \u2014 German Resource Efficiency Programme",
+  "snippet": "Mandatory resource efficiency audits for food processing companies above 250 employees.",
+  "hash": "sha256:8802979626ae3caf8c28249ae22547ff02a44d2712d92b8523d819f31543a34d",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.87,
+  "topic": "waste",
+  "related_regulation_id": "ProgRess-III"
+}

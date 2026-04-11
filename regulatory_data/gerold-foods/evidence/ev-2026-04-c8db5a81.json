@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-c8db5a81",
+  "client_id": "gerold-foods",
+  "source_id": "bmuv",
+  "source_name": "BMUV/UBA",
+  "url": "https://www.umweltbundesamt.de/themen/wasser/gewaesser/grundwasser",
+  "access_date": "2026-04-11",
+  "document_title": "UBA Groundwater Quality Standards \u2014 Industrial Discharge Limits",
+  "snippet": "Updated nitrate and phosphate limits for industrial water users under WHG amendments.",
+  "hash": "sha256:c8db5a81a0cff7f27aa4dde5de464f3adbe75b299dc63bd47c1ad0cd19873f79",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.85,
+  "topic": "water",
+  "related_regulation_id": "WHG-2023"
+}

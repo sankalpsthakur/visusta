@@ -1,0 +1,188 @@
+{
+  "screening_period": "2026-02",
+  "generated_date": "2026-02-28",
+  "previous_period": "2026-01",
+  "client_context": {
+    "facility_line": "Parma Pasta & Modena Olive Oil, Italian Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Italian Sustainability Frameworks for Food Manufacturers"
+  },
+  "executive_summary": "February 2026 is a decisive month for Trivento Foods' packaging compliance programme. The EU PPWR delegated act draft published in February 2026 classifies the company's olive oil glass bottles as recyclability Class A — the highest classification — under the glass-specific assessment criteria, which is positive news for the Modena Olive Oil facility. However, the same draft delegated act introduces a mandatory reuse rate of 5% for glass beverage and condiment packaging by 2028, which Trivento will need to meet through a deposit-return or refill scheme for olive oil.\n\nThe Italian Plastic Tax portal registration deadline on the Agenzia delle Dogane e dei Monopoli platform opened on 1 February 2026. Trivento's finance and compliance team registered the Parma Pasta facility under ATECO code 10.73 (Manufacture of pasta) on 5 February 2026. The registration process confirmed the annual declaration framework and penalty regime: late or incorrect declarations face penalties of 200–400% of the evaded tax amount under Article 656(4) of Law 160/2019.\n\nThe EU-CSDDD-2024/1760 transposition progress in Italy accelerated in February 2026 with the publication of the Ministry of Enterprise (MIMIT) consultation paper on civil liability provisions. The Italian transposition draft extends CSDDD civil liability to the food and agri sector's first-tier suppliers, which directly implicates Trivento's relationships with 47 primary durum wheat farms and 23 olive grove cooperatives across southern Italy and Tunisia.",
+  "sections": [
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation — Glass Classification and Reuse",
+      "paragraphs": [
+        "Draft PPWR delegated act classifies Trivento's olive oil glass bottles as recyclability Class A (positive outcome). However, the 5% mandatory reuse rate for glass packaging from 2028 requires a deposit-return or refill scheme covering at least 5% of units placed on the Italian and EU export markets. Modena Olive Oil sells approximately 2.1 million units/year into EU markets; 105,000 units/year must be covered by a reuse scheme by 2028."
+      ],
+      "callout": "Evaluate partnership with Italian CONAI glass reuse consortium or establish retailer-based refill programme; feasibility study due Q2 2026.",
+      "evidence_refs": [
+        "ev-2026-04-47d4c62d",
+        "ev-2026-04-e37b22bb",
+        "ev-2026-04-30c58c08",
+        "ev-2026-04-295028b3",
+        "ev-2026-04-11a73b75"
+      ]
+    },
+    {
+      "heading": "Italian Plastic Tax — Portal Registration Completed",
+      "paragraphs": [
+        "Parma Pasta facility registered on Agenzia delle Dogane MACSI portal on 5 February 2026 under ATECO 10.73. First annual declaration due 30 June 2027 (for FY2026 July–December period). Mater-Bi transition on track; Huhtamaki scale-up trial scheduled April–June 2026."
+      ],
+      "callout": "Complete Huhtamaki scale-up trial by 30 June 2026; obtain EN 13432 certification for new film before 1 July 2026 Plastic Tax activation date.",
+      "evidence_refs": [
+        "ev-2026-04-e37b22bb",
+        "ev-2026-04-c5fb2a38",
+        "ev-2026-04-295028b3",
+        "ev-2026-04-11a73b75",
+        "ev-2026-04-b08c9f47"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Due Diligence Directive — Italian Transposition",
+      "paragraphs": [
+        "MIMIT February 2026 consultation paper extends civil liability to first-tier food and agri suppliers. Trivento's 47 durum wheat farm contracts and 23 olive grove cooperative agreements will need CSDDD-compliant contractual due diligence clauses. The draft Italian transposition includes specific provisions for seasonal agricultural workers aligned with ILO Convention 184 (Safety and Health in Agriculture)."
+      ],
+      "callout": "Review all farm and cooperative supply contracts for CSDDD compliance gaps; engage labour law firm Toffoletto De Luca Tamajo for contract revision programme by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-e37b22bb",
+        "ev-2026-04-6d0ad1a3",
+        "ev-2026-04-96ba4c07",
+        "ev-2026-04-c5fb2a38",
+        "ev-2026-04-b08c9f47"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "EU-CSDDD-2024/1760",
+        "social_human_rights",
+        "MIMIT February 2026 consultation paper extends civil liability to first-tier food and agri suppliers. Trivento's 47 durum wheat farm contracts and 23 olive grove cooperative agreements will need CSDDD-compliant contractual due diligence clauses. The draft Italian transposition includes specific provisions for seasonal agricultural workers aligned with ILO Convention 184 (Safety and Health in Agriculture).",
+        "Review all farm and cooperative supply contracts for CSDDD compliance gaps; engage labour law firm Toffoletto De Luca Tamajo for contract revision programme by 31 March 2026."
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2026-02-28"
+    }
+  ],
+  "total_regulations_tracked": 5,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 2
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [],
+  "content_updates": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation — Glass Classification and Reuse",
+      "topic": "packaging",
+      "change_type": "content_update",
+      "severity": "medium",
+      "summary": "Draft PPWR delegated act classifies Trivento's olive oil glass bottles as recyclability Class A (positive outcome). However, the 5% mandatory reuse rate for glass packaging from 2028 requires a deposit-return or refill scheme covering at least 5% of units placed on the Italian and EU export markets. Modena Olive Oil sells approximately 2.1 million units/year into EU markets; 105,000 units/year must be covered by a reuse scheme by 2028.",
+      "action_required": "Evaluate partnership with Italian CONAI glass reuse consortium or establish retailer-based refill programme; feasibility study due Q2 2026.",
+      "current_status": "delegated_act_draft",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "changes": [
+        {
+          "field": "glass_classification",
+          "old": "unclassified",
+          "new": "class_A_recyclable",
+          "description": "Olive oil glass bottles classified Class A; 5% reuse rate required from 2028"
+        }
+      ]
+    },
+    {
+      "regulation_id": "IT-Plastic-Tax-DL73",
+      "title": "Italian Plastic Tax — Portal Registration Completed",
+      "topic": "packaging",
+      "change_type": "content_update",
+      "severity": "low",
+      "summary": "Parma Pasta facility registered on Agenzia delle Dogane MACSI portal on 5 February 2026 under ATECO 10.73. First annual declaration due 30 June 2027 (for FY2026 July–December period). Mater-Bi transition on track; Huhtamaki scale-up trial scheduled April–June 2026.",
+      "action_required": "Complete Huhtamaki scale-up trial by 30 June 2026; obtain EN 13432 certification for new film before 1 July 2026 Plastic Tax activation date.",
+      "current_status": "portal_registered",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "changes": [
+        {
+          "field": "portal_registration",
+          "old": "pending",
+          "new": "completed_5_February_2026",
+          "description": "Agenzia delle Dogane MACSI portal registration complete; annual declaration framework confirmed"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive — Italian Transposition",
+      "topic": "social_human_rights",
+      "change_type": "content_update",
+      "severity": "high",
+      "summary": "MIMIT February 2026 consultation paper extends civil liability to first-tier food and agri suppliers. Trivento's 47 durum wheat farm contracts and 23 olive grove cooperative agreements will need CSDDD-compliant contractual due diligence clauses. The draft Italian transposition includes specific provisions for seasonal agricultural workers aligned with ILO Convention 184 (Safety and Health in Agriculture).",
+      "action_required": "Review all farm and cooperative supply contracts for CSDDD compliance gaps; engage labour law firm Toffoletto De Luca Tamajo for contract revision programme by 31 March 2026.",
+      "current_status": "transposition_consultation",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "changes": [
+        {
+          "field": "it_transposition_stage",
+          "old": "awaiting_consultation",
+          "new": "consultation_paper_published_feb_2026",
+          "description": "MIMIT consultation extends civil liability to first-tier agri suppliers; farm contract review required"
+        }
+      ]
+    }
+  ],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

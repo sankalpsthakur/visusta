@@ -1,0 +1,186 @@
+{
+  "screening_period": "2026-01",
+  "generated_date": "2026-01-31",
+  "previous_period": "2025-12",
+  "client_context": {
+    "facility_line": "Lisbon Juices & Porto Organic Veg, Portuguese Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Portuguese Sustainability Frameworks for Organic Food Producers"
+  },
+  "executive_summary": "January 2026 is Terra Verde Organics' first full month on the Visusta platform, and the regulatory landscape it faces is crowded. The APA annual declaration for PT-CO2-Tax is being prepared, with December 2025 metering data confirming an annualised Scope 1 estimate of approximately 1,750 tCO2e across the three Lisbon Juices pasteurisation lines. The company registered for the SIGRE Lisbon deposit-return pilot on 29 January 2026 and has been assigned a pilot-member liaison at the Sociedade Ponto Verde national EPR scheme.\n\nThe PPWR packaging audit commissioned from Inovação em Embalagem (Portuguese LCA consultancy) delivered its preliminary findings on 20 January 2026. The results are mixed: Terra Verde's premium glass juice bottles score Class A under the draft recyclability criteria, as expected; the standard PET sport bottles (100% virgin PET, no recycled content) score Class B (moderate recyclability concerns) due to the absence of recycled content; the ambient Tetra Brik aseptic carton range (EVOH barrier) is preliminarily classified Class C with EPR surcharge exposure from 2028. The audit has recommended priority action on the aseptic carton format.\n\nThe EU-CSDDD-2024/1760 is developing quickly in Portugal. The Assembleia da República published a preliminary CSDDD transposition framework in January 2026, which includes specific provisions for the agricultural supply chain relevant to Terra Verde's organic produce sourcing from Alentejo and Algarve farms. The draft extends due diligence obligations to indirect suppliers in the first tier of agricultural production, creating obligations for Terra Verde's 34 certified organic farm contracts.",
+  "sections": [
+    {
+      "heading": "Corporate Sustainability Due Diligence Directive",
+      "paragraphs": [
+        "Portugal's January 2026 preliminary CSDDD transposition framework extends due diligence to first-tier agricultural suppliers, creating obligations for Terra Verde's 34 certified organic farm contracts in Alentejo and Algarve. The framework includes seasonal worker protections aligned with ILO Convention 184 and Portugal's own Código do Trabalho provisions on seasonal agricultural employment. Final transposition bill expected by May 2026.",
+        "Directive 2024/1760/EU (CSDDD, EUR-Lex 32024L1760) was adopted on 13 June 2024 with transposition deadline 26 July 2026. Portugal's preliminary transposition framework published in the Assembleia da República gazette in January 2026 extends beyond the directive's minimum requirements in two areas: (1) the definition of 'established business relationship' captures seasonal agricultural contracts exceeding 90 days, which covers Terra Verde's summer berry and stone fruit picking contracts; (2) the civil liability provisions include a reversible burden of proof mechanism where the company must demonstrate it conducted adequate due diligence to rebut a damages claim. Terra Verde's organic certification (Agrobio/Ecocert) partially satisfies due diligence requirements for environmental standards but does not cover labour rights obligations."
+      ],
+      "callout": "Begin farm contract due diligence mapping aligned with CSDDD first-tier agricultural supplier requirements; engage ABIO (Portuguese Organic Farming Association) for sector-specific guidance.",
+      "evidence_refs": [
+        "ev-2026-04-ffcee9ec",
+        "ev-2026-04-0fd12cc8"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation — Packaging Audit Results",
+      "paragraphs": [
+        "Inovação em Embalagem audit: glass bottles Class A, PET sport bottles Class B (no recycled content), Tetra Brik aseptic cartons Class C (EVOH barrier). The Class C Tetra Brik range represents approximately 1.2 million units/year sold in Portugal and Spain, with EPR surcharge exposure of EUR 96,000–144,000 per year from 2028 at EUR 0.08–0.12/unit."
+      ],
+      "callout": "Commission Tetra Pak or SIG Combibloc to assess barrier-free or reduced-barrier carton format feasibility by 30 April 2026; evaluate ambient PET transition for shelf-stable juice range as alternative.",
+      "evidence_refs": [
+        "ev-2026-04-4b0217f8",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-bb42504e",
+        "ev-2026-04-3de138c9"
+      ]
+    },
+    {
+      "heading": "Portuguese Deposit-Return Scheme",
+      "paragraphs": [
+        "SIGRE Lisbon pilot registration confirmed 29 January 2026. Terra Verde will contribute 10,000 glass juice bottles to the pilot's reverse vending machine network at three Lisbon supermarkets. Pilot data will inform the national DRS design for the 2028 mandatory scheme."
+      ],
+      "callout": "Designate 10,000 premium glass bottle units for SIGRE pilot; brief Lisbon distribution team on pilot logistics by 28 February 2026.",
+      "evidence_refs": [
+        "ev-2026-04-fa367452",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-a73c4ff7",
+        "ev-2026-04-ab777e3f",
+        "ev-2026-04-3de138c9"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "EU-PPWR-2025/40",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2026-01-31"
+    }
+  ],
+  "total_regulations_tracked": 5,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 2
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "Portugal's January 2026 preliminary CSDDD transposition framework extends due diligence to first-tier agricultural suppliers, creating obligations for Terra Verde's 34 certified organic farm contracts in Alentejo and Algarve. The framework includes seasonal worker protections aligned with ILO Convention 184 and Portugal's own Código do Trabalho provisions on seasonal agricultural employment. Final transposition bill expected by May 2026.",
+      "action_required": "Begin farm contract due diligence mapping aligned with CSDDD first-tier agricultural supplier requirements; engage ABIO (Portuguese Organic Farming Association) for sector-specific guidance.",
+      "current_status": "transposition_preliminary_framework",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "description": "Directive 2024/1760/EU (CSDDD, EUR-Lex 32024L1760) was adopted on 13 June 2024 with transposition deadline 26 July 2026. Portugal's preliminary transposition framework published in the Assembleia da República gazette in January 2026 extends beyond the directive's minimum requirements in two areas: (1) the definition of 'established business relationship' captures seasonal agricultural contracts exceeding 90 days, which covers Terra Verde's summer berry and stone fruit picking contracts; (2) the civil liability provisions include a reversible burden of proof mechanism where the company must demonstrate it conducted adequate due diligence to rebut a damages claim. Terra Verde's organic certification (Agrobio/Ecocert) partially satisfies due diligence requirements for environmental standards but does not cover labour rights obligations."
+    }
+  ],
+  "status_changes": [],
+  "content_updates": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation — Packaging Audit Results",
+      "topic": "packaging",
+      "change_type": "content_update",
+      "severity": "critical",
+      "summary": "Inovação em Embalagem audit: glass bottles Class A, PET sport bottles Class B (no recycled content), Tetra Brik aseptic cartons Class C (EVOH barrier). The Class C Tetra Brik range represents approximately 1.2 million units/year sold in Portugal and Spain, with EPR surcharge exposure of EUR 96,000–144,000 per year from 2028 at EUR 0.08–0.12/unit.",
+      "action_required": "Commission Tetra Pak or SIG Combibloc to assess barrier-free or reduced-barrier carton format feasibility by 30 April 2026; evaluate ambient PET transition for shelf-stable juice range as alternative.",
+      "current_status": "audit_complete",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "changes": [
+        {
+          "field": "packaging_audit",
+          "old": "pending",
+          "new": "complete_class_C_cartons_class_B_PET_class_A_glass",
+          "description": "Audit completed: Class C carton EPR exposure EUR 96-144k/year from 2028"
+        }
+      ]
+    },
+    {
+      "regulation_id": "PT-Deposit-Return-2028",
+      "title": "Portuguese Deposit-Return Scheme",
+      "topic": "packaging",
+      "change_type": "content_update",
+      "severity": "low",
+      "summary": "SIGRE Lisbon pilot registration confirmed 29 January 2026. Terra Verde will contribute 10,000 glass juice bottles to the pilot's reverse vending machine network at three Lisbon supermarkets. Pilot data will inform the national DRS design for the 2028 mandatory scheme.",
+      "action_required": "Designate 10,000 premium glass bottle units for SIGRE pilot; brief Lisbon distribution team on pilot logistics by 28 February 2026.",
+      "current_status": "pilot_registered",
+      "effective_date": "2026-04-01",
+      "enforcement_date": "2028-01-01",
+      "changes": [
+        {
+          "field": "sigre_pilot_status",
+          "old": "registered",
+          "new": "active_pilot_member_10000_units_allocated",
+          "description": "SIGRE Lisbon pilot confirmed; 10,000 glass bottle units allocated for pilot programme"
+        }
+      ]
+    }
+  ],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "severity": "critical",
+      "action": "Tetra Brik range classified Class C — EUR 96-144k EPR surcharge exposure from 2028; carton redesign feasibility required by April 2026"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

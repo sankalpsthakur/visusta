@@ -1,0 +1,45 @@
+{
+  "screening_period": "2025-11",
+  "screening_date": "2025-11-30",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": ["exceedance_detected:NO-Forurensningsloven-2024:phosphorus:Oslo-Seafood"],
+  "regulations": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "topic": "water",
+      "status": "in_force",
+      "severity": "critical",
+      "effective_date": "2024-07-01",
+      "enforcement_date": "2024-07-01",
+      "jurisdiction": "NO",
+      "citation": "Prop. 74 L (2023-2024), Forurensningsloven §11",
+      "summary": "Oslo Seafood phosphorus discharge 15% above new 1.5 mg/L limit; voluntary disclosure required."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2030-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "EPS fish box reuse targets from 2030; Commission seafood sector guidance published September 2025."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Soy aquaculture feed due diligence declarations required from Skretting and Cargill by end Q1 2026."
+    }
+  ]
+}

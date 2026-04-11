@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-58a6cd37",
+  "client_id": "nordic-harvest",
+  "source_id": "lovdata",
+  "source_name": "Lovdata",
+  "url": "https://lovdata.no/dokument/NL/lov/1981-03-13-6",
+  "access_date": "2026-04-11",
+  "document_title": "Forurensningsloven \u2014 Norwegian Pollution Control Act (amended 2023)",
+  "snippet": "Updated discharge permits and emission limits for seafood processing facilities.",
+  "hash": "sha256:58a6cd37b2507021459e5aa0cb6ba38b13848cc561977e5485ce2cc970b7b065",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "water",
+  "related_regulation_id": "Forurensningsloven-1981"
+}

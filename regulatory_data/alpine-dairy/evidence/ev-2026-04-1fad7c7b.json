@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-1fad7c7b",
+  "client_id": "alpine-dairy",
+  "source_id": "bafu",
+  "source_name": "BAFU \u2014 Swiss Federal Office for the Environment",
+  "url": "https://www.bafu.admin.ch/bafu/de/home/themen/abfall/fachinformationen/abfallpolitik-der-schweiz/lebensmittelabfall.html",
+  "access_date": "2026-04-11",
+  "document_title": "BAFU Food Waste Strategy \u2014 Swiss Action Plan 2025",
+  "snippet": "Switzerland's national food waste reduction targets; mandatory reporting for food processors.",
+  "hash": "sha256:1fad7c7bc448a99589c9e95cc0b5a51a351d4375987afbb14b9e3f92f9450fec",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.86,
+  "topic": "waste",
+  "related_regulation_id": "USG-SR-814"
+}

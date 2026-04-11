@@ -24,6 +24,8 @@ from typing import Optional, List, Dict, Any, Callable, Set, Tuple
 from collections import defaultdict
 from pathlib import Path
 
+from config import get_config
+
 
 # ═════════════════════════════════════════════════════════════════════════════
 # ENUMERATIONS & CONSTANTS
@@ -66,11 +68,14 @@ class InvestmentType(Enum):
     NONE = "None"            # No investment required
 
 
-# Validation thresholds
-VALIDATION_MIN_SOURCES = 2
-VALIDATION_MAX_AGE_DAYS = 90
-CONFIDENCE_HIGH_THRESHOLD = 0.8
-CONFIDENCE_MEDIUM_THRESHOLD = 0.5
+# Validation thresholds — sourced from config/visusta.yaml
+_cfg = get_config()
+VALIDATION_MIN_SOURCES     = _cfg.validation.min_sources
+VALIDATION_MAX_AGE_DAYS    = _cfg.validation.max_age_days
+CONFIDENCE_HIGH_THRESHOLD  = 0.8   # internal scoring constant, not user-configurable
+CONFIDENCE_MEDIUM_THRESHOLD = _cfg.validation.confidence_threshold
+_RELIABILITY_THRESHOLD      = _cfg.validation.reliability_threshold
+_MIN_DESCRIPTION_LENGTH     = _cfg.validation.min_description_length
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -412,7 +417,7 @@ class ChangeValidator:
         if not entry.sources:
             return False, "No sources provided"
         avg_reliability = sum(s.reliability_score for s in entry.sources) / len(entry.sources)
-        if avg_reliability < 0.6:
+        if avg_reliability < _RELIABILITY_THRESHOLD:
             return False, f"Source reliability too low: {avg_reliability:.2f}"
         return True, ""
     
@@ -428,7 +433,7 @@ class ChangeValidator:
         return True, ""
     
     def _check_has_description(self, entry: ChangeLogEntry) -> Tuple[bool, str]:
-        if not entry.description or len(entry.description) < 50:
+        if not entry.description or len(entry.description) < _MIN_DESCRIPTION_LENGTH:
             return False, "Description too short or missing"
         return True, ""
     

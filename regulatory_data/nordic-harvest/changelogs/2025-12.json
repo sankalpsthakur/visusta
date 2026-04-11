@@ -1,0 +1,162 @@
+{
+  "screening_period": "2025-12",
+  "generated_date": "2025-12-31",
+  "previous_period": "2025-11",
+  "client_context": {
+    "facility_line": "Oslo Seafood & Bergen Fish Oils, Kingdom of Norway",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EEA & Norwegian Sustainability Frameworks for Seafood Processors"
+  },
+  "executive_summary": "December 2025 brings resolution on one compliance matter and escalation on another for Nordic Harvest AS. Following the voluntary disclosure filed with Miljødirektoratet on 12 December 2025, the agency issued a temporary compliance notice granting Nordic Harvest until 31 October 2026 to achieve phosphorus discharge compliance at Oslo Seafood — conditional on the submission of a detailed remediation investment plan by 31 March 2026. The engineering feasibility study for enhanced biological treatment has been commissioned from Norconsult at a cost of NOK 450,000.\n\nThe EU-CSRD-2022/2464 first-wave reporting cycle has activated obligations for Nordic Harvest's Hamburg EU sales subsidiary, which confirmed in December 2025 that it meets the CSRD large-undertaking threshold (EUR 48m net turnover, 187 employees, balance sheet EUR 22m). A double materiality assessment has been initiated with external consultant KPMG Oslo, with particular focus on ESRS E3 (water and marine resources) given the phosphorus discharge issue at Oslo Seafood.\n\nNordic Harvest also faces an emerging regulatory development: the Norwegian government's December 2025 budget included a proposed carbon tax on fishing and aquaculture vessels, set at NOK 590/tCO2e from 2026, rising to NOK 1,100 from 2030. The Bergen Fish Oils fleet of three processing vessels will face an estimated annual carbon tax liability of NOK 3.2–4.8 million at the 2026 rate.",
+  "sections": [
+    {
+      "heading": "Norwegian Carbon Tax Extension to Fisheries and Aquaculture",
+      "paragraphs": [
+        "The Norwegian government's 2026 budget proposal extends the national carbon tax to fishing vessels and aquaculture processing vessels, setting an initial rate of NOK 590 per tonne of CO2 equivalent from 1 January 2026. Bergen Fish Oils operates three processing vessels with a combined estimated annual fuel consumption of approximately 1,800 tonnes of marine gas oil, generating approximately 5,700 tCO2e annually. This creates an estimated annual carbon tax liability of NOK 3.2–3.4 million at the initial rate, rising to NOK 6.3 million at the 2030 rate.",
+        "The Norwegian carbon tax (CO2-avgift) has applied to the petroleum and industrial sectors since 1991 but historically exempted commercial fisheries under the Havfiskeflåten agreement. The 2026 budget proposal (Prop. 1 LS (2025-2026), Chapter 8) removes this exemption for vessels over 250 gross tonnes and introduces the tax at 50% of the general rate (NOK 590/tCO2e in 2026), escalating to 100% (NOK 1,100/tCO2e) from 2030. The proposal requires Stortinget ratification expected January 2026. The Norwegian Seafood Federation (Sjømatbedriftene) is challenging the exemption removal and has indicated it will seek judicial review if the measure passes without industry consultation."
+      ],
+      "callout": "Model carbon tax liability across Bergen Fish Oils fleet; assess fuel efficiency investments and alternative fuel options (LNG, ammonia) to reduce future exposure.",
+      "evidence_refs": [
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-42df1ba6",
+        "ev-2026-04-6e019582",
+        "ev-2026-04-fe8d6581",
+        "ev-2026-04-58a6cd37",
+        "ev-2026-04-00169e92",
+        "ev-2026-04-9c6c716d",
+        "ev-2026-04-cbc4ff1a",
+        "ev-2026-04-d7339055"
+      ]
+    },
+    {
+      "heading": "Norwegian Pollution Control Act Amendment",
+      "paragraphs": [
+        "Miljødirektoratet accepted Nordic Harvest's voluntary disclosure and issued a temporary compliance notice granting until 31 October 2026 to achieve phosphorus discharge compliance at Oslo Seafood. The notice requires submission of a detailed remediation investment plan by 31 March 2026 and quarterly progress reporting. Norconsult has been engaged for the engineering feasibility study at a cost of NOK 450,000."
+      ],
+      "callout": "Finalise Norconsult feasibility study and submit remediation investment plan to Miljødirektoratet by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-6e019582",
+        "ev-2026-04-fe8d6581",
+        "ev-2026-04-58a6cd37",
+        "ev-2026-04-8eae12e3",
+        "ev-2026-04-00169e92",
+        "ev-2026-04-9c6c716d",
+        "ev-2026-04-cbc4ff1a"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "NO-Forurensningsloven-2024",
+        "",
+        "",
+        ""
+      ],
+      [
+        "NO-CO2-Fiskeri-2026",
+        "ghg",
+        "The Norwegian government's 2026 budget proposal extends the national carbon tax to fishing vessels and aquaculture processing vessels, setting an initial rate of NOK 590 per tonne of CO2 equivalent from 1 January 2026. Bergen Fish Oils operates three processing vessels with a combined estimated annual fuel consumption of approximately 1,800 tonnes of marine gas oil, generating approximately 5,700 tCO2e annually. This creates an estimated annual carbon tax liability of NOK 3.2–3.4 million at the initial rate, rising to NOK 6.3 million at the 2030 rate.",
+        "Model carbon tax liability across Bergen Fish Oils fleet; assess fuel efficiency investments and alternative fuel options (LNG, ammonia) to reduce future exposure."
+      ]
+    ]
+  },
+  "references": [],
+  "total_regulations_tracked": 4,
+  "total_changes_detected": 2,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "water": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "NO-CO2-Fiskeri-2026",
+      "title": "Norwegian Carbon Tax Extension to Fisheries and Aquaculture",
+      "topic": "ghg",
+      "change_type": "new_regulation",
+      "severity": "high",
+      "summary": "The Norwegian government's 2026 budget proposal extends the national carbon tax to fishing vessels and aquaculture processing vessels, setting an initial rate of NOK 590 per tonne of CO2 equivalent from 1 January 2026. Bergen Fish Oils operates three processing vessels with a combined estimated annual fuel consumption of approximately 1,800 tonnes of marine gas oil, generating approximately 5,700 tCO2e annually. This creates an estimated annual carbon tax liability of NOK 3.2–3.4 million at the initial rate, rising to NOK 6.3 million at the 2030 rate.",
+      "action_required": "Model carbon tax liability across Bergen Fish Oils fleet; assess fuel efficiency investments and alternative fuel options (LNG, ammonia) to reduce future exposure.",
+      "current_status": "budget_proposal",
+      "effective_date": "2026-01-01",
+      "enforcement_date": "2026-01-01",
+      "description": "The Norwegian carbon tax (CO2-avgift) has applied to the petroleum and industrial sectors since 1991 but historically exempted commercial fisheries under the Havfiskeflåten agreement. The 2026 budget proposal (Prop. 1 LS (2025-2026), Chapter 8) removes this exemption for vessels over 250 gross tonnes and introduces the tax at 50% of the general rate (NOK 590/tCO2e in 2026), escalating to 100% (NOK 1,100/tCO2e) from 2030. The proposal requires Stortinget ratification expected January 2026. The Norwegian Seafood Federation (Sjømatbedriftene) is challenging the exemption removal and has indicated it will seek judicial review if the measure passes without industry consultation."
+    }
+  ],
+  "status_changes": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "topic": "water",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "Miljødirektoratet accepted Nordic Harvest's voluntary disclosure and issued a temporary compliance notice granting until 31 October 2026 to achieve phosphorus discharge compliance at Oslo Seafood. The notice requires submission of a detailed remediation investment plan by 31 March 2026 and quarterly progress reporting. Norconsult has been engaged for the engineering feasibility study at a cost of NOK 450,000.",
+      "action_required": "Finalise Norconsult feasibility study and submit remediation investment plan to Miljødirektoratet by 31 March 2026.",
+      "current_status": "temporary_compliance_notice",
+      "effective_date": "2024-07-01",
+      "enforcement_date": "2026-10-31",
+      "changes": [
+        {
+          "field": "compliance_status",
+          "old": "exceedance_identified",
+          "new": "temporary_compliance_notice_granted",
+          "description": "Miljødirektoratet granted compliance extension to 31 October 2026 pending remediation plan"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "severity": "high",
+      "action": "Remediation investment plan due 31 March 2026 — Norconsult engagement confirmed"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-f08d84a8",
+  "client_id": "brosel-backwaren",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1760",
+  "access_date": "2026-04-11",
+  "document_title": "CSDDD \u2014 Corporate Sustainability Due Diligence Directive",
+  "snippet": "German and Austrian operations must conduct grain and dairy supply chain due diligence.",
+  "hash": "sha256:f08d84a8f6d1b65d8275d583eef1f930dabd7bb99468fa7daa96ebb0543d0066",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.94,
+  "topic": "social_human_rights",
+  "related_regulation_id": "CSDDD-2024"
+}

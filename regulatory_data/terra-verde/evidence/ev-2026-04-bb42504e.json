@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-bb42504e",
+  "client_id": "terra-verde",
+  "source_id": "apa",
+  "source_name": "Ag\u00eancia Portuguesa do Ambiente",
+  "url": "https://apambiente.pt/index.php?ref=16&subref=86",
+  "access_date": "2026-04-11",
+  "document_title": "APA Water Abstraction and Discharge Permits \u2014 Agro-food Sector",
+  "snippet": "Licensing requirements for water use above 100 m\u00b3/day; online permit renewal deadlines.",
+  "hash": "sha256:bb42504ed0180edf7f0d54ac397034cbbc6e1948436bedbd4d00cdd772e87b4f",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.87,
+  "topic": "water",
+  "related_regulation_id": "PT-Water-Permits-2024"
+}

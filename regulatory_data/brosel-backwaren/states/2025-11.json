@@ -1,0 +1,57 @@
+{
+  "screening_period": "2025-11",
+  "screening_date": "2025-11-30",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "PE/EVOH bread bags at risk of Class C; PP bakery bags likely Class B; packaging LCA commissioned."
+    },
+    {
+      "regulation_id": "DE-VerpackDG-2026",
+      "title": "Verpackungsdurchführungsgesetz Amendment",
+      "topic": "packaging",
+      "status": "parliamentary_consultation",
+      "severity": "high",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "DE",
+      "citation": "Referentenentwurf VerpackDG-2026",
+      "summary": "Article 12c fee differentiation; PE/EVOH laminates likely high-fee tier; PackML declaration required by June 2026."
+    },
+    {
+      "regulation_id": "AT-EAG-2021",
+      "title": "Austrian EPR — ARA Scheme",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "jurisdiction": "AT",
+      "citation": "BGBl. II Nr. 4/2025 (Verpackungsverordnung 2025)",
+      "summary": "Vienna Pastries 78t/year places on AT market; ARA registration required; estimated EUR 16,840 annual contribution."
+    },
+    {
+      "regulation_id": "DE-LkSG-2023",
+      "title": "Lieferkettensorgfaltspflichtengesetz",
+      "topic": "social_human_rights",
+      "status": "threshold_assessment_required",
+      "severity": "medium",
+      "effective_date": "2024-01-01",
+      "enforcement_date": "2024-01-01",
+      "jurisdiction": "DE",
+      "citation": "BGBl. 2021 I S. 2959",
+      "summary": "German employee count near 1,000 threshold; BAFA confirmation required; LkSG report may be due April 2026."
+    }
+  ]
+}

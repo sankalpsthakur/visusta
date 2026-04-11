@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-a73c4ff7",
+  "client_id": "terra-verde",
+  "source_id": "dre",
+  "source_name": "Di\u00e1rio da Rep\u00fablica Eletr\u00f3nico",
+  "url": "https://dre.pt/dre/legislacao-consolidada/resolucao-conselho-ministros/2021-836000",
+  "access_date": "2026-04-11",
+  "document_title": "RCM n.\u00ba 107/2019 \u2014 Portuguese Roadmap for Carbon Neutrality 2050",
+  "snippet": "Industry sector GHG reduction pathway; food and agriculture -33% by 2030 vs 2005.",
+  "hash": "sha256:a73c4ff76df00eb57dae77197dc449ad2e715dce1426e8aea76b6b00d7c7241b",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.89,
+  "topic": "ghg",
+  "related_regulation_id": "PT-RNC2050"
+}

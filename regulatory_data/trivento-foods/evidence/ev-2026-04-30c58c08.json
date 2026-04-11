@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-30c58c08",
+  "client_id": "trivento-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+  "access_date": "2026-04-11",
+  "document_title": "PPWR \u2014 Packaging and Packaging Waste Regulation",
+  "snippet": "Mandatory recyclability and recycled content targets affecting Italian pasta and olive oil packaging.",
+  "hash": "sha256:30c58c08a8c19bc76ad03bf1fd0addb1c01c36d1650eaf4bca8d7cdd01c23de1",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "packaging",
+  "related_regulation_id": "PPWR-2025"
+}

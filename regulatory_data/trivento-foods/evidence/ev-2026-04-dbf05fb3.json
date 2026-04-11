@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-dbf05fb3",
+  "client_id": "trivento-foods",
+  "source_id": "ministero_ambiente",
+  "source_name": "Ministero dell'Ambiente",
+  "url": "https://www.mase.gov.it/comunicati/piano-nazionale-integrato-per-lenergia-e-il-clima-pniec",
+  "access_date": "2026-04-11",
+  "document_title": "PNIEC \u2014 Piano Nazionale Integrato per l'Energia e il Clima 2030",
+  "snippet": "Italy's integrated energy and climate plan: 65% renewables, 55% GHG reduction targets.",
+  "hash": "sha256:dbf05fb389783cfe8e476b6c64ebc033de1358c00e987111f0035ebc7a0e258a",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.91,
+  "topic": "ghg",
+  "related_regulation_id": "IT-PNIEC-2024"
+}

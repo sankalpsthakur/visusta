@@ -1,0 +1,185 @@
+{
+  "screening_period": "2025-12",
+  "generated_date": "2025-12-31",
+  "previous_period": "2025-11",
+  "client_context": {
+    "facility_line": "Munich Bread Works & Vienna Pastries, Germany / Austria",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU, German & Austrian Sustainability Frameworks for Bakery Manufacturers"
+  },
+  "executive_summary": "December 2025 brings regulatory resolution and escalation in equal measure for Brösel Backwaren GmbH. ARA registration for Vienna Pastries was completed on 3 December 2025, with the online ARA-Online-Service portal confirming an annual EPR contribution of EUR 16,840 based on 51 tonnes paper/board and 27 tonnes plastic. The first quarterly contribution of EUR 4,210 is due 31 January 2026.\n\nGermany's BAFA confirmed in December 2025 that Brösel Backwaren GmbH's consolidated German employee headcount of 1,037 places it squarely within LkSG scope for FY2025. The company must file its first LkSG compliance report with BAFA by 30 April 2026 covering FY2025 human rights and environmental due diligence. Brösel has engaged Frankfurt-based law firm Freshfields Bruckhaus Deringer for LkSG support, with initial focus on palm oil in Vienna Pastries' croissant and Danish pastry recipes (sourced from a Singaporean commodity trader with Malaysian palm oil origins).\n\nThe EU-CSRD-2022/2464 scoping assessment was completed in December 2025 by KPMG Munich. Brösel's consolidated group (Munich + Vienna) has EUR 320m net turnover, 1,020 employees, and EUR 180m balance sheet, meeting two of the three large-undertaking criteria. FY2025 is therefore the first CSRD reporting year. The ESRS double materiality assessment will begin in January 2026 with particular focus on E1 (bakery oven energy — natural gas + electric), S1 (workforce — high seasonality in Vienna Christmas pastry production), and S2 (palm oil and cocoa supply chain labour).",
+  "sections": [
+    {
+      "heading": "Austrian Extended Producer Responsibility — ARA Registration",
+      "paragraphs": [
+        "Vienna Pastries ARA registration completed 3 December 2025. Annual EPR contribution confirmed at EUR 16,840 (EUR 7,650 paper + EUR 7,560 plastic + EUR 1,630 admin). First quarterly payment EUR 4,210 due 31 January 2026. ARA registration number AT-EPR-2025-08847."
+      ],
+      "callout": "Process first ARA quarterly payment EUR 4,210 by 31 January 2026; prepare FY2025 material quantity declaration for submission 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-9bdc2787",
+        "ev-2026-04-b185b439",
+        "ev-2026-04-8c0b7cac",
+        "ev-2026-04-6afadeb8",
+        "ev-2026-04-947268fe"
+      ]
+    },
+    {
+      "heading": "Lieferkettensorgfaltspflichtengesetz",
+      "paragraphs": [
+        "BAFA confirmed Brösel's German headcount of 1,037 places it within LkSG scope from FY2025. First LkSG compliance report due to BAFA by 30 April 2026. Freshfields Bruckhaus Deringer engaged; initial focus on Malaysian palm oil supply chain for Vienna Pastries croissant and Danish recipes."
+      ],
+      "callout": "Complete LkSG human rights risk assessment covering palm oil, cocoa, and sugar supply chains by 28 February 2026; draft BAFA compliance report by 31 March 2026."
+    },
+    {
+      "heading": "Corporate Sustainability Reporting Directive — Scoping",
+      "paragraphs": [
+        "KPMG Munich scoping assessment confirmed Brösel as CSRD large undertaking (EUR 320m turnover, 1,020 employees). FY2025 first reporting year; sustainability statement due 30 June 2026. DMA will begin January 2026 with E1, S1, S2 as priority topics given bakery energy intensity and palm oil supply chain risk."
+      ],
+      "callout": "Begin ESRS double materiality assessment in January 2026; engage external assurance provider (KPMG Munich retained for assurance) by 31 January 2026.",
+      "evidence_refs": [
+        "ev-2026-04-f08d84a8",
+        "ev-2026-04-68ce1b10"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "DE-LkSG-2023",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2025-12-31"
+    }
+  ],
+  "total_regulations_tracked": 5,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 2
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [
+    {
+      "regulation_id": "AT-EAG-2021",
+      "title": "Austrian Extended Producer Responsibility — ARA Registration",
+      "topic": "packaging",
+      "change_type": "status_change",
+      "severity": "low",
+      "summary": "Vienna Pastries ARA registration completed 3 December 2025. Annual EPR contribution confirmed at EUR 16,840 (EUR 7,650 paper + EUR 7,560 plastic + EUR 1,630 admin). First quarterly payment EUR 4,210 due 31 January 2026. ARA registration number AT-EPR-2025-08847.",
+      "action_required": "Process first ARA quarterly payment EUR 4,210 by 31 January 2026; prepare FY2025 material quantity declaration for submission 31 March 2026.",
+      "current_status": "registered",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "changes": [
+        {
+          "field": "registration_status",
+          "old": "pending",
+          "new": "registered_AT-EPR-2025-08847",
+          "description": "Vienna Pastries ARA registration complete; EUR 16,840 annual contribution confirmed"
+        }
+      ]
+    },
+    {
+      "regulation_id": "DE-LkSG-2023",
+      "title": "Lieferkettensorgfaltspflichtengesetz",
+      "topic": "social_human_rights",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "BAFA confirmed Brösel's German headcount of 1,037 places it within LkSG scope from FY2025. First LkSG compliance report due to BAFA by 30 April 2026. Freshfields Bruckhaus Deringer engaged; initial focus on Malaysian palm oil supply chain for Vienna Pastries croissant and Danish recipes.",
+      "action_required": "Complete LkSG human rights risk assessment covering palm oil, cocoa, and sugar supply chains by 28 February 2026; draft BAFA compliance report by 31 March 2026.",
+      "current_status": "in_scope_confirmed",
+      "effective_date": "2024-01-01",
+      "enforcement_date": "2024-01-01",
+      "changes": [
+        {
+          "field": "scope_status",
+          "old": "threshold_assessment_required",
+          "new": "confirmed_in_scope_1037_DE_employees",
+          "description": "BAFA confirmed 1,037 German employees; LkSG report due 30 April 2026"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive — Scoping",
+      "topic": "social_human_rights",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "KPMG Munich scoping assessment confirmed Brösel as CSRD large undertaking (EUR 320m turnover, 1,020 employees). FY2025 first reporting year; sustainability statement due 30 June 2026. DMA will begin January 2026 with E1, S1, S2 as priority topics given bakery energy intensity and palm oil supply chain risk.",
+      "action_required": "Begin ESRS double materiality assessment in January 2026; engage external assurance provider (KPMG Munich retained for assurance) by 31 January 2026.",
+      "current_status": "in_force_FY2025_first_year",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "changes": [
+        {
+          "field": "csrd_scope",
+          "old": "scoping_in_progress",
+          "new": "confirmed_large_undertaking_FY2025_first_year",
+          "description": "KPMG Munich confirmed CSRD large undertaking; DMA to begin January 2026"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "DE-LkSG-2023",
+      "title": "Lieferkettensorgfaltspflichtengesetz",
+      "severity": "high",
+      "action": "First LkSG BAFA report due 30 April 2026 — palm oil supply chain risk assessment must be complete by 28 February"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

@@ -1,0 +1,182 @@
+{
+  "screening_period": "2025-11",
+  "generated_date": "2025-11-30",
+  "previous_period": "2025-10",
+  "client_context": {
+    "facility_line": "Hamburg Bakery & Rietberg Cold Cuts, Federal Republic of Germany",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & German Sustainability Frameworks for Food Manufacturers"
+  },
+  "executive_summary": "November 2025 inaugurates Gerold & Team's formal regulatory screening programme under the Visusta platform. The company's two German facilities — Hamburg Bakery and Rietberg Cold Cuts — face a converging set of EU and German-level regulatory obligations across packaging, GHG, and supply chain due diligence that will define the compliance agenda for 2026.\n\nThe most urgent development this month is the publication of the EU Packaging and Packaging Waste Regulation (EU-PPWR-2025/40) delegated act consultation, which includes a priority assessment of multilayer barrier films used in cold cuts packaging. Gerold's Rietberg facility uses a PE/PA (polyamide) vacuum-skin packaging format for sliced cold cut products with a minimum 35-day shelf life. The Commission's consultation document flags PE/PA multilayer laminates as 'technically challenging' for recyclability classification due to the compatibility issues between polyethylene and polyamide at material recovery facilities. A formal recyclability classification is expected in the February 2026 delegated act draft.\n\nThe DE-VerpackDG-2026 draft amendment is in parliamentary consultation, with its Article 12c EPR fee differentiation posing a direct financial risk to Gerold's Hamburg Bakery bread packaging lines and Rietberg's cold cut vacuum packs. The German food industry association BVE (Bundesvereinigung der Deutschen Ernährungsindustrie) has opened a coordination working group for PPWR and VerpackDG submissions, and Gerold's head of operations has been invited to join the working group's packaging subcommittee.",
+  "sections": [
+    {
+      "heading": "Corporate Sustainability Reporting Directive",
+      "paragraphs": [
+        "Gerold & Team must assess CSRD applicability based on size thresholds. As a mid-size German food manufacturer with approximately EUR 145m net turnover and 890 employees, the company is likely below the 500-employee threshold for FY2024 first-wave reporting, but may be captured in the second wave (FY2025 reporting for large undertakings meeting two of three size criteria: balance sheet >EUR 20m, turnover >EUR 40m, employees >250). Both facilities combined satisfy two criteria, making Gerold an FY2026 filer if EU member state SME thresholds apply as implemented in German D-ESRS.",
+        "Directive 2022/2464/EU (EUR-Lex 32022L2464) was transposed into German law by the CSRD-Umsetzungsgesetz (effective 22 July 2024). The second wave captures large undertakings not already in the first wave, with FY2025 as first reporting year and sustainability statements due by 30 June 2026. The German implementation uses a consolidated group test, meaning Gerold's total consolidated employee count of 890 may place it just below the 1,000-employee LkSG threshold but still within CSRD large-undertaking scope if turnover and balance sheet criteria are met. The double materiality assessment would typically identify E1 (climate — natural gas use in both facilities), E3 (water — cold cuts processing water consumption), and S1 (own workforce — seasonal production patterns) as relevant topics for a German food SME."
+      ],
+      "callout": "Commission formal CSRD scoping assessment by 31 January 2026; determine whether Gerold's consolidated entity structure meets second-wave large-undertaking criteria.",
+      "evidence_refs": [
+        "ev-2026-04-070fb003",
+        "ev-2026-04-9ece38fa",
+        "ev-2026-04-95cf44f5"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation",
+      "paragraphs": [
+        "PPWR establishes binding recyclability criteria for all EU-market packaging. Gerold's Rietberg Cold Cuts PE/PA vacuum-skin packs are technically challenging for recyclability classification due to polyethylene-polyamide incompatibility. Hamburg Bakery's packaging — a mix of paper/board retail bags and PE film wrapping for wholesale bread — is at lower risk with Class A and B classifications expected respectively. Commission delegated act on recyclability criteria expected February 2026.",
+        "Regulation (EU) 2025/40 (EUR-Lex 32025R0040). Gerold's packaging exposure is concentrated at Rietberg Cold Cuts, where the PE/PA vacuum-skin format protects product shelf life but creates recyclability challenges at standard German DSD (Duales System Deutschland) material recovery facilities. The Commission's November 2025 call for evidence specifically identifies 'vacuum-skin packaging for chilled meat and fish products' as a category requiring derogation assessment given food safety imperatives. Gerold's head of packaging has been in contact with the Commission's DG GROW packaging team through the BVE working group to advocate for extended timelines for chilled meat sector recyclability compliance."
+      ],
+      "callout": "Join BVE packaging working group; commission recyclability audit for Rietberg Cold Cuts PE/PA vacuum-skin format by 28 February 2026.",
+      "evidence_refs": [
+        "ev-2026-04-6d6e82ac",
+        "ev-2026-04-20ec444e",
+        "ev-2026-04-070fb003",
+        "ev-2026-04-fd57e3e1",
+        "ev-2026-04-eafc5584",
+        "ev-2026-04-678b6c88",
+        "ev-2026-04-ab30184e",
+        "ev-2026-04-c29528f9",
+        "ev-2026-04-c8db5a81"
+      ]
+    },
+    {
+      "heading": "Verpackungsdurchführungsgesetz Amendment",
+      "paragraphs": [
+        "Germany's draft VerpackDG-2026 amendment introduces Article 12c EPR fee differentiation and a new PackML digital declaration requirement for all packaging producers placing more than 10 tonnes/year on the German market. Gerold's combined Hamburg and Rietberg packaging volumes of approximately 490 tonnes/year far exceed the threshold. The Article 12c fee multipliers could increase Gerold's annual ZSVR EPR contribution from the current estimated EUR 38,000 to EUR 60,000–76,000 if cold cut and bread packaging are classified Class B and Class C respectively.",
+        "The draft VerpackDG-2026 amendment (Referentenentwurf, published October 2025) introduces three primary changes affecting Gerold: (1) Article 12c fee differentiation (multipliers 1.0x, 1.4x, 2.0x for Class A, B, C packaging); (2) mandatory PackML digital packaging composition declarations for all ZSVR-registered producers by 30 June 2026; and (3) extended producer responsibility for packaging transit through German distribution centres, potentially capturing Gerold's Hamburg wholesale distribution operations. The Zentrales Stelle Verpackungsregister (ZSVR) is developing the PackML digital standard with input from industry associations; BVE has circulated a draft guidance note for food sector members."
+      ],
+      "callout": "Prepare BVE consultation submission on Article 12c by 28 March 2026; begin ZSVR PackML digital declaration preparation.",
+      "evidence_refs": [
+        "ev-2026-04-6d6e82ac",
+        "ev-2026-04-20ec444e",
+        "ev-2026-04-eafc5584",
+        "ev-2026-04-ab30184e"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "EU-PPWR-2025/40",
+        "packaging",
+        "PPWR establishes binding recyclability criteria for all EU-market packaging. Gerold's Rietberg Cold Cuts PE/PA vacuum-skin packs are technically challenging for recyclability classification due to polyethylene-polyamide incompatibility. Hamburg Bakery's packaging — a mix of paper/board retail bags and PE film wrapping for wholesale bread — is at lower risk with Class A and B classifications expected respectively. Commission delegated act on recyclability criteria expected February 2026.",
+        "Join BVE packaging working group; commission recyclability audit for Rietberg Cold Cuts PE/PA vacuum-skin format by 28 February 2026."
+      ],
+      [
+        "DE-VerpackDG-2026",
+        "packaging",
+        "Germany's draft VerpackDG-2026 amendment introduces Article 12c EPR fee differentiation and a new PackML digital declaration requirement for all packaging producers placing more than 10 tonnes/year on the German market. Gerold's combined Hamburg and Rietberg packaging volumes of approximately 490 tonnes/year far exceed the threshold. The Article 12c fee multipliers could increase Gerold's annual ZSVR EPR contribution from the current estimated EUR 38,000 to EUR 60,000–76,000 if cold cut and bread packaging are classified Class B and Class C respectively.",
+        "Prepare BVE consultation submission on Article 12c by 28 March 2026; begin ZSVR PackML digital declaration preparation."
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2025-11-30"
+    },
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2025-11-30"
+    }
+  ],
+  "total_regulations_tracked": 3,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 2
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "Gerold & Team must assess CSRD applicability based on size thresholds. As a mid-size German food manufacturer with approximately EUR 145m net turnover and 890 employees, the company is likely below the 500-employee threshold for FY2024 first-wave reporting, but may be captured in the second wave (FY2025 reporting for large undertakings meeting two of three size criteria: balance sheet >EUR 20m, turnover >EUR 40m, employees >250). Both facilities combined satisfy two criteria, making Gerold an FY2026 filer if EU member state SME thresholds apply as implemented in German D-ESRS.",
+      "action_required": "Commission formal CSRD scoping assessment by 31 January 2026; determine whether Gerold's consolidated entity structure meets second-wave large-undertaking criteria.",
+      "current_status": "in_force",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2027-06-30",
+      "description": "Directive 2022/2464/EU (EUR-Lex 32022L2464) was transposed into German law by the CSRD-Umsetzungsgesetz (effective 22 July 2024). The second wave captures large undertakings not already in the first wave, with FY2025 as first reporting year and sustainability statements due by 30 June 2026. The German implementation uses a consolidated group test, meaning Gerold's total consolidated employee count of 890 may place it just below the 1,000-employee LkSG threshold but still within CSRD large-undertaking scope if turnover and balance sheet criteria are met. The double materiality assessment would typically identify E1 (climate — natural gas use in both facilities), E3 (water — cold cuts processing water consumption), and S1 (own workforce — seasonal production patterns) as relevant topics for a German food SME."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "change_type": "new_regulation",
+      "severity": "high",
+      "summary": "PPWR establishes binding recyclability criteria for all EU-market packaging. Gerold's Rietberg Cold Cuts PE/PA vacuum-skin packs are technically challenging for recyclability classification due to polyethylene-polyamide incompatibility. Hamburg Bakery's packaging — a mix of paper/board retail bags and PE film wrapping for wholesale bread — is at lower risk with Class A and B classifications expected respectively. Commission delegated act on recyclability criteria expected February 2026.",
+      "action_required": "Join BVE packaging working group; commission recyclability audit for Rietberg Cold Cuts PE/PA vacuum-skin format by 28 February 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "description": "Regulation (EU) 2025/40 (EUR-Lex 32025R0040). Gerold's packaging exposure is concentrated at Rietberg Cold Cuts, where the PE/PA vacuum-skin format protects product shelf life but creates recyclability challenges at standard German DSD (Duales System Deutschland) material recovery facilities. The Commission's November 2025 call for evidence specifically identifies 'vacuum-skin packaging for chilled meat and fish products' as a category requiring derogation assessment given food safety imperatives. Gerold's head of packaging has been in contact with the Commission's DG GROW packaging team through the BVE working group to advocate for extended timelines for chilled meat sector recyclability compliance."
+    },
+    {
+      "regulation_id": "DE-VerpackDG-2026",
+      "title": "Verpackungsdurchführungsgesetz Amendment",
+      "topic": "packaging",
+      "change_type": "new_regulation",
+      "severity": "high",
+      "summary": "Germany's draft VerpackDG-2026 amendment introduces Article 12c EPR fee differentiation and a new PackML digital declaration requirement for all packaging producers placing more than 10 tonnes/year on the German market. Gerold's combined Hamburg and Rietberg packaging volumes of approximately 490 tonnes/year far exceed the threshold. The Article 12c fee multipliers could increase Gerold's annual ZSVR EPR contribution from the current estimated EUR 38,000 to EUR 60,000–76,000 if cold cut and bread packaging are classified Class B and Class C respectively.",
+      "action_required": "Prepare BVE consultation submission on Article 12c by 28 March 2026; begin ZSVR PackML digital declaration preparation.",
+      "current_status": "parliamentary_consultation",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "description": "The draft VerpackDG-2026 amendment (Referentenentwurf, published October 2025) introduces three primary changes affecting Gerold: (1) Article 12c fee differentiation (multipliers 1.0x, 1.4x, 2.0x for Class A, B, C packaging); (2) mandatory PackML digital packaging composition declarations for all ZSVR-registered producers by 30 June 2026; and (3) extended producer responsibility for packaging transit through German distribution centres, potentially capturing Gerold's Hamburg wholesale distribution operations. The Zentrales Stelle Verpackungsregister (ZSVR) is developing the PackML digital standard with input from industry associations; BVE has circulated a draft guidance note for food sector members."
+    }
+  ],
+  "status_changes": [],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

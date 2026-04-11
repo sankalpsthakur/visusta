@@ -22,15 +22,18 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+from config import get_config
+
 
 REPO_ROOT = Path(__file__).resolve().parent
 REG_DATA = REPO_ROOT / "regulatory_data"
 
-REQUIRED_TOPICS = ["ghg", "packaging", "water", "waste", "social_human_rights"]
+_cfg = get_config()
 
-# NOTE: This is a pragmatic allow-list for this repo's stated scope: EU + Germany.
-# Extend intentionally when you add additional geographies.
-ALLOWED_COUNTRY_CODES = {"EU", "DE"}
+# Required topics and allowed country codes sourced from config/visusta.yaml.
+# Extend via config when adding geographies or topics.
+REQUIRED_TOPICS = _cfg.screening.required_topics
+ALLOWED_COUNTRY_CODES = set(_cfg.screening.allowed_countries)
 
 
 @dataclass
@@ -274,8 +277,16 @@ def _audit_pdf_builders_are_data_driven(report: AuditReport) -> None:
             )
 
 
-def run_audit() -> AuditReport:
+def _audit_scope(client_id: Optional[str]) -> Tuple[Path, Path]:
+    if client_id:
+        scoped_root = REG_DATA / client_id
+        return scoped_root / "states", scoped_root / "audits"
+    return REG_DATA / "states", REG_DATA / "audits"
+
+
+def run_audit(client_id: Optional[str] = None) -> AuditReport:
     report = AuditReport()
+    states_dir, out_dir = _audit_scope(client_id)
 
     # 1) Audit report references embedded in PDF builders
     for script in [REPO_ROOT / "build_monthly_report.py", REPO_ROOT / "build_quarterly_brief.py"]:
@@ -288,7 +299,6 @@ def run_audit() -> AuditReport:
         _audit_references(report, script, refs)
 
     # 2) Audit screening state topic coverage and jurisdiction correctness
-    states_dir = REG_DATA / "states"
     if not states_dir.exists():
         report.add("CRITICAL", "Missing Data", str(states_dir), "No screening states directory found.")
     else:
@@ -302,16 +312,16 @@ def run_audit() -> AuditReport:
     # 3) Check whether the builders are data-driven vs changelog-driven
     _audit_pdf_builders_are_data_driven(report)
 
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "gap_analysis_report.md"
+    out_path.write_text(report.to_markdown(), encoding="utf-8")
+
     return report
 
 
 def main() -> None:
     report = run_audit()
-
-    out_dir = REPO_ROOT / "regulatory_data" / "audits"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / "gap_analysis_report.md"
-    out_path.write_text(report.to_markdown(), encoding="utf-8")
+    out_path = _audit_scope(None)[1] / "gap_analysis_report.md"
 
     print(report.to_markdown())
     print(f"\nSaved: {out_path}")

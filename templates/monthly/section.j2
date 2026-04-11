@@ -1,0 +1,5 @@
+<b>{{ section.heading }}</b><br/><br/>
+{{ section.paragraphs | join('<br/><br/>') }}
+{% if section.callout -%}
+<br/><br/><i>&#9888; {{ section.callout }}</i>
+{%- endif %}

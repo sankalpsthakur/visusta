@@ -1,0 +1,57 @@
+{
+  "screening_period": "2025-12",
+  "screening_date": "2025-12-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "status": "in_force_FY2026_first_year",
+      "severity": "medium",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2027-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "BDO Hamburg confirmed large undertaking scope; FY2026 first year; DMA to begin Q1 2026."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Recyclability audit for Rietberg PE/PA vacuum-skin underway; BVE consultation submission preparation."
+    },
+    {
+      "regulation_id": "DE-VerpackDG-2026",
+      "title": "Verpackungsdurchführungsgesetz Amendment",
+      "topic": "packaging",
+      "status": "parliamentary_consultation",
+      "severity": "high",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "DE",
+      "citation": "Referentenentwurf VerpackDG-2026",
+      "summary": "BVE draft response circulating; Gerold packaging team reviewing transit packaging EPR exposure."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "low",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Soy feed EUDR declarations requested from Westfleisch and Tönnies group; SAI Platform FSA data expected March 2026."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-0d6f1d2c",
+  "client_id": "alpine-dairy",
+  "source_id": "fedlex",
+  "source_name": "Fedlex",
+  "url": "https://www.fedlex.admin.ch/eli/cc/2023/420/de",
+  "access_date": "2026-04-11",
+  "document_title": "Verpackungsverordnung CH \u2014 Swiss Packaging Ordinance 2023",
+  "snippet": "Swiss equivalent to EU PPWR: recyclability targets and single-use plastic restrictions.",
+  "hash": "sha256:0d6f1d2c86eb831c2b483b5c4ee2bdc019f80eda9b326154ff08191526a6c323",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "packaging",
+  "related_regulation_id": "VerpV-2023"
+}

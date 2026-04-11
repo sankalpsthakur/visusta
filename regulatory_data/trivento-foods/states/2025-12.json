@@ -1,0 +1,57 @@
+{
+  "screening_period": "2025-12",
+  "screening_date": "2025-12-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "IT-Plastic-Tax-DL73",
+      "title": "Italian Plastic Tax",
+      "topic": "packaging",
+      "status": "confirmed_application_date",
+      "severity": "high",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "IT",
+      "citation": "Law 160/2019; Manovra 2026 (Law 234/2025)",
+      "summary": "Manovra 2026 confirmed standard portal pathway; Novamont compostable film assessment commissioned."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "delegated_act_consultation",
+      "severity": "medium",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "CONAI consultation response preparation underway; glass bottle reuse modelling initiated."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464; D.Lgs. 125/2024 (IT)",
+      "summary": "DMA complete: E1 (kiln energy), E3 (water), S1 (seasonal workers), G1 (olive oil supply) material; SBTi target commitment required."
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "status": "transposition_in_progress",
+      "severity": "medium",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32024L1760",
+      "summary": "MIMIT consultation expected Q1 2026; Italian transposition likely to extend to agri first-tier suppliers."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-070fb003",
+  "client_id": "gerold-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1233",
+  "access_date": "2026-04-11",
+  "document_title": "ESRS Set 1 \u2014 European Sustainability Reporting Standards (Commission Delegated Regulation)",
+  "snippet": "ESRS E1-E5 (climate, pollution, water, biodiversity, resource use) and S1-S4 (social) mandatory disclosure.",
+  "hash": "sha256:070fb0036af25627d0150cd88b42943cbd44321a81e67a46ac87df01bb15a186",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.97,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

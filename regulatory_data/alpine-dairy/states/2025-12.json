@@ -1,0 +1,81 @@
+{
+  "screening_period": "2025-12",
+  "screening_date": "2025-12-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "CH-VOCV-2025",
+      "title": "Swiss VOC Ordinance Update",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-03-01",
+      "enforcement_date": "2025-03-01",
+      "jurisdiction": "CH",
+      "citation": "SR 814.318.142.1 (revised 2025)",
+      "summary": "First cantonal inspections scheduled Q1 2026."
+    },
+    {
+      "regulation_id": "EU-CBAM-2023/956",
+      "title": "Carbon Border Adjustment Mechanism",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "low",
+      "effective_date": "2026-01-01",
+      "enforcement_date": "2026-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R0956",
+      "summary": "Definitive phase from January 2026; dairy products outside current scope but Article 30 review may extend."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Commission call for evidence on recyclability criteria published November 2025."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Definitive applicability from December 2025; soy/palm feed supply chain due diligence required."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "FY2024 report due June 2026; assurance provider engagement underway."
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "status": "transposition_in_progress",
+      "severity": "high",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32024L1760",
+      "summary": "DE and AT draft transposition bills published; civil liability provisions under review."
+    }
+  ]
+}

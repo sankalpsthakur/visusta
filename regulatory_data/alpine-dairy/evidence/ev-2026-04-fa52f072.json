@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-fa52f072",
+  "client_id": "alpine-dairy",
+  "source_id": "fedlex",
+  "source_name": "Fedlex",
+  "url": "https://www.fedlex.admin.ch/eli/cc/2021/846/de",
+  "access_date": "2026-04-11",
+  "document_title": "CO2-Gesetz CH \u2014 Swiss CO2 Act 2021 (revised)",
+  "snippet": "Updated Swiss CO2 levy on fuels; ETS participation for large emitters; aviation surcharge.",
+  "hash": "sha256:fa52f072fba1ad191c4ca634f9e4d5e4795b7c1a3a179f8ee8a6ef52126998c3",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "ghg",
+  "related_regulation_id": "CO2G-CH-2021"
+}

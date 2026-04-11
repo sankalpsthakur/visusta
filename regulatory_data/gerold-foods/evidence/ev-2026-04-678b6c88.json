@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-678b6c88",
+  "client_id": "gerold-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+  "access_date": "2026-04-11",
+  "document_title": "CBAM \u2014 Carbon Border Adjustment Mechanism Regulation 2023/956",
+  "snippet": "Carbon price on imports of certain goods from countries without equivalent carbon pricing.",
+  "hash": "sha256:678b6c88be5d2f7747d75041fdc6e9f0d1763910f60f7508fcae64d1a75a0059",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "ghg",
+  "related_regulation_id": "CBAM-2023"
+}

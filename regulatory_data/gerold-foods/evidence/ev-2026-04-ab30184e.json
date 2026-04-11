@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-ab30184e",
+  "client_id": "gerold-foods",
+  "source_id": "zsvr",
+  "source_name": "ZSVR/LUCID",
+  "url": "https://www.zsvr.de/ZSVR/DE/Aufgaben/Verpackungsregister/LUCID/lucid_node.html",
+  "access_date": "2026-04-11",
+  "document_title": "LUCID Verpackungsregister \u2014 Registration Requirements",
+  "snippet": "All initial distributors of packaging must register in the LUCID packaging register.",
+  "hash": "sha256:ab30184e70278b6aac315c3b52ca55897f8b8e21da9401ff6ac24406b31b7427",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "packaging",
+  "related_regulation_id": "VerpackDG-2019"
+}

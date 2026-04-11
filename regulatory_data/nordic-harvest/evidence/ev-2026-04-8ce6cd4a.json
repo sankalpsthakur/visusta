@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-8ce6cd4a",
+  "client_id": "nordic-harvest",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115",
+  "access_date": "2026-04-11",
+  "document_title": "EUDR \u2014 EU Deforestation Regulation (EEA-relevant for Norwegian seafood)",
+  "snippet": "Norwegian seafood operators exporting to EU must provide EUDR due diligence statements.",
+  "hash": "sha256:8ce6cd4ae597ecc0ee19d79491788551ee55be8b8b883ac63e93127673d0a4e6",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.87,
+  "topic": "social_human_rights",
+  "related_regulation_id": "EUDR-2023"
+}

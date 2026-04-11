@@ -1,0 +1,81 @@
+{
+  "screening_period": "2026-02",
+  "screening_date": "2026-02-28",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "class_C_confirmed_mitigation_options",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Delegated act draft confirmed Class C; paper-MAP Class A (EUR 0.04/unit premium) vs mono-PE Class B pilot decision March 2026."
+    },
+    {
+      "regulation_id": "DE-VerpackDG-2026",
+      "title": "Verpackungsdurchführungsgesetz Amendment",
+      "topic": "packaging",
+      "status": "parliamentary_consultation",
+      "severity": "high",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "DE",
+      "citation": "Referentenentwurf VerpackDG-2026",
+      "summary": "Consultation closes 31 March 2026; Bundesrat vote May 2026; PackML declaration due 30 June 2026."
+    },
+    {
+      "regulation_id": "AT-EAG-2021",
+      "title": "Austrian EPR — ARA",
+      "topic": "packaging",
+      "status": "declaration_submitted",
+      "severity": "low",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "jurisdiction": "AT",
+      "citation": "BGBl. II Nr. 4/2025",
+      "summary": "FY2025 declaration submitted 20 Feb: 78t total; EUR 16,840/year contribution; Q2 EUR 4,210 due 30 April 2026."
+    },
+    {
+      "regulation_id": "DE-LkSG-2023",
+      "title": "Lieferkettensorgfaltspflichtengesetz",
+      "topic": "social_human_rights",
+      "status": "rspo_transition_approved",
+      "severity": "medium",
+      "effective_date": "2024-01-01",
+      "enforcement_date": "2024-01-01",
+      "jurisdiction": "DE",
+      "citation": "BGBl. 2021 I S. 2959",
+      "summary": "RSPO Mass Balance transition approved effective 1 April 2026; EUR 5,400/year premium; BAFA report in preparation."
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive — AT",
+      "topic": "social_human_rights",
+      "status": "contract_review_required",
+      "severity": "medium",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32024L1760",
+      "summary": "AT CSDDD first reading approved; NZ butter import chain flagged; CSDDD clause to be added at September 2026 contract renewal."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "status": "dma_in_progress",
+      "severity": "medium",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "DMA expected completion March 2026; E1 oven audit underway; S2 RSPO transition addresses palm oil risk."
+    }
+  ]
+}

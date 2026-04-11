@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-fe8d6581",
+  "client_id": "nordic-harvest",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+  "access_date": "2026-04-11",
+  "document_title": "CSRD \u2014 EEA Relevance for Norwegian Exporters",
+  "snippet": "Norway as EEA member must implement CSRD; Norwegian companies exporting to EU affected.",
+  "hash": "sha256:fe8d6581f7ba151b183a3929dbb1bce4439d49955ad66c52f2f9e1b8317de00c",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

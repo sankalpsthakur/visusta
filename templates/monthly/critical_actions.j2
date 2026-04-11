@@ -1,0 +1,10 @@
+{% if critical_actions -%}
+The following critical actions require immediate attention:<br/>
+{% for action in critical_actions -%}
+<b>{{ action.regulation_id }}</b> — {{ action.title }}<br/>
+{{ action.summary }}<br/>
+<i>Action required:</i> {{ action.action_required }}{% if not loop.last %}<br/><br/>{% endif %}
+{% endfor %}
+{%- else -%}
+No critical regulatory actions were flagged this period.
+{%- endif %}

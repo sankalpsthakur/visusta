@@ -1,0 +1,69 @@
+{
+  "screening_period": "2025-12",
+  "screening_date": "2025-12-31",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax on Industrial Emissions",
+      "topic": "ghg",
+      "status": "registered_metering_installed",
+      "severity": "medium",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "jurisdiction": "PT",
+      "citation": "Decreto-Lei n.º 12/2025",
+      "summary": "APA registered 10 December; December metering: 148 tCO2e; annual declaration due 31 March 2026."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Packaging audit commissioned from Inovação em Embalagem; SIGRE Lisbon pilot registration pending."
+    },
+    {
+      "regulation_id": "PT-Deposit-Return-2028",
+      "title": "Portuguese Deposit-Return Scheme",
+      "topic": "packaging",
+      "status": "policy_announced",
+      "severity": "medium",
+      "effective_date": "2028-01-01",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "PT",
+      "citation": "Portugal Circular 2030 (December 2025)",
+      "summary": "National DRS committed for containers >300ml by 2028; SIGRE pilot Q2 2026; Terra Verde invited as founding member."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "low",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Tropical fruit concentrates not listed; Brazil/Peru sourcing flagged high-risk; proactive supplier declarations recommended."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-12-31",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "BDO Portugal engaged; ESRS gap analysis initiated; FY2025 first report due June 2026."
+    }
+  ]
+}

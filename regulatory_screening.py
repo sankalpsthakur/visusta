@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import List, Optional, Dict, Any, Protocol, Tuple, Set
 from uuid import UUID, uuid4
 
+from config import get_config
+
 
 # ============================================================================
 # ENUMERATIONS
@@ -434,8 +436,14 @@ class RegulatoryScreeningModule:
     ):
         self.store = store
         self.sources = sources or []
-        self.config = config or {}
-        self.critical_enforcement_days = self.config.get("critical_enforcement_window_days", 90)
+        _cfg = get_config()
+        # Merge YAML defaults under any caller-supplied config dict.
+        _defaults: Dict[str, Any] = {
+            "allowed_countries": _cfg.screening.allowed_countries,
+            "critical_enforcement_window_days": _cfg.screening.critical_enforcement_window_days,
+        }
+        self.config = {**_defaults, **(config or {})}
+        self.critical_enforcement_days = self.config.get("critical_enforcement_window_days")
     
     # ==================== PUBLIC API ====================
     

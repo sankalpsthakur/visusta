@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-95cf44f5",
+  "client_id": "gerold-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+  "access_date": "2026-04-11",
+  "document_title": "CSRD \u2014 Corporate Sustainability Reporting Directive 2022/2464",
+  "snippet": "Large undertakings and listed SMEs must report sustainability information under ESRS standards.",
+  "hash": "sha256:95cf44f5851647da69cecdb0f15a07f2ba375ce754630d1ac026e915a7f9ac88",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.98,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

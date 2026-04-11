@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-8c0b7cac",
+  "client_id": "brosel-backwaren",
+  "source_id": "zsvr",
+  "source_name": "ZSVR/LUCID",
+  "url": "https://www.zsvr.de/ZSVR/DE/Aufgaben/Verpackungsregister/LUCID/lucid_node.html",
+  "access_date": "2026-04-11",
+  "document_title": "LUCID Packaging Register \u2014 Mandatory Registration",
+  "snippet": "All bakery packaging producers must register in LUCID; annual system participation fees apply.",
+  "hash": "sha256:8c0b7cac34a84e81e1a7f8e7f5f0420c3f47e3557da2e5797ef299b58dcaba44",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "packaging",
+  "related_regulation_id": "VerpackDG-2019"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-7a8dcda0",
+  "client_id": "brosel-backwaren",
+  "source_id": "bafa",
+  "source_name": "BAFA",
+  "url": "https://www.bafa.de/DE/Themen/Aussenwirtschaft_Investitionskontrolle/Lieferkettensorgfaltspflichtengesetz/lksg_node.html",
+  "access_date": "2026-04-11",
+  "document_title": "BAFA LkSG Compliance Framework \u2014 Food and Bakery Sector",
+  "snippet": "BAFA sector guidance for food manufacturers; wheat and sugar supply chain risk focus.",
+  "hash": "sha256:7a8dcda0d88144efc086ddf474e05b885e9486ba9b378adacd7fc7a10c017e17",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "social_human_rights",
+  "related_regulation_id": "LkSG-2021"
+}

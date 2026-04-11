@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-9ece38fa",
+  "client_id": "gerold-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1760",
+  "access_date": "2026-04-11",
+  "document_title": "CSDDD \u2014 Corporate Sustainability Due Diligence Directive 2024/1760",
+  "snippet": "Companies must conduct human rights and environmental due diligence across their value chains.",
+  "hash": "sha256:9ece38faef9f0b02697bbd0e44f8e15c0e02d5145abc30e3267ecb6199bac456",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.97,
+  "topic": "social_human_rights",
+  "related_regulation_id": "CSDDD-2024"
+}

@@ -1,0 +1,157 @@
+{
+  "screening_period": "2026-01",
+  "generated_date": "2026-01-31",
+  "previous_period": "2025-12",
+  "client_context": {
+    "facility_line": "Parma Pasta & Modena Olive Oil, Italian Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Italian Sustainability Frameworks for Food Manufacturers"
+  },
+  "executive_summary": "January 2026 presents Trivento Foods with its most demanding compliance preparation period ahead of the summer Italian Plastic Tax activation. Novamont's feasibility assessment for compostable film substitution across Parma Pasta's four main pasta SKU formats was completed on 15 January 2026. The findings confirm that compostable Mater-Bi film meeting EN 13432 is technically viable for the company's semolina-based pasta lines, with a EUR 0.12–0.18/kg premium over current PE film. Full substitution would reduce the Plastic Tax liability from an estimated EUR 171,000 to zero, with a net annual packaging cost increase of approximately EUR 46,000–68,000. The economics strongly favour substitution and the board has approved the investment.\n\nThe EU Taxonomy Article 8 assessment is underway for FY2024 disclosures. Parma Pasta's natural gas-intensive drying process faces particular scrutiny under the Climate Change Mitigation Technical Screening Criteria: the 'manufacture of food products' activity (NACE C.10.1) requires that the facility's specific energy consumption does not exceed the top quartile benchmark for the EU pasta manufacturing sector. Internal analysis suggests Parma operates in the second quartile, which means it can claim 'substantial contribution' to climate change mitigation only through a credible transition plan with time-bound milestones — not on current energy performance alone.\n\nItaly's D.Lgs. 125/2024 CSRD transposition regulation was amended by a technical correction decree in January 2026 to clarify that the Autorità di Vigilanza (ANAC) enforcement powers apply from FY2024 reporting, not from FY2026 as some legal interpretations had argued. This confirms that Trivento's FY2024 report faces regulatory enforcement risk from July 2026.",
+  "sections": [
+    {
+      "heading": "Italian Plastic Tax",
+      "paragraphs": [
+        "Board approved full transition to Novamont Mater-Bi EN 13432-certified compostable film for Parma Pasta's four main SKU formats. Transition cost EUR 46,000–68,000/year premium above current PE film cost, eliminating EUR 171,000 annual Plastic Tax liability. Packaging supplier Huhtamaki Italy engaged for scale-up trial at Parma facility starting April 2026."
+      ],
+      "callout": "Complete Huhtamaki scale-up trial by 30 June 2026 to ensure compostable film transition complete before 1 July 2026 Plastic Tax activation.",
+      "evidence_refs": [
+        "ev-2026-04-e37b22bb",
+        "ev-2026-04-c5fb2a38",
+        "ev-2026-04-295028b3",
+        "ev-2026-04-11a73b75",
+        "ev-2026-04-b08c9f47"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Reporting Directive — ANAC Enforcement Clarification",
+      "paragraphs": [
+        "Italy's technical correction decree (D.Lgs. 8/2026) clarified that ANAC enforcement powers for CSRD apply from FY2024 reporting, resolving legal uncertainty about enforcement timing. Trivento's FY2024 sustainability statement is now subject to EUR 50,000–150,000 penalties for material non-compliance from July 2026. This accelerates the external assurance timeline."
+      ],
+      "callout": "Confirm external assurance engagement with PwC Italy by 31 January 2026; target draft sustainability statement for board approval by 30 April 2026.",
+      "evidence_refs": [
+        "ev-2026-04-6d0ad1a3",
+        "ev-2026-04-96ba4c07"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "EU-CSRD-2022/2464",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2026-01-31"
+    }
+  ],
+  "total_regulations_tracked": 4,
+  "total_changes_detected": 2,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [
+    {
+      "regulation_id": "IT-Plastic-Tax-DL73",
+      "title": "Italian Plastic Tax",
+      "topic": "packaging",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "Board approved full transition to Novamont Mater-Bi EN 13432-certified compostable film for Parma Pasta's four main SKU formats. Transition cost EUR 46,000–68,000/year premium above current PE film cost, eliminating EUR 171,000 annual Plastic Tax liability. Packaging supplier Huhtamaki Italy engaged for scale-up trial at Parma facility starting April 2026.",
+      "action_required": "Complete Huhtamaki scale-up trial by 30 June 2026 to ensure compostable film transition complete before 1 July 2026 Plastic Tax activation.",
+      "current_status": "mitigation_approved",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "changes": [
+        {
+          "field": "mitigation_status",
+          "old": "feasibility_assessment_in_progress",
+          "new": "board_approved_mater_bi_transition",
+          "description": "Full Mater-Bi film substitution approved; eliminates EUR 171,000 annual Plastic Tax liability"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive — ANAC Enforcement Clarification",
+      "topic": "social_human_rights",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "Italy's technical correction decree (D.Lgs. 8/2026) clarified that ANAC enforcement powers for CSRD apply from FY2024 reporting, resolving legal uncertainty about enforcement timing. Trivento's FY2024 sustainability statement is now subject to EUR 50,000–150,000 penalties for material non-compliance from July 2026. This accelerates the external assurance timeline.",
+      "action_required": "Confirm external assurance engagement with PwC Italy by 31 January 2026; target draft sustainability statement for board approval by 30 April 2026.",
+      "current_status": "enforcement_confirmed_FY2024",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-07-01",
+      "changes": [
+        {
+          "field": "enforcement_timing",
+          "old": "legal_uncertainty_FY2024_or_FY2026",
+          "new": "confirmed_FY2024_ANAC_powers_active_July_2026",
+          "description": "D.Lgs. 8/2026 resolved enforcement timing; FY2024 reports subject to ANAC review from July 2026"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "severity": "high",
+      "action": "Draft sustainability statement must reach board by 30 April 2026 — ANAC enforcement confirmed from July 2026"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

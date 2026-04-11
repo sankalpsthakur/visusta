@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-6afadeb8",
+  "client_id": "brosel-backwaren",
+  "source_id": "ris",
+  "source_name": "Rechtsinformationssystem Austria",
+  "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10020386",
+  "access_date": "2026-04-11",
+  "document_title": "Austrian Verpackungsverordnung \u2014 Packaging Ordinance (amended 2024)",
+  "snippet": "Vienna site packaging obligations: 80% recycling rate for paper/cardboard bakery packaging.",
+  "hash": "sha256:6afadeb86d7a6030e486ae4ea1ce28f8a0fe51a51eb9d6e20754ef25596177e3",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "packaging",
+  "related_regulation_id": "AT-VerpackV-2024"
+}

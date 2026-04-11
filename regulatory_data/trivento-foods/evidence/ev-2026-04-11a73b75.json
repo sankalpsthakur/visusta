@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-11a73b75",
+  "client_id": "trivento-foods",
+  "source_id": "gazzetta_ufficiale",
+  "source_name": "Gazzetta Ufficiale della Repubblica Italiana",
+  "url": "https://www.gazzettaufficiale.it/eli/gu/2023/12/30/303/sg/pdf",
+  "access_date": "2026-04-11",
+  "document_title": "Legge di Bilancio 2024 \u2014 Green Tax Incentives for Food Industry",
+  "snippet": "Tax credits for food manufacturers investing in energy efficiency and circular packaging solutions.",
+  "hash": "sha256:11a73b75c50c698196814a638bb404a06ed52d9d9d9e56f29e9a263bd305c85c",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.86,
+  "topic": "packaging",
+  "related_regulation_id": "IT-GreenIncentives-2024"
+}

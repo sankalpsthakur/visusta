@@ -1,0 +1,45 @@
+{
+  "screening_period": "2025-11",
+  "screening_date": "2025-11-30",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": ["first_screening_baseline"],
+  "regulations": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax on Industrial Emissions",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "jurisdiction": "PT",
+      "citation": "Decreto-Lei n.º 12/2025",
+      "summary": "EUR 42.98/tCO2e; Lisbon Juices ~1,850 tCO2e/year estimated = EUR 79,500 liability; APA registration required."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Multi-format packaging portfolio (glass, PET, aseptic carton) audit required; EPR surcharge exposure varies by format."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-12-31",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464; Decreto-Lei n.º 89/2024 (PT)",
+      "summary": "FY2025 first reporting year; BDO Portugal CSRD scoping initiated; sustainability statement due June 2026."
+    }
+  ]
+}

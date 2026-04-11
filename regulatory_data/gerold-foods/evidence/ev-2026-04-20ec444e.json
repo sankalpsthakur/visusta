@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-20ec444e",
+  "client_id": "gerold-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+  "access_date": "2026-04-11",
+  "document_title": "PPWR \u2014 Packaging and Packaging Waste Regulation 2025/40",
+  "snippet": "Mandatory recycled content targets and packaging minimisation requirements from 2030.",
+  "hash": "sha256:20ec444e47c345ae64a563075293f8fb46e3debdf42bd19531bde19eef2eb4cb",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "packaging",
+  "related_regulation_id": "PPWR-2025"
+}

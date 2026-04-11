@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-00762e31",
+  "client_id": "brosel-backwaren",
+  "source_id": "bgbl",
+  "source_name": "Bundesgesetzblatt",
+  "url": "https://www.recht.bund.de/bgbl/1/2021/S2959/regelungstext.pdf",
+  "access_date": "2026-04-11",
+  "document_title": "LkSG \u2014 Supply Chain Due Diligence Act (applies from 2024 to 1,000+ employees)",
+  "snippet": "Brosel Backwaren must implement risk-based supply chain monitoring if headcount exceeds 1,000.",
+  "hash": "sha256:00762e31813bf8c838cefa1bb89860a59e3ca2f8c61dc623c55355cc604fe231",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "social_human_rights",
+  "related_regulation_id": "LkSG-2021"
+}

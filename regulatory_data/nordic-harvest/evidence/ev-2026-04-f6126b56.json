@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-f6126b56",
+  "client_id": "nordic-harvest",
+  "source_id": "miljodirektoratet",
+  "source_name": "Norwegian Environment Agency",
+  "url": "https://www.miljodirektoratet.no/ansvarsomraader/industri-og-naeringsliv/utslippstillatelse/",
+  "access_date": "2026-04-11",
+  "document_title": "Milj\u00f8direktoratet \u2014 Discharge Permit Requirements for Fish Processing",
+  "snippet": "Fish processing plants require individual discharge permits; effluent BOD and nutrient limits.",
+  "hash": "sha256:f6126b565d0adcc8c34b3de86a9c6db62963ffdeeaf9d611a20b985128206b77",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "water",
+  "related_regulation_id": "Forurensningsloven-1981"
+}

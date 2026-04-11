@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-57def54c",
+  "client_id": "brosel-backwaren",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+  "access_date": "2026-04-11",
+  "document_title": "PPWR \u2014 Packaging and Packaging Waste Regulation 2025/40",
+  "snippet": "Bakery and pastry packaging must achieve 50% recycled content by 2030 under PPWR.",
+  "hash": "sha256:57def54c045adcef6cd884fbaffb7368afe77c222887e2bf08a511d3987eec16",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.97,
+  "topic": "packaging",
+  "related_regulation_id": "PPWR-2025"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-3de138c9",
+  "client_id": "terra-verde",
+  "source_id": "dre",
+  "source_name": "Di\u00e1rio da Rep\u00fablica Eletr\u00f3nico",
+  "url": "https://dre.pt/dre/legislacao-consolidada/decreto-lei/2023-802000",
+  "access_date": "2026-04-11",
+  "document_title": "DL n.\u00ba 102-D/2020 \u2014 Portuguese Waste Management Regime",
+  "snippet": "Updated waste regime transposing EU Circular Economy Package; EPR for packaging and organics.",
+  "hash": "sha256:3de138c9927320fac6754daf0bf534a07ad4e5594bb3c798a4c5b790a662a9ea",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "waste",
+  "related_regulation_id": "PT-Waste-2020"
+}

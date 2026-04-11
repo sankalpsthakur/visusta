@@ -1,0 +1,124 @@
+{
+  "screening_period": "2026-01",
+  "generated_date": "2026-01-31",
+  "previous_period": "2025-12",
+  "client_context": {
+    "facility_line": "Zurich Cheese Works & Bern Yogurt Plant, Swiss Confederation",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Swiss Sustainability Frameworks for Dairy Manufacturers"
+  },
+  "executive_summary": "January 2026 is a pivotal month for Alpine Dairy AG's regulatory compliance calendar. CBAM's definitive phase is now active, and while dairy product lines remain outside the current product scope, the company's engineering procurement team flagged that ammonia refrigerant purchases from a German supplier may create indirect reporting exposure under the definitive CBAM secondary obligations framework. Legal counsel has been engaged to clarify.\n\nThe EU Taxonomy Regulation (EU-Taxonomy-2020/852) Article 8 disclosure obligations are now fully embedded in CSRD reporting for FY2024. Alpine Dairy's European entities must determine the proportion of their capital expenditure, operating expenditure, and turnover that is Taxonomy-aligned under the 'protection and restoration of biodiversity and ecosystems' and 'sustainable use and protection of water and marine resources' objectives, both highly relevant to dairy operations. The Technical Screening Criteria for the food and beverage manufacturing sector under Climate Change Mitigation were adopted by delegated act in late 2024 and now apply.\n\nThe Swiss-EU bilateral negotiations, resumed in November 2024, have produced a draft chapter on mutual recognition of environmental standards that could ultimately harmonise CH-VOCV-2025 compliance with EU standards, reducing Alpine Dairy's dual-compliance burden. However, no ratification timeline has been confirmed and the company cannot yet rely on this for planning purposes.",
+  "sections": [
+    {
+      "heading": "EU Taxonomy Regulation — Article 8 Disclosures",
+      "paragraphs": [
+        "The EU Taxonomy Regulation's Article 8 disclosure requirements are now fully integrated into CSRD reporting for FY2024 filers. Large EU undertakings must report the share of turnover, capital expenditure, and operating expenditure derived from Taxonomy-aligned economic activities. For dairy manufacturers, relevant Taxonomy activities include 'manufacture of food and beverages' (activity 9.2 in the Climate Change Mitigation Delegated Act) and 'rehabilitation and restoration of ecosystems' relating to sustainable land use. Water intensity thresholds defined in the Water and Marine Resources Technical Screening Criteria apply to Zurich Cheese Works, which processes approximately 120,000 tonnes of milk annually.",
+        "Regulation (EU) 2020/852 (EUR-Lex 32020R0852) and its delegated acts — Commission Delegated Regulation (EU) 2021/2139 (Climate Change Mitigation and Adaptation) and (EU) 2023/2485 (four remaining environmental objectives) — define the Taxonomy framework. Article 8 of the Regulation mandates that financial and non-financial undertakings subject to NFRD/CSRD disclose Taxonomy KPIs. The food and beverage manufacturing activity (NACE C.10) is covered under Climate Change Mitigation with Technical Screening Criteria requiring substantial contribution to GHG reduction or energy efficiency. Dairy processing is also subject to the 'Do No Significant Harm' assessment for water use, requiring water consumption below sector-specific benchmarks set by the Water Framework Directive. The Commission's guidance document on Taxonomy reporting for agri-food companies (2024 update) provides sector-specific interpretation."
+      ],
+      "callout": "Commission Taxonomy alignment assessment for Zurich Cheese Works and Bern Yogurt Plant by 31 March 2026 to inform FY2024 CSRD disclosures.",
+      "evidence_refs": [
+        "ev-2026-04-71e87763"
+      ]
+    },
+    {
+      "heading": "Carbon Border Adjustment Mechanism",
+      "paragraphs": [
+        "The Commission published implementing regulation details for CBAM definitive-phase financial settlement procedures in January 2026, clarifying that CBAM certificates must be purchased by 31 May each year for the prior calendar year's imports. The certificate price is set as the weekly average of EU ETS auction prices. Current ETS price of approximately EUR 68/tCO2e creates a financial baseline for CBAM liability calculations."
+      ],
+      "callout": "Confirm with German engineering supplier whether CBAM obligations arise from cross-border energy-intensive component supply; no direct dairy CBAM obligation currently exists."
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": []
+  },
+  "references": [],
+  "total_regulations_tracked": 6,
+  "total_changes_detected": 2,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "water": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-Taxonomy-2020/852",
+      "title": "EU Taxonomy Regulation — Article 8 Disclosures",
+      "topic": "water",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "The EU Taxonomy Regulation's Article 8 disclosure requirements are now fully integrated into CSRD reporting for FY2024 filers. Large EU undertakings must report the share of turnover, capital expenditure, and operating expenditure derived from Taxonomy-aligned economic activities. For dairy manufacturers, relevant Taxonomy activities include 'manufacture of food and beverages' (activity 9.2 in the Climate Change Mitigation Delegated Act) and 'rehabilitation and restoration of ecosystems' relating to sustainable land use. Water intensity thresholds defined in the Water and Marine Resources Technical Screening Criteria apply to Zurich Cheese Works, which processes approximately 120,000 tonnes of milk annually.",
+      "action_required": "Commission Taxonomy alignment assessment for Zurich Cheese Works and Bern Yogurt Plant by 31 March 2026 to inform FY2024 CSRD disclosures.",
+      "current_status": "in_force",
+      "effective_date": "2023-01-01",
+      "enforcement_date": "2026-06-30",
+      "description": "Regulation (EU) 2020/852 (EUR-Lex 32020R0852) and its delegated acts — Commission Delegated Regulation (EU) 2021/2139 (Climate Change Mitigation and Adaptation) and (EU) 2023/2485 (four remaining environmental objectives) — define the Taxonomy framework. Article 8 of the Regulation mandates that financial and non-financial undertakings subject to NFRD/CSRD disclose Taxonomy KPIs. The food and beverage manufacturing activity (NACE C.10) is covered under Climate Change Mitigation with Technical Screening Criteria requiring substantial contribution to GHG reduction or energy efficiency. Dairy processing is also subject to the 'Do No Significant Harm' assessment for water use, requiring water consumption below sector-specific benchmarks set by the Water Framework Directive. The Commission's guidance document on Taxonomy reporting for agri-food companies (2024 update) provides sector-specific interpretation."
+    }
+  ],
+  "status_changes": [],
+  "content_updates": [
+    {
+      "regulation_id": "EU-CBAM-2023/956",
+      "title": "Carbon Border Adjustment Mechanism",
+      "topic": "ghg",
+      "change_type": "content_update",
+      "severity": "low",
+      "summary": "The Commission published implementing regulation details for CBAM definitive-phase financial settlement procedures in January 2026, clarifying that CBAM certificates must be purchased by 31 May each year for the prior calendar year's imports. The certificate price is set as the weekly average of EU ETS auction prices. Current ETS price of approximately EUR 68/tCO2e creates a financial baseline for CBAM liability calculations.",
+      "action_required": "Confirm with German engineering supplier whether CBAM obligations arise from cross-border energy-intensive component supply; no direct dairy CBAM obligation currently exists.",
+      "current_status": "in_force",
+      "effective_date": "2026-01-01",
+      "enforcement_date": "2026-05-31",
+      "changes": [
+        {
+          "field": "implementing_details",
+          "old": "pending",
+          "new": "published",
+          "description": "Commission published definitive-phase CBAM certificate settlement procedures"
+        }
+      ]
+    }
+  ],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

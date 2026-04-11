@@ -1,0 +1,172 @@
+{
+  "screening_period": "2025-11",
+  "generated_date": "2025-11-30",
+  "previous_period": "2025-10",
+  "client_context": {
+    "facility_line": "Lisbon Juices & Porto Organic Veg, Portuguese Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Portuguese Sustainability Frameworks for Organic Food Producers"
+  },
+  "executive_summary": "November 2025 is Terra Verde Organics Lda.'s inaugural regulatory screening period, reflecting the company's February 2026 client onboarding date and the need to establish a baseline regulatory landscape for its Lisbon Juices and Porto Organic Veg operations. As a recent entrant to the Visusta platform, this first screening covers all active regulations relevant to Terra Verde's Portuguese-domiciled food manufacturing operations.\n\nThe Portuguese carbon tax on industrial emissions (PT-CO2-Tax-2024), which entered force on 1 January 2025 under Portugal's revised ETS-complement regime, is the most financially immediate regulatory matter. Terra Verde's Lisbon Juices facility uses three natural gas-fired pasteurisation lines that collectively emit approximately 1,850 tCO2e/year from Scope 1 sources. At the current Portuguese carbon tax rate of EUR 42.98/tCO2e (indexed to the EU ETS price), this creates an annual liability of approximately EUR 79,500. The Porto Organic Veg cold storage facility's refrigeration system uses HFC-134a with an annual F-gas emissions equivalent of approximately 230 tCO2e, potentially captured under the Portuguese F-gas surcharge supplement.\n\nThe EU-PPWR-2025/40 framework applies to Terra Verde's primary packaging across both facilities, with particular complexity around the Lisbon Juices range that uses a mix of glass bottles (premium organic juices), Tetra Brik aseptic cartons (ambient range), and PET bottles (sport/convenience range). Regulatory mapping of all three formats against PPWR recyclability criteria is required as a priority action. The Portuguese association EMBALAGEM, through its extended producer responsibility scheme Sociedade Ponto Verde, is an active stakeholder in PPWR national transposition.",
+  "sections": [
+    {
+      "heading": "Portuguese Carbon Tax on Industrial Emissions (Taxa de Carbono Industrial)",
+      "paragraphs": [
+        "Portugal's industrial carbon tax, effective 1 January 2025, applies to non-ETS industrial emitters including food manufacturers with annual Scope 1 emissions exceeding 500 tCO2e. Terra Verde's Lisbon Juices pasteurisation lines emit approximately 1,850 tCO2e/year of direct natural gas combustion. At EUR 42.98/tCO2e (2025 rate, indexed quarterly to EU ETS average), the estimated annual tax liability is EUR 79,500. Annual declaration is due to Agência Portuguesa do Ambiente (APA) by 31 March each year for the preceding calendar year.",
+        "The Portuguese carbon tax for industrial emissions was introduced by Decreto-Lei n.º 12/2025 as an extension of Portugal's commitment under the Fundo Ambiental (Environmental Fund) framework and the EU Effort Sharing Regulation (EU) 2018/842. The tax applies to Portuguese-domiciled industrial establishments classified under NACE sections B-E with annual non-ETS Scope 1 emissions exceeding 500 tCO2e. The tax rate is set at 100% of the quarterly average EU ETS auction clearing price, published by the Portuguese Direção-Geral de Energia e Geologia. Revenue is ring-fenced for the Fundo Ambiental and redistributed to energy efficiency grants for SMEs in the food and agricultural sector. Terra Verde Organics qualifies for the SME energy efficiency grant programme if it invests in certified pasteurisation heat recovery systems."
+      ],
+      "callout": "Register Lisbon Juices facility with APA for PT-CO2-Tax; compile 2025 natural gas consumption data for first annual declaration due 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-0fd12cc8",
+        "ev-2026-04-fa367452",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-a73c4ff7",
+        "ev-2026-04-ab777e3f",
+        "ev-2026-04-3de138c9"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation",
+      "paragraphs": [
+        "PPWR applies across Terra Verde's diverse packaging portfolio at Lisbon Juices (glass, aseptic carton, PET) and Porto Organic Veg (biodegradable film, corrugated). The regulation's recyclability-by-design requirements and EPR fee modulation create different risk profiles for each packaging format. PET bottles and corrugated trays are in the highest recyclability classes; glass has Class A status; aseptic cartons containing EVOH barrier layers are at risk of Class C classification under the draft delegated act. Immediate packaging audit required.",
+        "Regulation (EU) 2025/40 (EUR-Lex 32025R0040) establishes a harmonised packaging framework with: (1) mandatory recyclability criteria across 10 packaging categories with EPR fee modulation, (2) minimum recycled content thresholds from 2030, (3) reuse targets for refillable formats, and (4) restrictions on certain packaging formats. In Portugal, Sociedade Ponto Verde (SPV) is the national EPR scheme operator and will be the primary implementation channel for PPWR fee modulation. Terra Verde's current SPV contributions of approximately EUR 28,000/year will be restructured based on recyclability classification of each packaging format under PPWR, with estimates ranging from a 15% reduction (if aseptic cartons are redesigned to Class B or above) to a 40% increase (if current carton format is classified Class C)."
+      ],
+      "callout": "Commission packaging lifecycle and recyclability audit across all Lisbon Juices and Porto Organic Veg packaging formats by 28 February 2026.",
+      "evidence_refs": [
+        "ev-2026-04-4b0217f8",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-bb42504e",
+        "ev-2026-04-3de138c9"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Reporting Directive",
+      "paragraphs": [
+        "Terra Verde Organics Lda. as a mid-size Portuguese company (EUR 180m net turnover, 420 employees) must assess whether it meets the CSRD large-undertaking threshold. With net turnover of EUR 180m and 420 employees, it exceeds two of three criteria (balance sheet of EUR 91m) and is therefore a large undertaking required to report for FY2025, with first sustainability statement due in 2026. Note: Terra Verde's February 2026 client onboarding means FY2024 data collection must begin retrospectively.",
+        "Directive 2022/2464/EU was transposed into Portuguese law by Decreto-Lei n.º 89/2024 (Comissão do Mercado de Valores Mobiliários, CMVM, as supervisory authority). Terra Verde as a large undertaking with FY2025 as first reporting year must publish its first sustainability statement by 30 June 2026. The organic and natural food sector faces specific ESRS challenges: E4 (biodiversity) is typically material due to organic farming practices and land use, E3 (water) is material for juice concentration operations, S2 (value chain workers) is material due to seasonal fruit-picking labour in Portugal's Alentejo and Algarve regions used for juice raw materials."
+      ],
+      "callout": "Initiate CSRD scoping assessment and retrospective FY2024 data collection for organic certification supply chain; engage Portuguese assurance provider (PwC Portugal or BDO Portugal) by 31 December 2025.",
+      "evidence_refs": [
+        "ev-2026-04-ffcee9ec",
+        "ev-2026-04-0fd12cc8"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "EU-PPWR-2025/40",
+        "packaging",
+        "PPWR applies across Terra Verde's diverse packaging portfolio at Lisbon Juices (glass, aseptic carton, PET) and Porto Organic Veg (biodegradable film, corrugated). The regulation's recyclability-by-design requirements and EPR fee modulation create different risk profiles for each packaging format. PET bottles and corrugated trays are in the highest recyclability classes; glass has Class A status; aseptic cartons containing EVOH barrier layers are at risk of Class C classification under the draft delegated act. Immediate packaging audit required.",
+        "Commission packaging lifecycle and recyclability audit across all Lisbon Juices and Porto Organic Veg packaging formats by 28 February 2026."
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2025-11-30"
+    },
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2025-11-30"
+    }
+  ],
+  "total_regulations_tracked": 3,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax on Industrial Emissions (Taxa de Carbono Industrial)",
+      "topic": "ghg",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "Portugal's industrial carbon tax, effective 1 January 2025, applies to non-ETS industrial emitters including food manufacturers with annual Scope 1 emissions exceeding 500 tCO2e. Terra Verde's Lisbon Juices pasteurisation lines emit approximately 1,850 tCO2e/year of direct natural gas combustion. At EUR 42.98/tCO2e (2025 rate, indexed quarterly to EU ETS average), the estimated annual tax liability is EUR 79,500. Annual declaration is due to Agência Portuguesa do Ambiente (APA) by 31 March each year for the preceding calendar year.",
+      "action_required": "Register Lisbon Juices facility with APA for PT-CO2-Tax; compile 2025 natural gas consumption data for first annual declaration due 31 March 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "description": "The Portuguese carbon tax for industrial emissions was introduced by Decreto-Lei n.º 12/2025 as an extension of Portugal's commitment under the Fundo Ambiental (Environmental Fund) framework and the EU Effort Sharing Regulation (EU) 2018/842. The tax applies to Portuguese-domiciled industrial establishments classified under NACE sections B-E with annual non-ETS Scope 1 emissions exceeding 500 tCO2e. The tax rate is set at 100% of the quarterly average EU ETS auction clearing price, published by the Portuguese Direção-Geral de Energia e Geologia. Revenue is ring-fenced for the Fundo Ambiental and redistributed to energy efficiency grants for SMEs in the food and agricultural sector. Terra Verde Organics qualifies for the SME energy efficiency grant programme if it invests in certified pasteurisation heat recovery systems."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "change_type": "new_regulation",
+      "severity": "high",
+      "summary": "PPWR applies across Terra Verde's diverse packaging portfolio at Lisbon Juices (glass, aseptic carton, PET) and Porto Organic Veg (biodegradable film, corrugated). The regulation's recyclability-by-design requirements and EPR fee modulation create different risk profiles for each packaging format. PET bottles and corrugated trays are in the highest recyclability classes; glass has Class A status; aseptic cartons containing EVOH barrier layers are at risk of Class C classification under the draft delegated act. Immediate packaging audit required.",
+      "action_required": "Commission packaging lifecycle and recyclability audit across all Lisbon Juices and Porto Organic Veg packaging formats by 28 February 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "description": "Regulation (EU) 2025/40 (EUR-Lex 32025R0040) establishes a harmonised packaging framework with: (1) mandatory recyclability criteria across 10 packaging categories with EPR fee modulation, (2) minimum recycled content thresholds from 2030, (3) reuse targets for refillable formats, and (4) restrictions on certain packaging formats. In Portugal, Sociedade Ponto Verde (SPV) is the national EPR scheme operator and will be the primary implementation channel for PPWR fee modulation. Terra Verde's current SPV contributions of approximately EUR 28,000/year will be restructured based on recyclability classification of each packaging format under PPWR, with estimates ranging from a 15% reduction (if aseptic cartons are redesigned to Class B or above) to a 40% increase (if current carton format is classified Class C)."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "Terra Verde Organics Lda. as a mid-size Portuguese company (EUR 180m net turnover, 420 employees) must assess whether it meets the CSRD large-undertaking threshold. With net turnover of EUR 180m and 420 employees, it exceeds two of three criteria (balance sheet of EUR 91m) and is therefore a large undertaking required to report for FY2025, with first sustainability statement due in 2026. Note: Terra Verde's February 2026 client onboarding means FY2024 data collection must begin retrospectively.",
+      "action_required": "Initiate CSRD scoping assessment and retrospective FY2024 data collection for organic certification supply chain; engage Portuguese assurance provider (PwC Portugal or BDO Portugal) by 31 December 2025.",
+      "current_status": "in_force",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-12-31",
+      "description": "Directive 2022/2464/EU was transposed into Portuguese law by Decreto-Lei n.º 89/2024 (Comissão do Mercado de Valores Mobiliários, CMVM, as supervisory authority). Terra Verde as a large undertaking with FY2025 as first reporting year must publish its first sustainability statement by 30 June 2026. The organic and natural food sector faces specific ESRS challenges: E4 (biodiversity) is typically material due to organic farming practices and land use, E3 (water) is material for juice concentration operations, S2 (value chain workers) is material due to seasonal fruit-picking labour in Portugal's Alentejo and Algarve regions used for juice raw materials."
+    }
+  ],
+  "status_changes": [],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

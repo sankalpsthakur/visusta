@@ -1,0 +1,87 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Visusta ESG Regulatory Intelligence Platform — Configuration
+# ──────────────────────────────────────────────────────────────────────────────
+# All hardcoded values live here. Edit this file to change platform behaviour
+# without touching source code.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Brand Colors ──────────────────────────────────────────────────────────────
+# Primary green palette used across monthly report, quarterly brief, and charts.
+# Note: build_capabilities_brief.py uses a distinct palette and is not driven
+# from this file.
+branding:
+  colors:
+    primary_dark:   "#0D3B26"   # Deep forest green — headers, table heads
+    primary:        "#1A6B4B"   # Main brand green
+    primary_light:  "#2E8B63"   # Lighter variant for charts/accents
+    accent:         "#4CAF50"   # Bright accent green
+    light_bg:       "#E8F5E9"   # Pale green background tint
+    warm_gray:      "#6B7B8D"   # Supporting neutral
+    text:           "#1A1A2E"   # Near-black body text
+    muted:          "#5A6270"   # De-emphasised text
+    border:         "#D0D8DF"   # Hairlines and dividers
+    alert_red:      "#C62828"   # Critical / high-severity alerts
+    alert_amber:    "#F57F17"   # Warning / medium-severity alerts
+    table_head:     "#0D3B26"   # Same as primary_dark; explicit alias
+    table_stripe:   "#F0F7F2"   # Alternating row tint
+    deep_blue:      "#1565C0"   # Used in quarterly brief only
+    soft_blue:      "#1565C0"   # Used in chart annotations (same value)
+
+# ── Screening Configuration ───────────────────────────────────────────────────
+# Controls which jurisdictions and enforcement windows are considered in-scope.
+screening:
+  # ISO country codes that are within screening scope.
+  # Extend intentionally when adding geographies beyond EU / Germany.
+  allowed_countries:
+    - "EU"
+    - "DE"
+
+  # Number of days before an enforcement deadline that it is flagged as
+  # "critical" and surfaced prominently in the monthly report.
+  critical_enforcement_window_days: 90
+
+  # Canonical topic slugs that must be covered every month (even as "no change").
+  required_topics:
+    - "ghg"
+    - "packaging"
+    - "water"
+    - "waste"
+    - "social_human_rights"
+
+# ── Validation Thresholds ─────────────────────────────────────────────────────
+# Quality gates applied during quarterly consolidation.
+validation:
+  # Minimum number of independent sources required to validate a change entry.
+  min_sources: 2
+
+  # Minimum average reliability score (0.0–1.0) across all sources on an entry.
+  reliability_threshold: 0.6
+
+  # Minimum confidence score (0.0–1.0) for a change to pass validation.
+  confidence_threshold: 0.5
+
+  # Maximum age (in days) of a change entry before it is considered stale.
+  max_age_days: 90
+
+  # Minimum character length for a change entry's description field.
+  min_description_length: 50
+
+# ── Report Metadata ───────────────────────────────────────────────────────────
+# Default values used when building PDF reports. Override at runtime if needed.
+report:
+  # Facilities covered by the monthly and quarterly reports.
+  facilities:
+    - "Hamburg"
+    - "Rietberg"
+
+  # The default monthly screening period (YYYY-MM format).
+  screening_period: "2026-02"
+
+  # Months included in the current quarterly brief.
+  quarter_months:
+    - "2026-01"
+    - "2026-02"
+    - "2026-03"
+
+  # Human-readable label for the current quarter.
+  quarter_label: "Q1 2026"

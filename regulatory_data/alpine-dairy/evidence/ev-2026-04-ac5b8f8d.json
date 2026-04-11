@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-ac5b8f8d",
+  "client_id": "alpine-dairy",
+  "source_id": "uvek",
+  "source_name": "UVEK \u2014 Swiss Ministry of Environment",
+  "url": "https://www.uvek.admin.ch/uvek/de/home/uvek/medien/medienmitteilungen/anzeige.msg-id-92345.html",
+  "access_date": "2026-04-11",
+  "document_title": "UVEK Net Zero Strategy for Industry \u2014 2024 Update",
+  "snippet": "Sector-specific decarbonisation pathways for food processing and dairy industry.",
+  "hash": "sha256:ac5b8f8d1505a75e19b305f6753664022a5456fdad009d4bab5e8635f873aa89",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.85,
+  "topic": "ghg",
+  "related_regulation_id": "CO2G-CH-2023"
+}

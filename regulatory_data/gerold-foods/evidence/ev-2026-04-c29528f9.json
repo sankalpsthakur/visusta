@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-c29528f9",
+  "client_id": "gerold-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115",
+  "access_date": "2026-04-11",
+  "document_title": "EUDR \u2014 EU Deforestation Regulation 2023/1115",
+  "snippet": "Due diligence requirements for operators placing certain commodities on the EU market.",
+  "hash": "sha256:c29528f94b89df8db097de4820d1fb93c38776abfa5cebe63f88541b69f2842f",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.94,
+  "topic": "waste",
+  "related_regulation_id": "EUDR-2023"
+}

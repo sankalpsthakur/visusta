@@ -1,0 +1,243 @@
+{
+  "screening_period": "2026-02",
+  "generated_date": "2026-02-28",
+  "previous_period": "2026-01",
+  "client_context": {
+    "facility_line": "Lisbon Juices & Porto Organic Veg, Portuguese Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Portuguese Sustainability Frameworks for Organic Food Producers"
+  },
+  "executive_summary": "February 2026 brings Terra Verde Organics' compliance programme to a critical inflection point. The PT-CO2-Tax first annual declaration was submitted to APA on 27 February 2026 for the period January–December 2025, covering 1,748 tCO2e of Scope 1 natural gas emissions at Lisbon Juices. The resulting tax liability of EUR 75,100 (at the 2025 indexed rate of EUR 42.98/tCO2e) will be settled by direct debit on 31 March 2026. The company has applied for the Fundo Ambiental SME energy efficiency grant to fund a heat recovery system on pasteurisation line 2, with potential to reduce Scope 1 emissions by 18–22% and reduce annual carbon tax liability by EUR 14,000–18,000.\n\nThe PPWR delegated act draft published in February 2026 confirmed the preliminary audit findings: Terra Verde's Tetra Brik aseptic cartons remain Class C under the EVOH barrier classification. SIG Combibloc's commercial team visited the Lisbon Juices facility on 24 February and proposed a barrier-reduction roadmap using their combidome® format with reduced aluminium barrier layer, which could achieve Class B reclassification by 2027 with capital investment of EUR 280,000 in new filling head tooling. The economics are positive given the EUR 96–144k annual EPR surcharge avoided.\n\nThe EU CSRD double materiality assessment, completed in February 2026 by BDO Portugal, confirmed Terra Verde as a large undertaking with FY2025 as first reporting year. The DMA identified five material ESRS topics: E1 (climate — carbon tax and energy transition), E3 (water — juice concentration water consumption), E4 (biodiversity — organic farming practices), S2 (value chain workers — seasonal Alentejo pickers), and G1 (anti-corruption — juice concentrate import chain). The assurance letter was signed by BDO Portugal on 28 February 2026.",
+  "sections": [
+    {
+      "heading": "Portuguese Carbon Tax on Industrial Emissions",
+      "paragraphs": [
+        "FY2025 declaration submitted to APA on 27 February 2026 covering 1,748 tCO2e at EUR 42.98/tCO2e = EUR 75,100 liability due 31 March 2026. Fundo Ambiental energy efficiency grant applied for pasteurisation line 2 heat recovery (potential 18-22% Scope 1 reduction)."
+      ],
+      "callout": "Ensure EUR 75,100 APA payment processed by 31 March 2026; submit Fundo Ambiental grant application supporting documentation by 15 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-0fd12cc8",
+        "ev-2026-04-fa367452",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-a73c4ff7",
+        "ev-2026-04-ab777e3f",
+        "ev-2026-04-3de138c9"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation — SIG Combibloc Redesign Proposal",
+      "paragraphs": [
+        "Draft PPWR delegated act confirmed Class C for EVOH-barrier Tetra Brik. SIG Combibloc proposed combidome® format upgrade (EUR 280,000 tooling) achieving Class B by 2027. Economics positive: EUR 280,000 investment avoids EUR 96-144k/year EPR surcharge from 2028 with 2-3 year payback. Commercial decision pending April 2026 board meeting."
+      ],
+      "callout": "Present SIG Combibloc combidome® business case to board at April 2026 meeting; decide carton redesign or full PET transition by 30 April 2026.",
+      "evidence_refs": [
+        "ev-2026-04-4b0217f8",
+        "ev-2026-04-ba02759f",
+        "ev-2026-04-bb42504e",
+        "ev-2026-04-3de138c9"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Reporting Directive — DMA Completed",
+      "paragraphs": [
+        "BDO Portugal DMA completed February 2026; five material topics: E1, E3, E4, S2, G1. FY2025 is first reporting year; sustainability statement due 30 June 2026. S2 (seasonal Alentejo picker labour conditions) and G1 (juice concentrate import chain) are high-priority disclosures given media exposure risk in organic food sector."
+      ],
+      "callout": "Initiate ESRS disclosure drafting for all five material topics; commission seasonal worker labour conditions assessment aligned with ESRS S2 by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-ffcee9ec",
+        "ev-2026-04-0fd12cc8",
+        "ev-2026-04-a73c4ff7"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Due Diligence Directive",
+      "paragraphs": [
+        "ABIO Portugal sector guidance for organic farm contract due diligence published February 2026. The guidance confirms that Ecocert and Agrobio organic certification satisfies the CSDDD environmental standard for soil and water management but does not cover labour rights. Terra Verde must add ILO Convention 184-aligned labour clauses to all 34 organic farm contracts at renewal."
+      ],
+      "callout": "Review all 34 organic farm contracts for ILO Convention 184 labour clause compliance; add CSDDD-aligned clauses to contracts renewing between March and September 2026.",
+      "evidence_refs": [
+        "ev-2026-04-ffcee9ec",
+        "ev-2026-04-0fd12cc8"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "PT-CO2-Tax-2024",
+        "",
+        "",
+        ""
+      ],
+      [
+        "EU-PPWR-2025/40",
+        "packaging",
+        "Draft PPWR delegated act confirmed Class C for EVOH-barrier Tetra Brik. SIG Combibloc proposed combidome® format upgrade (EUR 280,000 tooling) achieving Class B by 2027. Economics positive: EUR 280,000 investment avoids EUR 96-144k/year EPR surcharge from 2028 with 2-3 year payback. Commercial decision pending April 2026 board meeting.",
+        "Present SIG Combibloc combidome® business case to board at April 2026 meeting; decide carton redesign or full PET transition by 30 April 2026."
+      ],
+      [
+        "EU-CSRD-2022/2464",
+        "social_human_rights",
+        "BDO Portugal DMA completed February 2026; five material topics: E1, E3, E4, S2, G1. FY2025 is first reporting year; sustainability statement due 30 June 2026. S2 (seasonal Alentejo picker labour conditions) and G1 (juice concentrate import chain) are high-priority disclosures given media exposure risk in organic food sector.",
+        "Initiate ESRS disclosure drafting for all five material topics; commission seasonal worker labour conditions assessment aligned with ESRS S2 by 31 March 2026."
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2026-02-28"
+    },
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2026-02-28"
+    }
+  ],
+  "total_regulations_tracked": 6,
+  "total_changes_detected": 4,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 2
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax on Industrial Emissions",
+      "topic": "ghg",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "FY2025 declaration submitted to APA on 27 February 2026 covering 1,748 tCO2e at EUR 42.98/tCO2e = EUR 75,100 liability due 31 March 2026. Fundo Ambiental energy efficiency grant applied for pasteurisation line 2 heat recovery (potential 18-22% Scope 1 reduction).",
+      "action_required": "Ensure EUR 75,100 APA payment processed by 31 March 2026; submit Fundo Ambiental grant application supporting documentation by 15 March 2026.",
+      "current_status": "declaration_submitted",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "changes": [
+        {
+          "field": "declaration_status",
+          "old": "in_preparation",
+          "new": "submitted_27_Feb_2026_EUR_75100",
+          "description": "Annual declaration submitted; EUR 75,100 liability due 31 March 2026"
+        }
+      ]
+    }
+  ],
+  "content_updates": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation — SIG Combibloc Redesign Proposal",
+      "topic": "packaging",
+      "change_type": "content_update",
+      "severity": "high",
+      "summary": "Draft PPWR delegated act confirmed Class C for EVOH-barrier Tetra Brik. SIG Combibloc proposed combidome® format upgrade (EUR 280,000 tooling) achieving Class B by 2027. Economics positive: EUR 280,000 investment avoids EUR 96-144k/year EPR surcharge from 2028 with 2-3 year payback. Commercial decision pending April 2026 board meeting.",
+      "action_required": "Present SIG Combibloc combidome® business case to board at April 2026 meeting; decide carton redesign or full PET transition by 30 April 2026.",
+      "current_status": "redesign_proposal_received",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "changes": [
+        {
+          "field": "carton_redesign",
+          "old": "feasibility_under_assessment",
+          "new": "sig_combibloc_proposal_EUR_280k_class_B_by_2027",
+          "description": "SIG Combibloc combidome® proposal received; board decision April 2026"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive — DMA Completed",
+      "topic": "social_human_rights",
+      "change_type": "content_update",
+      "severity": "high",
+      "summary": "BDO Portugal DMA completed February 2026; five material topics: E1, E3, E4, S2, G1. FY2025 is first reporting year; sustainability statement due 30 June 2026. S2 (seasonal Alentejo picker labour conditions) and G1 (juice concentrate import chain) are high-priority disclosures given media exposure risk in organic food sector.",
+      "action_required": "Initiate ESRS disclosure drafting for all five material topics; commission seasonal worker labour conditions assessment aligned with ESRS S2 by 31 March 2026.",
+      "current_status": "dma_complete_FY2025_first_reporting",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-12-31",
+      "changes": [
+        {
+          "field": "dma_status",
+          "old": "in_progress",
+          "new": "complete_5_material_topics_BDO_signed",
+          "description": "DMA complete; E1, E3, E4, S2, G1 material; FY2025 first reporting year"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "change_type": "content_update",
+      "severity": "medium",
+      "summary": "ABIO Portugal sector guidance for organic farm contract due diligence published February 2026. The guidance confirms that Ecocert and Agrobio organic certification satisfies the CSDDD environmental standard for soil and water management but does not cover labour rights. Terra Verde must add ILO Convention 184-aligned labour clauses to all 34 organic farm contracts at renewal.",
+      "action_required": "Review all 34 organic farm contracts for ILO Convention 184 labour clause compliance; add CSDDD-aligned clauses to contracts renewing between March and September 2026.",
+      "current_status": "guidance_published_contracts_under_review",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "changes": [
+        {
+          "field": "farm_contract_review",
+          "old": "pending",
+          "new": "abio_guidance_received_contract_review_initiated",
+          "description": "ABIO guidance confirms organic cert covers environment but not labour; 34 farm contracts need ILO 184 clauses"
+        }
+      ]
+    }
+  ],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax",
+      "severity": "medium",
+      "action": "EUR 75,100 APA payment due 31 March 2026"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85,
+    "sections[3]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

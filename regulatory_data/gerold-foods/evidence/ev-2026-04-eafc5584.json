@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-eafc5584",
+  "client_id": "gerold-foods",
+  "source_id": "bgbl",
+  "source_name": "Bundesgesetzblatt",
+  "url": "https://www.recht.bund.de/bgbl/1/2024/verpackdg-aenderung.html",
+  "access_date": "2026-04-11",
+  "document_title": "VerpackDG Amendment \u2014 Packaging Act Amendment 2024",
+  "snippet": "Updated recyclability requirements and extended producer responsibility for packaging producers.",
+  "hash": "sha256:eafc5584156954da3ea01db153a6d80da8e8dd3e51f6a3b098f6adcb25b20430",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "packaging",
+  "related_regulation_id": "VerpackDG-2024"
+}

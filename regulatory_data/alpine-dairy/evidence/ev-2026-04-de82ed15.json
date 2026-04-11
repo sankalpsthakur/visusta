@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-de82ed15",
+  "client_id": "alpine-dairy",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+  "access_date": "2026-04-11",
+  "document_title": "CSRD \u2014 Corporate Sustainability Reporting Directive (EU export relevance for CH)",
+  "snippet": "Swiss exporters to EU must comply with CSRD requirements from EU business partners.",
+  "hash": "sha256:de82ed15e183403882512312d4840415c76ebe1e59a468da970cf71017098342",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.94,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

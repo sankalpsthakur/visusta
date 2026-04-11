@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-VISUSTA — Monthly Regulatory Impact Report (February 2026)
-Enterprise-grade PDF with charts, tables, and full references.
+VISUSTA — Monthly Regulatory Impact Report
+Enterprise-grade PDF, data-driven from extended changelog schema.
 """
 
+import argparse
 import os
 import json
 import re
@@ -43,16 +44,31 @@ PAGE_W, PAGE_H = A4  # 595.28 x 841.89 points
 # ── Output ────────────────────────────────────────────────────────
 OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
 CHART_DIR = os.path.join(OUTPUT_DIR, 'charts')
-OUT_FILE = os.path.join(OUTPUT_DIR, 'Visusta_Monthly_Impact_Report_Feb2026.pdf')
-SCREENING_PERIOD = "2026-02"
+# OUT_FILE and SCREENING_PERIOD are set at runtime via CLI args (see build_pdf / __main__)
+_DEFAULT_PERIOD = "2026-02"
 
 
-def _load_monthly_changelog(period: str):
-    path = os.path.join(OUTPUT_DIR, "regulatory_data", "changelogs", f"{period}.json")
+def _load_monthly_changelog(client_id: str, period: str):
+    path = os.path.join(
+        OUTPUT_DIR, "regulatory_data", client_id, "changelogs", f"{period}.json"
+    )
     if not os.path.exists(path):
         return None
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def _period_to_display(period: str) -> str:
+    """Convert 'YYYY-MM' to 'Month YYYY'."""
+    months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+    ]
+    try:
+        year, month = period.split("-")
+        return f"{months[int(month) - 1]} {year}"
+    except (ValueError, IndexError):
+        return period
 
 
 def _topic_label(topic: str) -> str:
@@ -103,7 +119,7 @@ def _change_type_label(change_type: str) -> str:
 # ══════════════════════════════════════════════════════════════════
 # Page Templates (Header / Footer)
 # ══════════════════════════════════════════════════════════════════
-def _draw_header_footer(canvas_obj, doc, is_cover=False):
+def _draw_header_footer(canvas_obj, doc, is_cover=False, period_display=""):
     """Draw branded header and footer on every non-cover page."""
     canvas_obj.saveState()
 
@@ -123,8 +139,8 @@ def _draw_header_footer(canvas_obj, doc, is_cover=False):
 
         canvas_obj.setFont('Helvetica', 7)
         canvas_obj.setFillColor(C_MUTED)
-        canvas_obj.drawRightString(PAGE_W - 25*mm, PAGE_H - 16*mm,
-                                   'Monthly Regulatory Impact Report | February 2026')
+        header_right = f'Monthly Regulatory Impact Report | {period_display}' if period_display else 'Monthly Regulatory Impact Report'
+        canvas_obj.drawRightString(PAGE_W - 25*mm, PAGE_H - 16*mm, header_right)
 
         # ── Footer ──
         canvas_obj.setStrokeColor(C_BORDER)
@@ -143,11 +159,13 @@ def _draw_header_footer(canvas_obj, doc, is_cover=False):
     canvas_obj.restoreState()
 
 
+def _make_on_page(period_display: str):
+    def on_page(canvas_obj, doc):
+        _draw_header_footer(canvas_obj, doc, is_cover=False, period_display=period_display)
+    return on_page
+
 def on_cover(canvas_obj, doc):
     _draw_header_footer(canvas_obj, doc, is_cover=True)
-
-def on_page(canvas_obj, doc):
-    _draw_header_footer(canvas_obj, doc, is_cover=False)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -319,12 +337,14 @@ def pro_table(headers, rows, col_widths, styles):
 # ══════════════════════════════════════════════════════════════════
 # Build the COVER PAGE
 # ══════════════════════════════════════════════════════════════════
-def build_cover(story, styles):
-    # Full-page dark green background via a table
+def build_cover(story, styles, period_display: str, client_context: dict):
+    facility_line = client_context.get("facility_line", "")
+    audience = client_context.get("audience", "")
+    jurisdiction_label = client_context.get("jurisdiction_label", "")
+
     cover_content = []
     cover_content.append(Spacer(1, 45*mm))
 
-    # Logo text
     cover_content.append(Paragraph(
         '<font size="12" color="#8FB8A2">visusta</font>  '
         '<font size="9" color="#5F9A7E">— make visions real.</font>',
@@ -333,49 +353,31 @@ def build_cover(story, styles):
     ))
     cover_content.append(Spacer(1, 25*mm))
 
-    # Title block
-    cover_content.append(Paragraph(
-        'Monthly Regulatory<br/>Impact Report',
-        styles['cover_title']
-    ))
+    cover_content.append(Paragraph('Monthly Regulatory<br/>Impact Report', styles['cover_title']))
     cover_content.append(Spacer(1, 4*mm))
-    cover_content.append(Paragraph(
-        'EU &amp; German Sustainability Frameworks<br/>for Food Manufacturers',
-        styles['cover_subtitle']
-    ))
+    if jurisdiction_label:
+        cover_content.append(Paragraph(jurisdiction_label, styles['cover_subtitle']))
     cover_content.append(Spacer(1, 12*mm))
 
-    # Divider line
     cover_content.append(HRFlowable(
         width='60%', thickness=1, color=HexColor('#2E8B63'),
         spaceBefore=0, spaceAfter=12, hAlign='LEFT'
     ))
 
-    # Meta info
     meta_style = styles['cover_meta']
-    cover_content.append(Paragraph('<b>Reporting Period:</b>  February 2026', meta_style))
-    cover_content.append(Paragraph('<b>Date of Issue:</b>  February 1, 2026', meta_style))
-    cover_content.append(Paragraph(
-        '<b>Prepared for:</b>  Executive Leadership, Regulatory Affairs &amp; Operations',
-        meta_style
-    ))
-    cover_content.append(Paragraph(
-        '<b>Facilities:</b>  Hamburg &amp; Rietberg, Federal Republic of Germany',
-        meta_style
-    ))
+    cover_content.append(Paragraph(f'<b>Reporting Period:</b>  {period_display}', meta_style))
+    if audience:
+        cover_content.append(Paragraph(f'<b>Prepared for:</b>  {audience}', meta_style))
+    if facility_line:
+        cover_content.append(Paragraph(f'<b>Facilities:</b>  {facility_line}', meta_style))
     cover_content.append(Spacer(1, 30*mm))
 
-    # Classification
     cover_content.append(Paragraph(
         '<font size="8" color="#5F9A7E">CLASSIFICATION: CONFIDENTIAL — INTERNAL USE ONLY</font>',
         ParagraphStyle('class', fontName='Helvetica', fontSize=8, textColor=HexColor('#5F9A7E'))
     ))
 
-    # Build as a full-page table with dark background
-    inner = []
-    for item in cover_content:
-        inner.append([item])
-
+    inner = [[item] for item in cover_content]
     cover_table = Table(inner, colWidths=[PAGE_W - 50*mm])
     cover_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), C_PRIMARY_DARK),
@@ -385,7 +387,6 @@ def build_cover(story, styles):
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
     ]))
 
-    # Outer wrapper to fill margins
     outer = Table([[cover_table]], colWidths=[PAGE_W - 50*mm])
     outer.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), C_PRIMARY_DARK),
@@ -402,47 +403,67 @@ def build_cover(story, styles):
 # ══════════════════════════════════════════════════════════════════
 # Build the CONTENT
 # ══════════════════════════════════════════════════════════════════
-def build_content(story, styles):
+def _h1_for_tone(title: str, styles: dict, tone: str) -> Paragraph:
+    if tone == "technical":
+        tag = re.sub(r"[^a-z0-9]+", "_", title.lower()).strip("_")
+        return Paragraph(f'<font size="7" color="#5A6270">[{tag}]</font><br/>{title}', styles['h1'])
+    if tone == "boardroom":
+        return Paragraph(f'<b><u>{title}</u></b>', styles['h1'])
+    return Paragraph(title, styles['h1'])
+
+
+def build_content(story, styles, period: str, client_id: str, preferences: dict | None = None):
     S = styles
     body = S['body']
 
-    # ── Executive Summary ──
-    story.append(Paragraph('Executive Summary', S['h1']))
-    story.append(Paragraph(
-        'This Monthly Impact Report covers the regulatory developments directly affecting '
-        'food manufacturing operations at the Hamburg and Rietberg facilities during February 2026. '
-        'The convergence of new Hamburg municipal fee structures, the imminent finalization of the '
-        'German Packaging Law Implementation Act (VerpackDG), and the retroactive abolition of LkSG '
-        'reporting obligations creates a complex compliance environment demanding immediate operational '
-        'recalibration.',
-        body
-    ))
-    story.append(Paragraph(
-        'The most significant financial impacts this month stem from the 3.3% increase in Hamburg '
-        'industrial wastewater and utility fees (effective January 1, 2026, with first invoicing in '
-        'February) and the new Extended Producer Responsibility (EPR) framework for B2B packaging '
-        'under the draft VerpackDG, which introduces a levy of approximately \u20ac5 per tonne on '
-        'transport and industrial packaging.',
-        body
-    ))
-    story.append(Spacer(1, 3*mm))
+    prefs = preferences or {}
+    depth = prefs.get("depth", "standard")
+    section_order = prefs.get("section_order") or [
+        "executive_summary", "change_log", "impact_summary", "topic_sections", "references"
+    ]
+    tone = prefs.get("tone", "executive")
+    chart_mix = prefs.get("chart_mix")
 
-    # ── Technical Screening Summary (Change Log) ──
-    changelog = _load_monthly_changelog(SCREENING_PERIOD)
-    if changelog:
+    changelog = _load_monthly_changelog(client_id, period)
+    if changelog is None:
+        raise ValueError(
+            f"No changelog found for client '{client_id}' and period '{period}'. "
+            "Cannot generate report without data."
+        )
+
+    if depth == "brief":
+        section_order = section_order[:3]
+
+    def _render_chart(chart_ref: str, caption: str):
+        if chart_mix is not None and chart_ref not in chart_mix:
+            return
+        chart_path = os.path.join(CHART_DIR, f'{chart_ref}.png')
+        if os.path.exists(chart_path):
+            story.append(Image(chart_path, width=155*mm, height=87*mm))
+            story.append(Paragraph(caption, S['caption']))
+
+    def _render_executive_summary():
+        story.append(_h1_for_tone('Executive Summary', S, tone))
+        exec_text = changelog.get("executive_summary", "")
+        if exec_text:
+            for para in exec_text.strip().split("\n\n"):
+                para = para.strip()
+                if para:
+                    story.append(Paragraph(para, body))
+        story.append(Spacer(1, 3*mm))
+
+    def _render_change_log():
         story.append(Paragraph('Technical Screening Summary (Change Log)', S['h2']))
         story.append(Paragraph(
-            f'This section is generated from the monthly regulatory change log for <b>{SCREENING_PERIOD}</b> '
-            f'(previous period: <b>{changelog.get("previous_period","")}</b>). It reports per-topic whether '
-            f'there was a change since last reporting and, if so, at which level.',
+            f'This section is generated from the monthly regulatory change log for <b>{period}</b>.',
             S['body_small']
         ))
         story.append(Spacer(1, 3*mm))
 
         topic_rows = []
         statuses = changelog.get("topic_change_statuses") or {}
-        topic_order = ["ghg", "packaging", "water", "waste", "social_human_rights"]
-        for topic in topic_order:
+        topic_order_list = ["ghg", "packaging", "water", "waste", "social_human_rights"]
+        for topic in topic_order_list:
             st = statuses.get(topic) or {}
             changed = "YES" if st.get("changed_since_last") else "NO"
             level_raw = st.get("level")
@@ -462,7 +483,6 @@ def build_content(story, styles):
         ))
         story.append(Spacer(1, 4*mm))
 
-        # Flatten changed entries (exclude carried_forward)
         entries = []
         for key in ["new_regulations", "status_changes", "content_updates", "timeline_changes", "ended_regulations"]:
             entries.extend(changelog.get(key) or [])
@@ -484,384 +504,198 @@ def build_content(story, styles):
                 styles
             ))
             story.append(Paragraph(
-                'Table 2: Extract of detected changes for this month (for full details use the JSON change log).',
+                'Table 2: Extract of detected changes for this month.',
                 S['caption']
             ))
             story.append(Spacer(1, 6*mm))
 
-    # ── Impact Summary Table ──
-    impact_headers = ['Regulation', 'Status', 'Impact Level', 'Action Required']
-    impact_rows = [
-        ['Hamburg Wastewater Fees', 'Effective Jan 1, 2026', 'HIGH — Direct OPEX',
-         'Audit Feb invoices; recalculate water efficiency ROI'],
-        ['NRW Circular Economy (NKWS)', 'Strategic Alignment', 'MEDIUM — Strategic',
-         'Engage EFA NRW for funding; prepare waste hierarchy audit'],
-        ['VerpackDG (B2B EPR)', 'Draft — Q1 Adoption Expected', 'CRITICAL — New Liability',
-         'Quantify B2B packaging tonnage; evaluate OfH membership'],
-        ['LkSG Reporting Abolition', 'Retroactive from Jan 2023', 'LOW — Admin Relief',
-         'Redirect resources to CSDDD/CSRD preparation'],
-    ]
-    impact_block = [
-        Paragraph('Monthly Impact Overview', S['h2']),
-        pro_table(impact_headers, impact_rows, [95, 100, 90, 175], styles),
-        Paragraph('Table 3: Monthly regulatory impact summary for February 2026.', S['caption']),
-        Spacer(1, 6*mm),
-    ]
-    story.append(KeepTogether(impact_block))
+    def _render_impact_summary():
+        impact_data = changelog.get("impact_summary_table")
+        if impact_data:
+            headers = impact_data.get("headers", [])
+            rows = impact_data.get("rows", [])
+            if headers and rows:
+                col_count = len(headers)
+                col_w = (PAGE_W - 50*mm) / col_count
+                story.append(KeepTogether([
+                    _h1_for_tone('Monthly Impact Overview', S, tone) if tone != "executive" else Paragraph('Monthly Impact Overview', S['h2']),
+                    pro_table(headers, rows, [col_w] * col_count, styles),
+                    Paragraph('Table 3: Monthly regulatory impact summary.', S['caption']),
+                    Spacer(1, 6*mm),
+                ]))
 
-    # ══════════════════════════════════════════════════════════════
-    # Section 1: Hamburg Municipal Fees
-    # ══════════════════════════════════════════════════════════════
-    story.append(Paragraph('1. Hamburg Industrial Wastewater &amp; Utility Fee Restructuring', S['h1']))
+    def _render_topic_sections():
+        sections = changelog.get("sections") or []
+        for section in sections:
+            heading = section.get("heading", "")
+            if heading:
+                story.append(_h1_for_tone(heading, S, tone))
 
-    story.append(status_badge('EFFECTIVE — JAN 1, 2026', C_ALERT_RED, styles))
-    story.append(Spacer(1, 3*mm))
+            for para in section.get("paragraphs") or []:
+                if para:
+                    story.append(Paragraph(para, body))
 
-    story.append(Paragraph(
-        'The Free and Hanseatic City of Hamburg has enacted significant adjustments to its municipal '
-        'fee structures effective January 1, 2026, approved by the Senate in late 2025. These changes '
-        'are driven by rising personnel and material costs within the Hamburger Stadtentwässerung (HSE) '
-        'and broader sanitation services. For food manufacturers with wet processing operations in '
-        'the region, these adjustments translate into immediate increases in operational expenditure '
-        '(OPEX).',
-        body
-    ))
-    story.append(Paragraph(
-        'The <i>Schmutzwassergebühr</i> (foul water fee) and <i>Niederschlagswassergebühr</i> '
-        '(rainwater fee) have both increased by approximately 3.3%. While this percentage may appear '
-        'moderate in isolation, the compound effect on annual utility costs for high-volume industrial '
-        'users is substantial. The fee calculation logic remains based on freshwater consumption '
-        'volumes for wastewater and sealed surface area for rainwater.',
-        body
-    ))
-    story.append(Spacer(1, 3*mm))
+            table_data = section.get("table")
+            if table_data:
+                headers = table_data.get("headers", [])
+                rows = table_data.get("rows", [])
+                if headers and rows:
+                    col_count = len(headers)
+                    col_w = (PAGE_W - 50*mm) / col_count
+                    story.append(pro_table(headers, rows, [col_w] * col_count, styles))
+                    story.append(Paragraph('', S['caption']))
 
-    # Chart: Hamburg Fees
-    chart_path = os.path.join(CHART_DIR, 'hamburg_fees.png')
-    if os.path.exists(chart_path):
-        img = Image(chart_path, width=155*mm, height=87*mm)
-        story.append(img)
-        story.append(Paragraph(
-            'Figure 1: Hamburg municipal fee adjustments by category, effective January 2026.',
-            S['caption']
-        ))
-    story.append(Spacer(1, 3*mm))
+            callout_text = section.get("callout")
+            if callout_text:
+                story.append(callout_box(None, callout_text, styles))
 
-    # Fee Details Table
-    story.append(Paragraph('1.1 Fee Adjustment Details', S['h2']))
-    fee_headers = ['Fee Category', 'Adjustment', 'Mechanism', 'Operational Implication']
-    fee_rows = [
-        ['Schmutzwasser (Wastewater)', '+3.3%', 'Volumetric (freshwater intake)',
-         'Direct cost increase for washing, blanching, CIP processes'],
-        ['Niederschlagswasser (Rainwater)', '+3.3%', 'Area-based (sealed surfaces)',
-         'Higher costs for warehouse roofs/lots; incentivizes green roofs'],
-        ['Waste Disposal (Müllabfuhr)', '+3.4%', 'Volume/Frequency',
-         'Higher general facility waste costs; reinforces recycling'],
-        ['Administrative Fees', 'Varied', 'Per transaction',
-         'Significant increase in special permits (e.g., Zweckentfremdung)'],
-    ]
-    story.append(pro_table(fee_headers, fee_rows, [88, 70, 88, 214], styles))
-    story.append(Paragraph(
-        'Table 4: Detailed breakdown of Hamburg municipal fee adjustments.',
-        S['caption']
-    ))
-    story.append(Spacer(1, 3*mm))
+            chart_ref = section.get("chart_ref")
+            if chart_ref:
+                _render_chart(chart_ref, section.get("chart_caption", ""))
 
-    # Action box
-    story.append(callout_box(
-        '\u26a0  Immediate Action Required',
-        'Facility managers in Hamburg must audit the February 2026 utility invoices. Verification '
-        'should focus on the application of the new unit rates against metered volumes from January. '
-        'The 3.3% increase alters the ROI calculus for water efficiency projects. Technologies such '
-        'as membrane bioreactors (MBR) for wastewater recycling or condensate recovery systems, '
-        'which may have been borderline viable in 2024, may now meet internal hurdle rates for '
-        'CAPEX approval.',
-        styles, accent_color=C_ALERT_AMBER
-    ))
-    story.append(Spacer(1, 8*mm))
+            story.append(Spacer(1, 8*mm))
 
-    # ══════════════════════════════════════════════════════════════
-    # Section 2: NRW Circular Economy
-    # ══════════════════════════════════════════════════════════════
-    story.append(Paragraph('2. North Rhine-Westphalia (NRW) Circular Economy Implementation', S['h1']))
+        if depth == "deep":
+            critical = changelog.get("critical_actions") or []
+            if critical:
+                story.append(Paragraph('Extended Commentary — Critical Actions', S['h2']))
+                for entry in critical:
+                    story.append(Paragraph(
+                        f'<b>{entry.get("regulation_id", "")}</b>: {entry.get("action_required", "")}',
+                        S['body_small']
+                    ))
+                    story.append(Spacer(1, 2*mm))
 
-    story.append(status_badge('STRATEGIC — ALIGNMENT PHASE', C_PRIMARY, styles))
-    story.append(Spacer(1, 3*mm))
+    def _render_references():
+        references = changelog.get("references") or []
+        if references:
+            story.append(PageBreak())
+            story.append(Paragraph('References', S['h1']))
+            story.append(Paragraph(
+                'The following sources underpin the analysis in this report.',
+                S['body_small']
+            ))
+            story.append(Spacer(1, 3*mm))
+            for i, ref in enumerate(references, 1):
+                url = ref.get("url", "")
+                citation_text = ref.get("citation", "")
+                access_date = ref.get("access_date", "n/a")
+                line = (
+                    f'<b>[{i}]</b> <i>{citation_text}</i>. Accessed {access_date}. '
+                    f'<link href="{url}" color="#8B2F1E">{url}</link>'
+                ) if url else (
+                    f'<b>[{i}]</b> <i>{citation_text}</i>. Accessed {access_date}.'
+                )
+                story.append(Paragraph(line, S['body_small']))
+                story.append(Spacer(1, 2*mm))
 
-    story.append(Paragraph(
-        'In Rietberg, the regulatory environment is heavily influenced by the NRW state government\'s '
-        'aggressive implementation of the National Circular Economy Strategy (NKWS), adopted at the '
-        'federal level in December 2024. NRW, as a densely populated industrial hub, is piloting '
-        'several initiatives to decouple economic activity from resource consumption.',
-        body
-    ))
-    story.append(Paragraph(
-        'The NRW strategy specifically targets the food and beverage sector. Aligning with UN SDG 12.3, '
-        'the state has committed to halving per capita food waste at retail and consumer levels by 2030, '
-        'and significantly reducing food losses along production and supply chains. This is translating '
-        'into stricter reporting requirements for industrial food waste. The emphasis is shifting from '
-        '"safe disposal" to "highest value retention" — diverting food waste to biogas generation '
-        '(energy recovery) is becoming the <i>minimum</i> standard, with nutrient recovery or animal '
-        'feed production being the preferred tier.',
-        body
-    ))
-    story.append(Spacer(1, 3*mm))
+    section_renderers = {
+        "executive_summary": _render_executive_summary,
+        "change_log": _render_change_log,
+        "impact_summary": _render_impact_summary,
+        "topic_sections": _render_topic_sections,
+        "references": _render_references,
+        "critical_actions": lambda: None,
+    }
 
-    story.append(callout_box(
-        '\u2713  Strategic Opportunity',
-        'The Rietberg facility management should engage with the <b>Effizienz-Agentur NRW (EFA)</b> '
-        'to identify potential funding for circularity projects. The "Circularity Made in Germany" '
-        'seal, introduced with the NKWS, offers a reputational advantage for B2B suppliers. '
-        'Additionally, the Federal Environment Agency is developing a "National Urban Mining Strategy" '
-        'by 2026, and NRW is likely to offer matching grants for industrial symbiosis projects.',
-        styles, accent_color=C_ACCENT
-    ))
-    story.append(Spacer(1, 8*mm))
-
-    # ══════════════════════════════════════════════════════════════
-    # Section 3: VerpackDG
-    # ══════════════════════════════════════════════════════════════
-    story.append(PageBreak())
-    story.append(Paragraph('3. German Packaging Law Implementation Act (VerpackDG)', S['h1']))
-
-    story.append(status_badge('CRITICAL — ADOPTION IMMINENT Q1 2026', C_ALERT_RED, styles))
-    story.append(Spacer(1, 3*mm))
-
-    story.append(Paragraph(
-        'The most significant looming regulatory change is the finalization of the '
-        '<i>Verpackungs-Durchführungsgesetz</i> (VerpackDG). This new act replaces the existing '
-        'Packaging Act (VerpackG) and serves as the national execution vehicle for the EU PPWR. '
-        'The draft introduces a <b>paradigm shift</b> for commercial and industrial packaging.',
-        body
-    ))
-
-    story.append(Paragraph('3.1 Expansion of EPR to B2B Packaging', S['h2']))
-    story.append(Paragraph(
-        'Under the previous regime, manufacturers of transport packaging and industrial packaging (B2B) '
-        'were required to register with the LUCID system but were largely exempt from financial '
-        'participation obligations. The new draft mandates that manufacturers of non-system-participating '
-        'packaging must now assume financial responsibility by either joining an authorized '
-        '"Organisation for Producer Responsibility" (OfH) or establishing an approved individual '
-        'take-back system.',
-        body
-    ))
-
-    story.append(Paragraph('3.2 Financial Impact Analysis', S['h2']))
-    story.append(Paragraph(
-        'A new levy of approximately <b>\u20ac5 per tonne</b> is proposed for all packaging handled '
-        'by EPR schemes or individual compliers, intended to fund waste prevention and reuse measures '
-        'managed by the Central Agency (ZSVR). Additional service fees from OfH providers are estimated '
-        'at \u20ac3 per tonne. The following chart illustrates the projected annual cost exposure by '
-        'B2B packaging volume:',
-        body
-    ))
-    story.append(Spacer(1, 3*mm))
-
-    chart_path2 = os.path.join(CHART_DIR, 'verpackdg_cost.png')
-    if os.path.exists(chart_path2):
-        img2 = Image(chart_path2, width=155*mm, height=83*mm)
-        story.append(img2)
-        story.append(Paragraph(
-            'Figure 2: Estimated annual EPR cost exposure under VerpackDG by B2B packaging volume.',
-            S['caption']
-        ))
-    story.append(Spacer(1, 3*mm))
-
-    # Recycling targets table
-    story.append(Paragraph('3.3 Recycling Targets for B2B Packaging Materials', S['h2']))
-    target_headers = ['Material Stream', '2028 Target', '2030 Target', 'Mechanical Only?']
-    target_rows = [
-        ['Plastics (B2B)', '75%', '80%', 'Mechanical baseline + chemical for gap'],
-        ['Paper / Cardboard', '85%', '90%', 'Mechanical preferred'],
-        ['Metals (Steel / Aluminium)', '80%', '85%', 'N/A'],
-        ['Wood', '30%', '35%', 'N/A'],
-    ]
-    story.append(pro_table(target_headers, target_rows, [120, 80, 80, 180], styles))
-    story.append(Paragraph(
-        'Table 5: VerpackDG recycling targets for non-system-participating (B2B) packaging.',
-        S['caption']
-    ))
-    story.append(Spacer(1, 3*mm))
-
-    story.append(callout_box(
-        '\u26a0  Immediate Action Required',
-        'Procurement and logistics teams must quantify the tonnage of transport packaging entering '
-        'and leaving the Hamburg and Rietberg sites. The potential cost of \u20ac5/tonne plus OfH '
-        'service fees represents a new logistics budget line item. Contracts with waste management '
-        'providers (Remondis, Veolia, PreZero) must be reviewed to assess whether they are positioning '
-        'as authorized OfH providers under the new framework.',
-        styles, accent_color=C_ALERT_AMBER
-    ))
-    story.append(Spacer(1, 8*mm))
-
-    # ══════════════════════════════════════════════════════════════
-    # Section 4: LkSG
-    # ══════════════════════════════════════════════════════════════
-    story.append(Paragraph('4. Abolition of LkSG Reporting Obligations', S['h1']))
-
-    story.append(status_badge('ADMINISTRATIVE RELIEF — RETROACTIVE', C_ACCENT, styles))
-    story.append(Spacer(1, 3*mm))
-
-    story.append(Paragraph(
-        'The German Federal Cabinet passed a law amending the Supply Chain Due Diligence Act (LkSG), '
-        'abolishing the reporting obligation under \u00a7 10 (2) LkSG with retroactive effect from '
-        'January 1, 2023. Companies are no longer required to submit the annual report to BAFA.',
-        body
-    ))
-
-    # Risk callout
-    story.append(callout_box(
-        '\u26a0  Risk of Misinterpretation',
-        '<b>Only the reporting obligation has been removed.</b> The substantive obligations remain '
-        'in full force: establishing a risk management system, conducting annual risk analyses, '
-        'adopting a policy statement, and implementing preventive and remedial measures. BAFA retains '
-        'authority to conduct risk-based controls and investigate complaints. Resources previously '
-        'dedicated to BAFA report compilation should be redirected toward preparing for the EU '
-        'CSDDD and CSRD.',
-        styles, accent_color=C_ALERT_AMBER
-    ))
-    story.append(Spacer(1, 3*mm))
-
-    # Comparison table
-    story.append(Paragraph('4.1 LkSG vs. Upcoming CSDDD: Key Differences', S['h2']))
-    comp_headers = ['Dimension', 'LkSG (Current)', 'CSDDD (Upcoming)']
-    comp_rows = [
-        ['Scope', 'Direct suppliers + known indirect', 'Full value chain incl. downstream'],
-        ['Reporting', 'Abolished (retroactive)', 'Integrated with CSRD'],
-        ['Liability', 'Administrative fines', 'Civil liability (damages claims)'],
-        ['Threshold', '\u2265 1,000 employees', 'TBD (EU-level thresholds)'],
-        ['Climate Plan', 'Not required', 'Mandatory transition plan'],
-    ]
-    story.append(pro_table(comp_headers, comp_rows, [80, 170, 210], styles))
-    story.append(Paragraph(
-        'Table 6: Comparison of German LkSG and upcoming EU CSDDD.',
-        S['caption']
-    ))
-    story.append(Spacer(1, 8*mm))
-
-    # ══════════════════════════════════════════════════════════════
-    # Section 5: EWKFondsG
-    # ══════════════════════════════════════════════════════════════
-    story.append(Paragraph('5. Single-Use Plastic Fund (EWKFondsG) — Data Collection Phase', S['h1']))
-
-    story.append(status_badge('ONGOING — 2026 DATA COLLECTION', C_ALERT_AMBER, styles))
-    story.append(Spacer(1, 4*mm))
-
-    story.append(Paragraph(
-        'The <i>Einwegkunststofffondsgesetz</i> (EWKFondsG) establishes a "plastic tax" mechanism '
-        'in Germany covering the costs of cleaning up litter in public spaces. The system is live '
-        'and the current period (2026) is the data collection phase for the 2026 reporting cycle. '
-        'Data for FY 2024 must be reported by May 15, 2025, with payments due shortly thereafter.',
-        body
-    ))
-    story.append(Spacer(1, 3*mm))
-
-    chart_path3 = os.path.join(CHART_DIR, 'ewk_levies.png')
-    if os.path.exists(chart_path3):
-        img3 = Image(chart_path3, width=145*mm, height=79*mm)
-        story.append(img3)
-        story.append(Paragraph(
-            'Figure 3: EWKFondsG single-use plastic levy rates by packaging category.',
-            S['caption']
-        ))
-    story.append(Spacer(1, 3*mm))
-
-    story.append(callout_box(
-        'Classification Risk',
-        'The definition of "flexible material containing food intended for immediate consumption" '
-        'is a frequent area of dispute. A wrapper for a chocolate bar is included; a wrapper for a '
-        'multipack may not be. Accurate classification in the ERP system is essential to avoid '
-        'overpayment or penalties for under-reporting.',
-        styles, accent_color=C_WARM_GRAY
-    ))
-    story.append(Spacer(1, 8*mm))
-
-    # ══════════════════════════════════════════════════════════════
-    # References
-    # ══════════════════════════════════════════════════════════════
-    story.append(PageBreak())
-    story.append(Paragraph('References', S['h1']))
-    story.append(Paragraph(
-        'The following sources underpin the analysis in this report. All URLs were accessed on '
-        'February 1, 2026.',
-        S['body_small']
-    ))
-    story.append(Spacer(1, 3*mm))
-
-    refs = [
-        '[1] "Änderung städtischer Gebühren ab 2026," Hamburg.de — https://www.hamburg.de/politik-und-verwaltung/behoerden/finanzbehoerde/aktuelles/aenderung-staedtischer-gebuehren-ab-2026-1123310',
-        '[2] "Hamburg erhöht 2026 Gebühren für Müllabfuhr und Abwasser," Hansetipp — https://www.hansetipp.de/hamburg-erhoeht-2026-gebuehren-fuer-muellabfuhr-und-abwasser/',
-        '[3] "Drucksache 22/16672," Hamburgische Bürgerschaft — https://www.buergerschaft-hh.de/parldok/dokument/22/art/Drucksache/num/16672',
-        '[4] "Germany: Circularity Made in Germany — The NKWS has been adopted," Baker McKenzie InsightPlus — https://insightplus.bakermckenzie.com/bm/environment-climate-change_1/germany-circularity-made-in-germany-the-national-circular-economy-strategy-nkws',
-        '[5] "National Strategy for Food Waste Reduction," BMLEH — https://www.bmleh.de/EN/topics/food-and-nutrition/food-waste/national-strategy-for-food-waste-reduction.html',
-        '[6] "National Circular Economy Strategy (NKWS)," IEA — https://www.iea.org/policies/24983-national-circular-economy-strategy-nkws',
-        '[7] "Neues VerpackDG: Referentenentwurf vorgelegt," ZENTEK — https://www.zentek.de/referentenentwurf-fuer-ein-neues-verpackungsrecht-durchfuehrungsgesetz-verpackdg/',
-        '[8] "Referentenentwurf (VerpackDG) — IHK resource," IHK — https://www.ihk.de/blueprint/servlet/resource/blob/6816162/3be581c7dddafeca305a04450943e5fa/verpackg-refentwurf-data.pdf',
-        '[9] "Federal cabinet resolves reforms to the German Supply Chain Act and implementation of the CSRD," Noerr — https://www.noerr.com/en/insights/federal-cabinet-resolves-reforms-to-the-german-supply-chain-act-and-implementation-of-the-csrd',
-        '[10] "Update on the Single-Use Plastics Fund Act: Plastic tax came into force on 1 January 2024," DLA Piper — https://www.dlapiper.com/en/insights/publications/2024/03/update-on-the-single-use-plastics-fund-act',
-        '[11] "The German EWKFondsG explained," Noventiz — https://www.noventiz.de/en/the-german-einwegkunststofffondsgesetz-ewkfondsg-explained/',
-    ]
-    for ref in refs:
-        story.append(Paragraph(ref, S['ref']))
+    for sec_id in section_order:
+        renderer = section_renderers.get(sec_id)
+        if renderer:
+            renderer()
 
     story.append(Spacer(1, 15*mm))
-
-    # Disclaimer
     story.append(HRFlowable(width='100%', thickness=0.5, color=C_BORDER, spaceBefore=4, spaceAfter=8))
     story.append(Paragraph(
         '<b>Disclaimer:</b> This report is based on regulatory data and legislative drafts available '
-        'as of February 1, 2026. Legislative texts, particularly the German VerpackDG and the national '
-        'implementation of CSRD, are subject to parliamentary amendment prior to final adoption. '
-        'This document does not constitute legal advice.',
+        'as of the stated reporting period. Legislative texts are subject to parliamentary amendment '
+        'prior to final adoption. This document does not constitute legal advice.',
         ParagraphStyle('disclaimer', fontName='Helvetica', fontSize=7.5, leading=10,
                        textColor=C_MUTED, alignment=TA_JUSTIFY)
     ))
     story.append(Spacer(1, 4*mm))
     story.append(Paragraph(
-        '\u00a9 2026 visusta GmbH — visusta.ch — All rights reserved.',
+        '\u00a9 visusta GmbH — visusta.ch — All rights reserved.',
         ParagraphStyle('footer_note', fontName='Helvetica', fontSize=7, leading=10,
                        textColor=C_MUTED, alignment=TA_CENTER)
     ))
 
 
+
 # ══════════════════════════════════════════════════════════════════
 # Build the Document
 # ══════════════════════════════════════════════════════════════════
-def build_pdf():
+def build_pdf(period: str = _DEFAULT_PERIOD, client_id: str | None = None, output_path: str | None = None, preferences=None):
     styles = build_styles()
 
-    # Define frames
+    if client_id is None:
+        raise ValueError("client_id is required to load monthly changelogs")
+
+    changelog = _load_monthly_changelog(client_id, period)
+    if changelog is None:
+        raise ValueError(
+            f"No changelog found for client '{client_id}' and period '{period}'."
+        )
+
+    client_context = changelog.get("client_context") or {}
+    period_display = _period_to_display(period)
+
+    try:
+        yr, mo = period.split("-")
+        _month_abbr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        period_slug = f"{_month_abbr[int(mo)-1]}{yr}"
+    except (ValueError, IndexError):
+        period_slug = period.replace("-", "")
+
+    out_file = output_path or os.path.join(
+        OUTPUT_DIR,
+        f'Visusta_Monthly_Impact_Report_{period_slug}.pdf'
+    )
+
     cover_frame = Frame(0, 0, PAGE_W, PAGE_H, leftPadding=25*mm, rightPadding=25*mm,
                         topPadding=10*mm, bottomPadding=10*mm, id='cover_frame')
     content_frame = Frame(25*mm, 22*mm, PAGE_W - 50*mm, PAGE_H - 45*mm,
                           id='content_frame')
 
+    on_page = _make_on_page(period_display)
     cover_template = PageTemplate(id='cover', frames=[cover_frame], onPage=on_cover)
     content_template = PageTemplate(id='content', frames=[content_frame], onPage=on_page)
 
     doc = BaseDocTemplate(
-        OUT_FILE,
+        out_file,
         pagesize=A4,
         pageTemplates=[cover_template, content_template],
-        title='Visusta Monthly Regulatory Impact Report — February 2026',
+        title=f'Visusta Monthly Regulatory Impact Report \u2014 {period_display}',
         author='visusta GmbH',
         subject='EU & German Sustainability Regulatory Monitoring',
-        creator='VARI — Visusta Autonomous Regulatory Intelligence'
+        creator='VARI \u2014 Visusta Autonomous Regulatory Intelligence'
     )
 
     story = []
-
-    # Cover page
-    build_cover(story, styles)
+    build_cover(story, styles, period_display=period_display, client_context=client_context)
     story.append(NextPageTemplate('content'))
+    build_content(story, styles, period=period, client_id=client_id, preferences=preferences)
 
-    # Content
-    build_content(story, styles)
-
+    os.makedirs(os.path.dirname(out_file) or ".", exist_ok=True)
     doc.build(story)
-    print(f'✓ Monthly Report saved: {OUT_FILE}')
-    print(f'  Size: {os.path.getsize(OUT_FILE) / 1024:.0f} KB')
+    print(f'\u2713 Monthly Report saved: {out_file}')
+    print(f'  Size: {os.path.getsize(out_file) / 1024:.0f} KB')
+    return out_file
 
 
 if __name__ == '__main__':
-    build_pdf()
+    parser = argparse.ArgumentParser(
+        description='Build Visusta Monthly Regulatory Impact Report PDF.'
+    )
+    parser.add_argument(
+        '--client-id',
+        required=True,
+        help='Client identifier used to load regulatory_data/<client_id>/changelogs',
+    )
+    parser.add_argument(
+        '--period',
+        default=_DEFAULT_PERIOD,
+        help='Reporting period in YYYY-MM format (default: %(default)s)',
+    )
+    args = parser.parse_args()
+    build_pdf(period=args.period, client_id=args.client_id)

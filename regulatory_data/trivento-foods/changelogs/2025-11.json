@@ -1,0 +1,181 @@
+{
+  "screening_period": "2025-11",
+  "generated_date": "2025-11-30",
+  "previous_period": "2025-10",
+  "client_context": {
+    "facility_line": "Parma Pasta & Modena Olive Oil, Italian Republic",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Italian Sustainability Frameworks for Food Manufacturers"
+  },
+  "executive_summary": "November 2025 marks an important regulatory milestone for Trivento Foods S.p.A., as EU-wide and Italy-specific compliance requirements converge across the company's Parma Pasta and Modena Olive Oil operations. The Italian Plastic Tax (IT-Plastic-Tax-DL73), which has been subject to repeated postponements since its initial introduction in the 2020 Budget Law, has received a definitive application date of 1 July 2026 following the European Commission's final state aid clearance in October 2025. Trivento's single-use plastic pasta packaging lines at Parma will face a EUR 0.45/kg levy on all non-compostable plastic used in single-use manufactured packaging items (MACSI — Manufatti con Singolo Impiego).\n\nThe EU-PPWR-2025/40 framework continues to develop with particular impact on olive oil packaging. The Commission's November 2025 consultation on the PPWR delegated act included a specific annex on glass packaging reuse targets, relevant to Trivento's 500ml and 750ml olive oil glass bottles distributed in Italy and exported to EU member states. Initial industry modelling suggests reuse targets will require Trivento to either establish a deposit-return scheme for glass bottles or transition to a refill-at-retail format by 2030.\n\nThe EU-CSRD-2022/2464 regime is approaching materialisation for Trivento's Italian holding company, which exceeds all three large-undertaking thresholds (EUR 890m net turnover, 2,340 employees, EUR 520m balance sheet). The FY2024 sustainability report must be published alongside the annual report for the 2024 financial year. Confindustria Alimentare has published a sector-specific ESRS implementation guidance note in November 2025 that Trivento's sustainability team is consulting.",
+  "sections": [
+    {
+      "heading": "Italian Plastic Tax (Imposta sul consumo dei manufatti con singolo impiego)",
+      "paragraphs": [
+        "The Italian Plastic Tax, definitively scheduled for application from 1 July 2026 following EU state aid clearance, levies EUR 0.45 per kilogram on single-use plastic manufactured items (MACSI) placed on the Italian market. Trivento's Parma Pasta facility uses approximately 380 tonnes of non-compostable PP and PE film packaging annually for dried pasta formats, creating an estimated annual tax liability of EUR 171,000. Exemptions exist for MACSI made from certified compostable bioplastics meeting EN 13432 or for MACSI containing at least 40% post-consumer recycled plastic.",
+        "The Italian Plastic Tax was introduced by Article 1, paragraphs 634-658 of Law 160/2019 (2020 Budget Law) and was originally due to apply from July 2020. It has been postponed eight times due to implementing regulation delays and EU state aid scrutiny. Following the European Commission's state aid clearance decision of 14 October 2025 (Case SA.63161), the Italian government confirmed 1 July 2026 as the definitive application date, with implementing regulation D.Lgs. issued 18 October 2025. The EUR 0.45/kg rate applies to MACSI (single-use plastics for food and beverage contact) placed on the Italian market by producers, importers, and intra-EU acquirers. Annual declarations are submitted to the Agenzia delle Dogane e dei Monopoli. The tax is not deductible for IRES (Italian corporate income tax) purposes, creating an effective EUR 0.45 gross cost per kilogram."
+      ],
+      "callout": "Commission material analysis for all Parma Pasta MACSI packaging; assess EUR liability and model cost of exemption pathways (compostable or PCR-content upgrade) by 31 January 2026.",
+      "evidence_refs": [
+        "ev-2026-04-e37b22bb",
+        "ev-2026-04-c5fb2a38",
+        "ev-2026-04-295028b3",
+        "ev-2026-04-11a73b75",
+        "ev-2026-04-b08c9f47"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation — Glass Reuse Targets",
+      "paragraphs": [
+        "The PPWR November 2025 delegated act consultation includes glass packaging reuse targets specifically relevant to Trivento's olive oil bottling operations. Under the draft Annex VII, glass food-and-beverage packaging of 250ml–2000ml must meet a reuse rate of 5% of units placed on market by 2028, rising to 10% by 2030 and 20% by 2035. Trivento's 500ml and 750ml olive oil bottles distributed in Italy and exported to Germany and France will be subject to these targets.",
+        "Regulation (EU) 2025/40 Article 26 establishes mandatory reuse targets for packaging in specific categories. The November 2025 delegated act consultation (Commission consultation reference PPWR-DA-2025-001) includes Annex VII covering reuse targets for glass packaging in the food sector. Olive oil bottling is specifically referenced as a high-priority sector given the predominance of glass packaging (>85% market share by unit volume in Italy) and the established returnable bottle infrastructure in the Italian domestic market. Compliance pathways include: (1) deposit-return scheme for glass bottles, (2) refill-at-retail programme through the grande distribuzione organizzata (GDO), or (3) institutional sales in reusable bottles. Trivento's Consorzio del Prosciutto di Parma DOC certification does not provide any PPWR exemption."
+      ],
+      "callout": "Participate in Italian packaging industry consultation response via CONAI by 15 January 2026; model reuse target compliance pathways for olive oil glass bottles.",
+      "evidence_refs": [
+        "ev-2026-04-47d4c62d",
+        "ev-2026-04-e37b22bb",
+        "ev-2026-04-dbf05fb3",
+        "ev-2026-04-9d5f1c45",
+        "ev-2026-04-30c58c08",
+        "ev-2026-04-96ba4c07",
+        "ev-2026-04-c5fb2a38",
+        "ev-2026-04-b08c9f47"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Reporting Directive",
+      "paragraphs": [
+        "Trivento Foods S.p.A. as the Italian holding company exceeds all three CSRD large-undertaking thresholds and must publish its first ESRS-compliant sustainability statement for FY2024. The Confindustria Alimentare November 2025 sector guidance identifies specific ESRS topics typically material for Italian food manufacturers, including E1 (energy use from pasta drying kilns), E3 (water intensity of pasta production), S1 (seasonal and migrant workers in agricultural supply chains), and G1 (anti-corruption in olive oil supply chain — a known sector risk).",
+        "Directive 2022/2464/EU (CSRD) was transposed into Italian law by D.Lgs. 125/2024, published in the Italian Official Gazette (Gazzetta Ufficiale) on 10 September 2024. The Italian transposition establishes the Autorità di Vigilanza sui Contratti Pubblici (ANAC) as the supervisory authority for CSRD compliance, with financial penalties of EUR 50,000–150,000 for delayed or materially incorrect sustainability statements. Trivento's ESRS reporting obligations extend to its entire consolidated group, including foreign subsidiaries in Germany and France. The Parma Pasta facility's Parmigiano Reggiano-region groundwater abstraction licence (Concessione di derivazione) creates a specific ESRS E3 water disclosure obligation given the strategic water resource designation of the Po Valley aquifer system."
+      ],
+      "callout": "Engage external assurance provider and complete double materiality assessment by 31 January 2026; prioritise E3 (water) given Parma facility's groundwater abstraction volumes.",
+      "evidence_refs": [
+        "ev-2026-04-6d0ad1a3",
+        "ev-2026-04-96ba4c07"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "IT-Plastic-Tax-DL73",
+        "packaging",
+        "The Italian Plastic Tax, definitively scheduled for application from 1 July 2026 following EU state aid clearance, levies EUR 0.45 per kilogram on single-use plastic manufactured items (MACSI) placed on the Italian market. Trivento's Parma Pasta facility uses approximately 380 tonnes of non-compostable PP and PE film packaging annually for dried pasta formats, creating an estimated annual tax liability of EUR 171,000. Exemptions exist for MACSI made from certified compostable bioplastics meeting EN 13432 or for MACSI containing at least 40% post-consumer recycled plastic.",
+        "Commission material analysis for all Parma Pasta MACSI packaging; assess EUR liability and model cost of exemption pathways (compostable or PCR-content upgrade) by 31 January 2026."
+      ],
+      [
+        "EU-CSRD-2022/2464",
+        "social_human_rights",
+        "Trivento Foods S.p.A. as the Italian holding company exceeds all three CSRD large-undertaking thresholds and must publish its first ESRS-compliant sustainability statement for FY2024. The Confindustria Alimentare November 2025 sector guidance identifies specific ESRS topics typically material for Italian food manufacturers, including E1 (energy use from pasta drying kilns), E3 (water intensity of pasta production), S1 (seasonal and migrant workers in agricultural supply chains), and G1 (anti-corruption in olive oil supply chain — a known sector risk).",
+        "Engage external assurance provider and complete double materiality assessment by 31 January 2026; prioritise E3 (water) given Parma facility's groundwater abstraction volumes."
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2025-11-30"
+    },
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2025-11-30"
+    }
+  ],
+  "total_regulations_tracked": 3,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 2
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "IT-Plastic-Tax-DL73",
+      "title": "Italian Plastic Tax (Imposta sul consumo dei manufatti con singolo impiego)",
+      "topic": "packaging",
+      "change_type": "new_regulation",
+      "severity": "high",
+      "summary": "The Italian Plastic Tax, definitively scheduled for application from 1 July 2026 following EU state aid clearance, levies EUR 0.45 per kilogram on single-use plastic manufactured items (MACSI) placed on the Italian market. Trivento's Parma Pasta facility uses approximately 380 tonnes of non-compostable PP and PE film packaging annually for dried pasta formats, creating an estimated annual tax liability of EUR 171,000. Exemptions exist for MACSI made from certified compostable bioplastics meeting EN 13432 or for MACSI containing at least 40% post-consumer recycled plastic.",
+      "action_required": "Commission material analysis for all Parma Pasta MACSI packaging; assess EUR liability and model cost of exemption pathways (compostable or PCR-content upgrade) by 31 January 2026.",
+      "current_status": "confirmed_application_date",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "description": "The Italian Plastic Tax was introduced by Article 1, paragraphs 634-658 of Law 160/2019 (2020 Budget Law) and was originally due to apply from July 2020. It has been postponed eight times due to implementing regulation delays and EU state aid scrutiny. Following the European Commission's state aid clearance decision of 14 October 2025 (Case SA.63161), the Italian government confirmed 1 July 2026 as the definitive application date, with implementing regulation D.Lgs. issued 18 October 2025. The EUR 0.45/kg rate applies to MACSI (single-use plastics for food and beverage contact) placed on the Italian market by producers, importers, and intra-EU acquirers. Annual declarations are submitted to the Agenzia delle Dogane e dei Monopoli. The tax is not deductible for IRES (Italian corporate income tax) purposes, creating an effective EUR 0.45 gross cost per kilogram."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation — Glass Reuse Targets",
+      "topic": "packaging",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "The PPWR November 2025 delegated act consultation includes glass packaging reuse targets specifically relevant to Trivento's olive oil bottling operations. Under the draft Annex VII, glass food-and-beverage packaging of 250ml–2000ml must meet a reuse rate of 5% of units placed on market by 2028, rising to 10% by 2030 and 20% by 2035. Trivento's 500ml and 750ml olive oil bottles distributed in Italy and exported to Germany and France will be subject to these targets.",
+      "action_required": "Participate in Italian packaging industry consultation response via CONAI by 15 January 2026; model reuse target compliance pathways for olive oil glass bottles.",
+      "current_status": "delegated_act_consultation",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "description": "Regulation (EU) 2025/40 Article 26 establishes mandatory reuse targets for packaging in specific categories. The November 2025 delegated act consultation (Commission consultation reference PPWR-DA-2025-001) includes Annex VII covering reuse targets for glass packaging in the food sector. Olive oil bottling is specifically referenced as a high-priority sector given the predominance of glass packaging (>85% market share by unit volume in Italy) and the established returnable bottle infrastructure in the Italian domestic market. Compliance pathways include: (1) deposit-return scheme for glass bottles, (2) refill-at-retail programme through the grande distribuzione organizzata (GDO), or (3) institutional sales in reusable bottles. Trivento's Consorzio del Prosciutto di Parma DOC certification does not provide any PPWR exemption."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "change_type": "new_regulation",
+      "severity": "high",
+      "summary": "Trivento Foods S.p.A. as the Italian holding company exceeds all three CSRD large-undertaking thresholds and must publish its first ESRS-compliant sustainability statement for FY2024. The Confindustria Alimentare November 2025 sector guidance identifies specific ESRS topics typically material for Italian food manufacturers, including E1 (energy use from pasta drying kilns), E3 (water intensity of pasta production), S1 (seasonal and migrant workers in agricultural supply chains), and G1 (anti-corruption in olive oil supply chain — a known sector risk).",
+      "action_required": "Engage external assurance provider and complete double materiality assessment by 31 January 2026; prioritise E3 (water) given Parma facility's groundwater abstraction volumes.",
+      "current_status": "in_force",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-06-30",
+      "description": "Directive 2022/2464/EU (CSRD) was transposed into Italian law by D.Lgs. 125/2024, published in the Italian Official Gazette (Gazzetta Ufficiale) on 10 September 2024. The Italian transposition establishes the Autorità di Vigilanza sui Contratti Pubblici (ANAC) as the supervisory authority for CSRD compliance, with financial penalties of EUR 50,000–150,000 for delayed or materially incorrect sustainability statements. Trivento's ESRS reporting obligations extend to its entire consolidated group, including foreign subsidiaries in Germany and France. The Parma Pasta facility's Parmigiano Reggiano-region groundwater abstraction licence (Concessione di derivazione) creates a specific ESRS E3 water disclosure obligation given the strategic water resource designation of the Po Valley aquifer system."
+    }
+  ],
+  "status_changes": [],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

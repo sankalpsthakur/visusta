@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-47d4c62d",
+  "client_id": "trivento-foods",
+  "source_id": "ispra",
+  "source_name": "ISPRA environmental agency",
+  "url": "https://www.isprambiente.gov.it/it/pubblicazioni/rapporti/rapporto-rifiuti-urbani-2024",
+  "access_date": "2026-04-11",
+  "document_title": "ISPRA Municipal Waste Report 2024 \u2014 Packaging Recycling Performance",
+  "snippet": "Italy achieved 73% packaging recycling rate in 2023; targets updated to align with PPWR.",
+  "hash": "sha256:47d4c62d6bcc83bc58fd17964a2846948151b8c03196a260a1e8e13135381629",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "packaging",
+  "related_regulation_id": "PPWR-2025"
+}

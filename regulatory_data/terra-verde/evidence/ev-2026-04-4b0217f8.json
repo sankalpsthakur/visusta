@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-4b0217f8",
+  "client_id": "terra-verde",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+  "access_date": "2026-04-11",
+  "document_title": "PPWR \u2014 Packaging and Packaging Waste Regulation",
+  "snippet": "Organic juice and vegetable packaging must meet PPWR recyclability requirements from 2028.",
+  "hash": "sha256:4b0217f895063c68edc753d5e178758efb7ffce2c7fd56ea29f47db5ea08cfc1",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.95,
+  "topic": "packaging",
+  "related_regulation_id": "PPWR-2025"
+}

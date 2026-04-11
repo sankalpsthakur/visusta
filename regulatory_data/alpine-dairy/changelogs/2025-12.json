@@ -1,0 +1,175 @@
+{
+  "screening_period": "2025-12",
+  "generated_date": "2025-12-31",
+  "previous_period": "2025-11",
+  "client_context": {
+    "facility_line": "Zurich Cheese Works & Bern Yogurt Plant, Swiss Confederation",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & Swiss Sustainability Frameworks for Dairy Manufacturers"
+  },
+  "executive_summary": "December 2025 brings two significant regulatory developments for Alpine Dairy AG. The EU Deforestation-free Products Regulation (EU-EUDR-2023/1115), after a 12-month postponement, has now entered its definitive applicability phase from December 2025. For dairy operations, the regulation's relevance centres on soy and palm oil used in animal feed sourced by contracted Swiss dairy farms. Alpine Dairy must assess whether its milk procurement contracts with farm cooperatives create downstream traceability obligations under Article 10 due diligence requirements.\n\nThe EU Carbon Border Adjustment Mechanism (EU-CBAM-2023/956) transitions from its transitional phase to definitive operation from 1 January 2026. While dairy products as such are not currently within CBAM's product scope, Alpine Dairy's cross-border energy-intensive operations — particularly the ammonia refrigeration systems at Zurich Cheese Works — may generate CBAM-adjacent compliance requirements if the Commission exercises its Article 30 review powers to extend product scope. Legal teams should monitor the Commission's Q1 2026 review report.\n\nFinally, the EU-CSDDD-2024/1760 transposition deadline of 26 July 2026 is approaching. Member states are actively drafting national implementing legislation; Germany and Austria have published draft bills that extend due diligence obligations to suppliers in the dairy value chain. Alpine Dairy AG's Swiss domicile does not exempt it from CSDDD obligations when its EU sales exceed EUR 150 million net turnover.",
+  "sections": [
+    {
+      "heading": "EU Deforestation-free Products Regulation",
+      "paragraphs": [
+        "The EUDR entered definitive applicability in December 2025 after a 12-month delay from the original June 2025 deadline. The regulation requires operators placing cattle, soy, palm oil, cocoa, coffee, rubber, and wood products (and derived products) on the EU market to conduct geolocation-based due diligence and maintain traceability to the plot of land of production. Alpine Dairy's primary exposure is indirect — through soy-based and palm-based feed ingredients consumed by milk-supplying farms — triggering supplier due diligence obligations under Article 10.",
+        "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) was adopted on 31 May 2023 with application originally set for June 2025, subsequently delayed by Regulation (EU) 2024/2133 to 30 December 2025 for large operators. The regulation establishes a due diligence system requiring: (1) collection of geolocation coordinates for all land parcels where listed commodities were produced, (2) risk assessment against deforestation and degradation indicators using satellite monitoring data, and (3) a due diligence statement filed via the EU Information System before placing products on the market. For food manufacturers using dairy as an ingredient, the cattle-and-cattle-products scope creates upstream obligations. Swiss-domiciled operators exporting to the EU are full 'operators' under Article 2(15) and cannot rely on the importer exception."
+      ],
+      "callout": "Map tier-1 feed ingredient suppliers of contracted dairy farms and request geolocation declarations for soy and palm-derived feed components by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-71e87763"
+      ]
+    },
+    {
+      "heading": "Carbon Border Adjustment Mechanism",
+      "paragraphs": [
+        "CBAM transitions from transitional phase (October 2023 – December 2025) to definitive operation from 1 January 2026. During the transitional phase, Alpine Dairy had no direct CBAM obligations as dairy products are outside the current product scope (cement, iron and steel, aluminium, fertilisers, electricity, hydrogen). The definitive phase triggers reporting obligations only for importers of in-scope goods but includes a Commission review of product scope extension."
+      ],
+      "callout": "Monitor Commission Article 30 review expected Q2 2026; assess potential CBAM exposure if dairy by-products (e.g., whey protein concentrate exported to AT/DE) are included in scope extension."
+    },
+    {
+      "heading": "Corporate Sustainability Due Diligence Directive",
+      "paragraphs": [
+        "Germany and Austria published draft national transposition bills for CSDDD in December 2025 ahead of the 26 July 2026 transposition deadline. The German draft (Referentenentwurf LkSG-Reform) extends the existing Lieferkettensorgfaltspflichtengesetz framework to incorporate CSDDD requirements, including civil liability for chain-level harm. The Austrian draft extends to companies with EUR 150m+ EU net turnover regardless of domicile, directly capturing Alpine Dairy's Austrian sales subsidiary."
+      ],
+      "callout": "Engage Austrian and German legal counsel to assess CSDDD transposition exposure; begin value chain mapping for dairy input suppliers in non-OECD countries by Q1 2026.",
+      "evidence_refs": [
+        "ev-2026-04-de82ed15"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "EU-CSDDD-2024/1760",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2023/1115 — EU Deforestation-free Products Regulation",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115",
+      "access_date": "2025-12-31"
+    }
+  ],
+  "total_regulations_tracked": 5,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "change_type": "new_regulation",
+      "severity": "medium",
+      "summary": "The EUDR entered definitive applicability in December 2025 after a 12-month delay from the original June 2025 deadline. The regulation requires operators placing cattle, soy, palm oil, cocoa, coffee, rubber, and wood products (and derived products) on the EU market to conduct geolocation-based due diligence and maintain traceability to the plot of land of production. Alpine Dairy's primary exposure is indirect — through soy-based and palm-based feed ingredients consumed by milk-supplying farms — triggering supplier due diligence obligations under Article 10.",
+      "action_required": "Map tier-1 feed ingredient suppliers of contracted dairy farms and request geolocation declarations for soy and palm-derived feed components by 31 March 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "description": "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) was adopted on 31 May 2023 with application originally set for June 2025, subsequently delayed by Regulation (EU) 2024/2133 to 30 December 2025 for large operators. The regulation establishes a due diligence system requiring: (1) collection of geolocation coordinates for all land parcels where listed commodities were produced, (2) risk assessment against deforestation and degradation indicators using satellite monitoring data, and (3) a due diligence statement filed via the EU Information System before placing products on the market. For food manufacturers using dairy as an ingredient, the cattle-and-cattle-products scope creates upstream obligations. Swiss-domiciled operators exporting to the EU are full 'operators' under Article 2(15) and cannot rely on the importer exception."
+    }
+  ],
+  "status_changes": [
+    {
+      "regulation_id": "EU-CBAM-2023/956",
+      "title": "Carbon Border Adjustment Mechanism",
+      "topic": "ghg",
+      "change_type": "status_change",
+      "severity": "low",
+      "summary": "CBAM transitions from transitional phase (October 2023 – December 2025) to definitive operation from 1 January 2026. During the transitional phase, Alpine Dairy had no direct CBAM obligations as dairy products are outside the current product scope (cement, iron and steel, aluminium, fertilisers, electricity, hydrogen). The definitive phase triggers reporting obligations only for importers of in-scope goods but includes a Commission review of product scope extension.",
+      "action_required": "Monitor Commission Article 30 review expected Q2 2026; assess potential CBAM exposure if dairy by-products (e.g., whey protein concentrate exported to AT/DE) are included in scope extension.",
+      "current_status": "in_force",
+      "effective_date": "2026-01-01",
+      "enforcement_date": "2026-01-01",
+      "changes": [
+        {
+          "field": "phase",
+          "old": "transitional",
+          "new": "definitive",
+          "description": "CBAM moves to full financial obligation phase from 1 January 2026"
+        }
+      ]
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "Germany and Austria published draft national transposition bills for CSDDD in December 2025 ahead of the 26 July 2026 transposition deadline. The German draft (Referentenentwurf LkSG-Reform) extends the existing Lieferkettensorgfaltspflichtengesetz framework to incorporate CSDDD requirements, including civil liability for chain-level harm. The Austrian draft extends to companies with EUR 150m+ EU net turnover regardless of domicile, directly capturing Alpine Dairy's Austrian sales subsidiary.",
+      "action_required": "Engage Austrian and German legal counsel to assess CSDDD transposition exposure; begin value chain mapping for dairy input suppliers in non-OECD countries by Q1 2026.",
+      "current_status": "transposition_in_progress",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "changes": [
+        {
+          "field": "transposition_status",
+          "old": "awaiting_national_bills",
+          "new": "draft_bills_published_DE_AT",
+          "description": "DE and AT published draft implementing legislation in December 2025"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "severity": "high",
+      "action": "Commission value chain mapping required before transposition deadline July 2026"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

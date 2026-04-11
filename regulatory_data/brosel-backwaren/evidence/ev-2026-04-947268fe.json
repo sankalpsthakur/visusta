@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-947268fe",
+  "client_id": "brosel-backwaren",
+  "source_id": "ris",
+  "source_name": "Rechtsinformationssystem Austria",
+  "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10010070",
+  "access_date": "2026-04-11",
+  "document_title": "Austrian Abfallwirtschaftsgesetz (AWG) \u2014 Waste Management Act",
+  "snippet": "Austrian waste obligations for food manufacturers; biowaste separation mandatory from 2025.",
+  "hash": "sha256:947268fe44e8fbbb74e963c603c0b68298879ceff82dc00fb1a006d5eb09461e",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.91,
+  "topic": "waste",
+  "related_regulation_id": "AT-AWG-2002"
+}

@@ -1,0 +1,373 @@
+clients:
+  gerold-foods:
+    display_name: Gerold & Team
+    facilities:
+    - name: Hamburg Bakery
+      jurisdiction: DE
+    - name: Rietberg Cold Cuts
+      jurisdiction: DE
+    allowed_countries:
+    - EU
+    - DE
+    required_topics:
+    - ghg
+    - packaging
+    - water
+    - waste
+    - social_human_rights
+    branding:
+      primary_color: '#8B2F1E'
+      accent_color: '#3F4E31'
+    created_at: '2026-01-15'
+    sources:
+    - id: eur_lex
+      display_name: EUR-Lex
+      url: https://eur-lex.europa.eu
+      frequency: daily
+      source_type: gazette
+    - id: bgbl
+      display_name: Bundesgesetzblatt
+      url: https://www.bgbl.de
+      frequency: daily
+      source_type: gazette
+    - id: bmuv
+      display_name: BMUV/UBA
+      url: https://www.bmuv.de
+      frequency: weekly
+      source_type: ministry
+    - id: bafa
+      display_name: BAFA
+      url: https://www.bafa.de
+      frequency: weekly
+      source_type: agency
+    - id: zsvr
+      display_name: ZSVR/LUCID
+      url: https://www.zsvr.de
+      frequency: weekly
+      source_type: registry
+    thresholds:
+      critical_enforcement_window_days: 90
+      min_confidence: 0.6
+      min_sources_per_entry: 2
+    report_preferences:
+      tone: executive
+      depth: standard
+      chart_mix:
+      - severity_heatmap
+      - enforcement_timeline
+      - topic_distribution
+      section_order:
+      - executive_summary
+      - critical_actions
+      - topic_status
+      - change_log
+      - impact_summary
+      - references
+  alpine-dairy:
+    display_name: Alpine Dairy AG
+    facilities:
+    - name: Zurich Cheese Works
+      jurisdiction: CH
+    - name: Bern Yogurt Plant
+      jurisdiction: CH
+    allowed_countries:
+    - EU
+    - CH
+    - DE
+    - AT
+    required_topics:
+    - ghg
+    - packaging
+    - water
+    - waste
+    - social_human_rights
+    branding:
+      primary_color: '#8B2F1E'
+      accent_color: '#3F4E31'
+    created_at: '2025-09-01'
+    sources:
+    - id: fedlex
+      display_name: Fedlex
+      url: https://www.fedlex.admin.ch
+      frequency: daily
+      source_type: gazette
+    - id: bafu
+      display_name: "BAFU \u2014 Swiss Federal Office for the Environment"
+      url: https://www.bafu.admin.ch
+      frequency: weekly
+      source_type: agency
+    - id: uvek
+      display_name: "UVEK \u2014 Swiss Ministry of Environment"
+      url: https://www.uvek.admin.ch
+      frequency: weekly
+      source_type: ministry
+    - id: eur_lex
+      display_name: EUR-Lex
+      url: https://eur-lex.europa.eu
+      frequency: daily
+      source_type: gazette
+    - id: ris
+      display_name: Rechtsinformationssystem Austria
+      url: https://www.ris.bka.gv.at
+      frequency: daily
+      source_type: gazette
+    thresholds:
+      critical_enforcement_window_days: 90
+      min_confidence: 0.6
+      min_sources_per_entry: 2
+    report_preferences:
+      tone: executive
+      depth: standard
+      chart_mix:
+      - severity_heatmap
+      - enforcement_timeline
+      - topic_distribution
+      section_order:
+      - executive_summary
+      - critical_actions
+      - topic_status
+      - change_log
+      - impact_summary
+      - references
+  nordic-harvest:
+    display_name: Nordic Harvest AS
+    facilities:
+    - name: Oslo Seafood
+      jurisdiction: 'NO'
+    - name: Bergen Fish Oils
+      jurisdiction: 'NO'
+    allowed_countries:
+    - EU
+    - 'NO'
+    required_topics:
+    - ghg
+    - packaging
+    - water
+    - waste
+    - social_human_rights
+    branding:
+      primary_color: '#8B2F1E'
+      accent_color: '#3F4E31'
+    created_at: '2025-11-03'
+    sources:
+    - id: lovdata
+      display_name: Lovdata
+      url: https://lovdata.no
+      frequency: daily
+      source_type: gazette
+    - id: miljodirektoratet
+      display_name: Norwegian Environment Agency
+      url: https://www.miljodirektoratet.no
+      frequency: weekly
+      source_type: agency
+    - id: stortinget
+      display_name: "Stortinget \u2014 Norwegian Parliament"
+      url: https://www.stortinget.no
+      frequency: weekly
+      source_type: legislature
+    - id: eur_lex
+      display_name: EUR-Lex
+      url: https://eur-lex.europa.eu
+      frequency: daily
+      source_type: gazette
+    thresholds:
+      critical_enforcement_window_days: 90
+      min_confidence: 0.6
+      min_sources_per_entry: 2
+    report_preferences:
+      tone: executive
+      depth: standard
+      chart_mix:
+      - severity_heatmap
+      - enforcement_timeline
+      - topic_distribution
+      section_order:
+      - executive_summary
+      - critical_actions
+      - topic_status
+      - change_log
+      - impact_summary
+      - references
+  trivento-foods:
+    display_name: Trivento Foods S.p.A.
+    facilities:
+    - name: Parma Pasta
+      jurisdiction: IT
+    - name: Modena Olive Oil
+      jurisdiction: IT
+    allowed_countries:
+    - EU
+    - IT
+    required_topics:
+    - ghg
+    - packaging
+    - water
+    - waste
+    - social_human_rights
+    branding:
+      primary_color: '#8B2F1E'
+      accent_color: '#3F4E31'
+    created_at: '2025-10-12'
+    sources:
+    - id: gazzetta_ufficiale
+      display_name: Gazzetta Ufficiale della Repubblica Italiana
+      url: https://www.gazzettaufficiale.it
+      frequency: daily
+      source_type: gazette
+    - id: ispra
+      display_name: ISPRA environmental agency
+      url: https://www.isprambiente.gov.it
+      frequency: weekly
+      source_type: agency
+    - id: ministero_ambiente
+      display_name: Ministero dell'Ambiente
+      url: https://www.mase.gov.it
+      frequency: weekly
+      source_type: ministry
+    - id: eur_lex
+      display_name: EUR-Lex
+      url: https://eur-lex.europa.eu
+      frequency: daily
+      source_type: gazette
+    thresholds:
+      critical_enforcement_window_days: 90
+      min_confidence: 0.6
+      min_sources_per_entry: 2
+    report_preferences:
+      tone: executive
+      depth: standard
+      chart_mix:
+      - severity_heatmap
+      - enforcement_timeline
+      - topic_distribution
+      section_order:
+      - executive_summary
+      - critical_actions
+      - topic_status
+      - change_log
+      - impact_summary
+      - references
+  terra-verde:
+    display_name: Terra Verde Organics Lda.
+    facilities:
+    - name: Lisbon Juices
+      jurisdiction: PT
+    - name: Porto Organic Veg
+      jurisdiction: PT
+    allowed_countries:
+    - EU
+    - PT
+    required_topics:
+    - ghg
+    - packaging
+    - water
+    - waste
+    - social_human_rights
+    branding:
+      primary_color: '#8B2F1E'
+      accent_color: '#3F4E31'
+    created_at: '2026-02-01'
+    sources:
+    - id: dre
+      display_name: "Di\xE1rio da Rep\xFAblica Eletr\xF3nico"
+      url: https://dre.pt
+      frequency: daily
+      source_type: gazette
+    - id: apa
+      display_name: "Ag\xEAncia Portuguesa do Ambiente"
+      url: https://apambiente.pt
+      frequency: weekly
+      source_type: agency
+    - id: eur_lex
+      display_name: EUR-Lex
+      url: https://eur-lex.europa.eu
+      frequency: daily
+      source_type: gazette
+    thresholds:
+      critical_enforcement_window_days: 90
+      min_confidence: 0.6
+      min_sources_per_entry: 2
+    report_preferences:
+      tone: executive
+      depth: standard
+      chart_mix:
+      - severity_heatmap
+      - enforcement_timeline
+      - topic_distribution
+      section_order:
+      - executive_summary
+      - critical_actions
+      - topic_status
+      - change_log
+      - impact_summary
+      - references
+  brosel-backwaren:
+    display_name: "Br\xF6sel Backwaren GmbH"
+    facilities:
+    - name: Munich Bread Works
+      jurisdiction: DE
+    - name: Vienna Pastries
+      jurisdiction: AT
+    allowed_countries:
+    - EU
+    - DE
+    - AT
+    required_topics:
+    - ghg
+    - packaging
+    - water
+    - waste
+    - social_human_rights
+    branding:
+      primary_color: '#8B2F1E'
+      accent_color: '#3F4E31'
+    created_at: '2025-12-05'
+    sources:
+    - id: eur_lex
+      display_name: EUR-Lex
+      url: https://eur-lex.europa.eu
+      frequency: daily
+      source_type: gazette
+    - id: bgbl
+      display_name: Bundesgesetzblatt
+      url: https://www.bgbl.de
+      frequency: daily
+      source_type: gazette
+    - id: bmuv
+      display_name: BMUV/UBA
+      url: https://www.bmuv.de
+      frequency: weekly
+      source_type: ministry
+    - id: bafa
+      display_name: BAFA
+      url: https://www.bafa.de
+      frequency: weekly
+      source_type: agency
+    - id: zsvr
+      display_name: ZSVR/LUCID
+      url: https://www.zsvr.de
+      frequency: weekly
+      source_type: registry
+    - id: ris
+      display_name: Rechtsinformationssystem Austria
+      url: https://www.ris.bka.gv.at
+      frequency: daily
+      source_type: gazette
+    thresholds:
+      critical_enforcement_window_days: 90
+      min_confidence: 0.6
+      min_sources_per_entry: 2
+    report_preferences:
+      tone: executive
+      depth: standard
+      chart_mix:
+      - severity_heatmap
+      - enforcement_timeline
+      - topic_distribution
+      section_order:
+      - executive_summary
+      - critical_actions
+      - topic_status
+      - change_log
+      - impact_summary
+      - references

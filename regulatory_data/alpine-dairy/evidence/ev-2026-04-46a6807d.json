@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-46a6807d",
+  "client_id": "alpine-dairy",
+  "source_id": "fedlex",
+  "source_name": "Fedlex",
+  "url": "https://www.fedlex.admin.ch/eli/cc/1999/415/de",
+  "access_date": "2026-04-11",
+  "document_title": "GSchG \u2014 Gew\u00e4sserschutzgesetz (Waters Protection Act)",
+  "snippet": "Effluent standards for dairy wastewater; BOD limits and temperature restrictions.",
+  "hash": "sha256:46a6807d7de6d14677f2163ce99a6bd41ddfc8be63915c2c9c3116dd2d498eb4",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.94,
+  "topic": "water",
+  "related_regulation_id": "GSchG-SR-814"
+}

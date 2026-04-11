@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-f232745a",
+  "client_id": "gerold-foods",
+  "source_id": "bmuv",
+  "source_name": "BMUV/UBA",
+  "url": "https://www.bmuv.de/themen/klimaschutz/klimaschutzgesetz",
+  "access_date": "2026-04-11",
+  "document_title": "Bundes-Klimaschutzgesetz (KSG) \u2014 Federal Climate Protection Act",
+  "snippet": "Germany's GHG reduction targets: 65% by 2030, 88% by 2040, climate neutrality by 2045.",
+  "hash": "sha256:f232745aedb9436c10f5348a58dd264b581a490531cfa59d6f89153ac425fdc7",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "ghg",
+  "related_regulation_id": "KSG-2021"
+}

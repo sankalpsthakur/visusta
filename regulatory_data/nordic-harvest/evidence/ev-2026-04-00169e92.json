@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-00169e92",
+  "client_id": "nordic-harvest",
+  "source_id": "lovdata",
+  "source_name": "Lovdata",
+  "url": "https://lovdata.no/dokument/NL/lov/2008-06-06-37",
+  "access_date": "2026-04-11",
+  "document_title": "Havressurslova \u2014 Marine Resources Act (fisheries quota management)",
+  "snippet": "Sustainability requirements for commercial fishing; quota systems and bycatch limits.",
+  "hash": "sha256:00169e9269efe38a4a9e7cfa8bb8dd6f8ee7f405a488f99c9ecdc45ce5d2d381",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.91,
+  "topic": "waste",
+  "related_regulation_id": "Havressurslova-2008"
+}

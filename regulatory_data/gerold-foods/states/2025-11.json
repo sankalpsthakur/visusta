@@ -1,0 +1,45 @@
+{
+  "screening_period": "2025-11",
+  "screening_date": "2025-11-30",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "status": "in_force",
+      "severity": "medium",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2027-06-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464; CSRD-Umsetzungsgesetz (DE)",
+      "summary": "CSRD scoping assessment commissioned from BDO Hamburg; FY2026 likely first reporting year."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "in_force",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Rietberg PE/PA vacuum-skin cold cut packs at risk of Class C; recyclability audit commissioned."
+    },
+    {
+      "regulation_id": "DE-VerpackDG-2026",
+      "title": "Verpackungsdurchführungsgesetz Amendment",
+      "topic": "packaging",
+      "status": "parliamentary_consultation",
+      "severity": "high",
+      "effective_date": "2026-07-01",
+      "enforcement_date": "2026-07-01",
+      "jurisdiction": "DE",
+      "citation": "Referentenentwurf VerpackDG-2026",
+      "summary": "Article 12c EPR multipliers; PackML declarations; BVE working group engagement initiated."
+    }
+  ]
+}

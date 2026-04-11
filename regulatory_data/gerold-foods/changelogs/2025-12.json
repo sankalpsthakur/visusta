@@ -1,0 +1,143 @@
+{
+  "screening_period": "2025-12",
+  "generated_date": "2025-12-31",
+  "previous_period": "2025-11",
+  "client_context": {
+    "facility_line": "Hamburg Bakery & Rietberg Cold Cuts, Federal Republic of Germany",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EU & German Sustainability Frameworks for Food Manufacturers"
+  },
+  "executive_summary": "December 2025 sees Gerold & Team's regulatory compliance picture sharpen materially. The CSRD scoping assessment commissioned from BDO Hamburg in December confirmed that Gerold's consolidated group meets the German CSRD large-undertaking criteria under D-ESRS implementation, with FY2026 as the first reporting year and sustainability statement due by 30 June 2027. This gives Gerold an additional year compared to FY2025 second-wave filers, but the DMA process should begin in Q1 2026 to allow adequate time for data collection and assurance.\n\nThe EU-EUDR Deforestation Regulation entered definitive applicability on 30 December 2025. Gerold's Cold Cuts facility at Rietberg sources pork and beef from German agricultural cooperatives, which typically use soy-based animal feed with Brazilian origins. While the pork and beef products themselves are not EUDR-listed commodities, the soy feed supply chain creates a potential EUDR compliance gap analogous to that faced by other food sector companies. Gerold's procurement team has been asked to obtain soy feed origin documentation from the two primary agricultural cooperatives (Westfleisch and Tönnies-group subsidiary farms) supplying Rietberg.\n\nThe LkSG employee count is confirmed at 890, placing Gerold below the 1,000-employee threshold for FY2025. However, the company plans to expand Hamburg Bakery in Q2 2026 (adding approximately 80 employees), which would push the consolidated German headcount to approximately 970. If the expansion proceeds and any further hiring occurs, LkSG obligations could activate from FY2026. Human resources has been informed to monitor the threshold.",
+  "sections": [
+    {
+      "heading": "EU Deforestation-free Products Regulation",
+      "paragraphs": [
+        "EUDR entered definitive applicability December 2025. Gerold's primary EUDR exposure is indirect — through soy-based animal feed in the pork and beef supply chain of contracted farms supplying Rietberg Cold Cuts. While pork and beef are not listed EUDR commodities, the Commission's FAQ document recommends food manufacturers obtain supplier declarations covering soy feed origins as a proactive due diligence measure.",
+        "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) covers cattle, soy, palm oil, cocoa, coffee, rubber, wood, and derived products. Gerold's Rietberg cold cuts facility sources pork from approximately 85 contracted German farms (predominantly North Rhine-Westphalia) and beef from 12 farms (Lower Saxony). German farm cooperatives procuring from Westfleisch and Tönnies are predominantly using imported South American soy in feed formulations — Brazil (approximately 65% of soy volume) and Argentina (35%). While the farms themselves are not EUDR 'operators', Gerold as a downstream food manufacturer should obtain written declarations from its first-tier agricultural suppliers confirming that the soy used in animal feed was not sourced from deforested land post-December 2020."
+      ],
+      "callout": "Request EUDR soy feed origin declarations from Westfleisch and Tönnies group farm suppliers by 31 March 2026.",
+      "evidence_refs": [
+        "ev-2026-04-20ec444e",
+        "ev-2026-04-070fb003",
+        "ev-2026-04-678b6c88",
+        "ev-2026-04-c29528f9"
+      ]
+    },
+    {
+      "heading": "Corporate Sustainability Reporting Directive — Scoping Confirmed",
+      "paragraphs": [
+        "BDO Hamburg scoping assessment confirmed Gerold as CSRD large undertaking (EUR 145m turnover, balance sheet EUR 78m, 890 employees — two of three criteria met). FY2026 is first reporting year under German D-ESRS second-wave implementation, with sustainability statement due 30 June 2027. DMA to begin Q1 2026."
+      ],
+      "callout": "Initiate ESRS double materiality assessment in January 2026; retain BDO Hamburg for limited assurance engagement.",
+      "evidence_refs": [
+        "ev-2026-04-070fb003",
+        "ev-2026-04-9ece38fa",
+        "ev-2026-04-95cf44f5"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": []
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2023/1115 — EU Deforestation-free Products Regulation",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115",
+      "access_date": "2025-12-31"
+    },
+    {
+      "citation": "Directive (EU) 2022/2464 — Corporate Sustainability Reporting Directive",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+      "access_date": "2025-12-31"
+    }
+  ],
+  "total_regulations_tracked": 4,
+  "total_changes_detected": 2,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": true,
+      "level": "new_regulation",
+      "changes_detected": 1
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "change_type": "new_regulation",
+      "severity": "low",
+      "summary": "EUDR entered definitive applicability December 2025. Gerold's primary EUDR exposure is indirect — through soy-based animal feed in the pork and beef supply chain of contracted farms supplying Rietberg Cold Cuts. While pork and beef are not listed EUDR commodities, the Commission's FAQ document recommends food manufacturers obtain supplier declarations covering soy feed origins as a proactive due diligence measure.",
+      "action_required": "Request EUDR soy feed origin declarations from Westfleisch and Tönnies group farm suppliers by 31 March 2026.",
+      "current_status": "in_force",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "description": "Regulation (EU) 2023/1115 (EUR-Lex 32023R1115) covers cattle, soy, palm oil, cocoa, coffee, rubber, wood, and derived products. Gerold's Rietberg cold cuts facility sources pork from approximately 85 contracted German farms (predominantly North Rhine-Westphalia) and beef from 12 farms (Lower Saxony). German farm cooperatives procuring from Westfleisch and Tönnies are predominantly using imported South American soy in feed formulations — Brazil (approximately 65% of soy volume) and Argentina (35%). While the farms themselves are not EUDR 'operators', Gerold as a downstream food manufacturer should obtain written declarations from its first-tier agricultural suppliers confirming that the soy used in animal feed was not sourced from deforested land post-December 2020."
+    }
+  ],
+  "status_changes": [
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive — Scoping Confirmed",
+      "topic": "ghg",
+      "change_type": "status_change",
+      "severity": "medium",
+      "summary": "BDO Hamburg scoping assessment confirmed Gerold as CSRD large undertaking (EUR 145m turnover, balance sheet EUR 78m, 890 employees — two of three criteria met). FY2026 is first reporting year under German D-ESRS second-wave implementation, with sustainability statement due 30 June 2027. DMA to begin Q1 2026.",
+      "action_required": "Initiate ESRS double materiality assessment in January 2026; retain BDO Hamburg for limited assurance engagement.",
+      "current_status": "in_force_FY2026_first_year",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2027-06-30",
+      "changes": [
+        {
+          "field": "csrd_scope",
+          "old": "scoping_in_progress",
+          "new": "confirmed_large_undertaking_FY2026_second_wave",
+          "description": "BDO Hamburg confirmed CSRD scope; FY2026 first year; DMA begins Q1 2026"
+        }
+      ]
+    }
+  ],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

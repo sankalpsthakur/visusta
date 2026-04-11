@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-96ba4c07",
+  "client_id": "trivento-foods",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+  "access_date": "2026-04-11",
+  "document_title": "CSRD \u2014 Corporate Sustainability Reporting Directive",
+  "snippet": "Italian food companies above EU thresholds must report under ESRS from 2025.",
+  "hash": "sha256:96ba4c07c8f8c859883d0a07a77a894940fc46683652db353a960bf79fbf4a3e",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.97,
+  "topic": "ghg",
+  "related_regulation_id": "CSRD-2022"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-bc477352",
+  "client_id": "alpine-dairy",
+  "source_id": "fedlex",
+  "source_name": "Fedlex",
+  "url": "https://www.fedlex.admin.ch/eli/cc/1986/208_208_208/de",
+  "access_date": "2026-04-11",
+  "document_title": "USG \u2014 Umweltschutzgesetz (Swiss Environmental Protection Act)",
+  "snippet": "Swiss federal law on environmental protection, waste management and polluter liability.",
+  "hash": "sha256:bc4773522ba39a87cd675f5819797b69f80877c6fb3a5312aea6e93e1fd4cf06",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "waste",
+  "related_regulation_id": "USG-SR-814"
+}

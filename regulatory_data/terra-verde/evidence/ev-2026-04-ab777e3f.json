@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-ab777e3f",
+  "client_id": "terra-verde",
+  "source_id": "dre",
+  "source_name": "Di\u00e1rio da Rep\u00fablica Eletr\u00f3nico",
+  "url": "https://dre.pt/dre/legislacao-consolidada/lei/2023-856000",
+  "access_date": "2026-04-11",
+  "document_title": "Lei n.\u00ba 52/2021 \u2014 Adicional sobre emiss\u00f5es de CO2 (Portuguese Carbon Tax)",
+  "snippet": "Portugal's carbon tax rate: \u20ac50.26/tCO2 in 2025; applies to fuel combustion in food processing.",
+  "hash": "sha256:ab777e3f548d8c4442d10a9cbe80f3a37acec08403840672de7619811615974c",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.94,
+  "topic": "ghg",
+  "related_regulation_id": "PT-CO2-2021"
+}

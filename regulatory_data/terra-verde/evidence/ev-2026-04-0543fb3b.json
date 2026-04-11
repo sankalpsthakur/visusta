@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-0543fb3b",
+  "client_id": "terra-verde",
+  "source_id": "apa",
+  "source_name": "Ag\u00eancia Portuguesa do Ambiente",
+  "url": "https://apambiente.pt/index.php?ref=16&subref=81",
+  "access_date": "2026-04-11",
+  "document_title": "APA Environmental Impact Assessment Guide for Food Industry",
+  "snippet": "EIA screening thresholds for food processing expansions; water abstraction permit requirements.",
+  "hash": "sha256:0543fb3be90850a053f10e353acac3ea0a6ebdcab18341df8a06d0d6475827d5",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "water",
+  "related_regulation_id": "PT-AIA-2013"
+}

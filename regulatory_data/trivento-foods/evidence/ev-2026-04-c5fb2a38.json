@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-c5fb2a38",
+  "client_id": "trivento-foods",
+  "source_id": "gazzetta_ufficiale",
+  "source_name": "Gazzetta Ufficiale della Repubblica Italiana",
+  "url": "https://www.gazzettaufficiale.it/eli/gu/2024/02/01/26/sg/pdf",
+  "access_date": "2026-04-11",
+  "document_title": "D.Lgs. 18/2024 \u2014 CSRD Transposition into Italian Law",
+  "snippet": "Italy transposes CSRD: sustainability reporting obligations for large enterprises from FY2024.",
+  "hash": "sha256:c5fb2a3857f97558eb090570ab33909fffe508293005f4e7cce5c9bc3d31c08f",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "ghg",
+  "related_regulation_id": "IT-CSRD-2024"
+}

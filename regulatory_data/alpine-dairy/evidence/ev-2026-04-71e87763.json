@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-71e87763",
+  "client_id": "alpine-dairy",
+  "source_id": "eur_lex",
+  "source_name": "EUR-Lex",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+  "access_date": "2026-04-11",
+  "document_title": "PPWR \u2014 Packaging and Packaging Waste Regulation (EU market access)",
+  "snippet": "Swiss dairy exporters to EU must meet PPWR packaging requirements from 2028.",
+  "hash": "sha256:71e87763f6653f21cec8ffb735c8b581ce8cbb5f6eb3bb24a84eedb9e2358f0f",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.93,
+  "topic": "packaging",
+  "related_regulation_id": "PPWR-2025"
+}

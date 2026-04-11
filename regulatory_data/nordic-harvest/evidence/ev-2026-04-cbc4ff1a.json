@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-cbc4ff1a",
+  "client_id": "nordic-harvest",
+  "source_id": "lovdata",
+  "source_name": "Lovdata",
+  "url": "https://lovdata.no/dokument/NL/lov/2017-06-16-63",
+  "access_date": "2026-04-11",
+  "document_title": "Klimaloven \u2014 Norwegian Climate Change Act",
+  "snippet": "Norway's binding 2030 target: 55% GHG reduction vs 1990; annual reporting to Parliament.",
+  "hash": "sha256:cbc4ff1afd58806cc94b5d4f7e3c204968512268ce873c784c8924fcdbc9499e",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.96,
+  "topic": "ghg",
+  "related_regulation_id": "Klimaloven-2017"
+}

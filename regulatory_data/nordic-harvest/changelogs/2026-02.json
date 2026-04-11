@@ -1,0 +1,203 @@
+{
+  "screening_period": "2026-02",
+  "generated_date": "2026-02-28",
+  "previous_period": "2026-01",
+  "client_context": {
+    "facility_line": "Oslo Seafood & Bergen Fish Oils, Kingdom of Norway",
+    "audience": "Executive Leadership, Regulatory Affairs & Operations",
+    "jurisdiction_label": "EEA & Norwegian Sustainability Frameworks for Seafood Processors"
+  },
+  "executive_summary": "February 2026 is the most regulatory-intensive month Nordic Harvest has faced. The Norconsult feasibility study for phosphorus treatment at Oslo Seafood was completed on 20 February and recommends a two-stage biological nutrient removal system at a capital cost of NOK 11.8 million, with installation timeline of 14 months. This gives Nordic Harvest a tight path to the 31 October 2026 Miljødirektoratet deadline. The board has provisionally approved the investment subject to Stortinget fisheries sector subsidy confirmation.\n\nThe EU-PPWR delegated act draft published in February 2026 has direct implications for Nordic Harvest's EU export lines. The omega-3 capsule blister packs used in the Bergen Fish Oils branded consumer range sold in Germany are classified as Class B (recyclable with significant improvements required) under the draft criteria, which is better than feared but still requires changes to the aluminium-plastic laminate construction by 2028. The company's packaging supplier Coveris has been engaged for a redesign feasibility assessment.\n\nNorway's Åpenhetsloven (Transparency Act) annual due diligence report for FY2025 is due 30 June 2026. Nordic Harvest's general counsel has confirmed that the Chilean hatchery labour risk identified in the KPMG DMA creates a mandatory disclosure obligation under Åpenhetsloven §4, requiring the company to report the risk, its assessment findings, and the remediation steps taken in the public annual report.",
+  "sections": [
+    {
+      "heading": "Norwegian Pollution Control Act Amendment",
+      "paragraphs": [
+        "Norconsult feasibility study complete — recommends two-stage biological nutrient removal at NOK 11.8 million capital cost, 14-month installation. Board provisionally approved investment. Remediation investment plan must be submitted to Miljødirektoratet by 31 March 2026."
+      ],
+      "callout": "Submit Norconsult remediation plan to Miljødirektoratet by 31 March 2026; issue procurement tender for BNR system contractor.",
+      "evidence_refs": [
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-6e019582",
+        "ev-2026-04-fe8d6581",
+        "ev-2026-04-58a6cd37",
+        "ev-2026-04-8eae12e3",
+        "ev-2026-04-00169e92",
+        "ev-2026-04-9c6c716d",
+        "ev-2026-04-cbc4ff1a"
+      ]
+    },
+    {
+      "heading": "EU Packaging and Packaging Waste Regulation — Blister Pack Classification",
+      "paragraphs": [
+        "Draft PPWR delegated act classifies Bergen Fish Oils' omega-3 blister packs (aluminium-plastic laminate) as recyclability Class B — recyclable with significant improvements required. Class B packaging avoids the highest EPR surcharge tier but requires redesign achieving mono-material aluminium or recyclable PET construction by 2028. Coveris redesign feasibility assessment commissioned."
+      ],
+      "callout": "Complete Coveris packaging redesign feasibility assessment by 30 April 2026; confirm Class A target achievability by 2028.",
+      "evidence_refs": [
+        "ev-2026-04-5afeb483",
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-8eae12e3",
+        "ev-2026-04-d7339055"
+      ]
+    },
+    {
+      "heading": "Norwegian Transparency Act (Åpenhetsloven) — FY2025 Annual Report",
+      "paragraphs": [
+        "Nordic Harvest's FY2025 Åpenhetsloven annual due diligence report must disclose the Chilean hatchery labour risk identified in the KPMG DMA, including the assessment methodology, findings, and remediation steps planned. General counsel has confirmed §4 disclosure obligation. The report is due 30 June 2026 on the company website and must be translated to English for international stakeholders."
+      ],
+      "callout": "Draft §4 disclosure covering Chilean hatchery risk by 30 April 2026; initiate on-site audit programme for Chilean suppliers by Q2 2026.",
+      "evidence_refs": [
+        "ev-2026-04-8ce6cd4a",
+        "ev-2026-04-42df1ba6",
+        "ev-2026-04-6e019582",
+        "ev-2026-04-fe8d6581",
+        "ev-2026-04-58a6cd37",
+        "ev-2026-04-8eae12e3",
+        "ev-2026-04-00169e92",
+        "ev-2026-04-9c6c716d",
+        "ev-2026-04-cbc4ff1a",
+        "ev-2026-04-d7339055"
+      ]
+    }
+  ],
+  "impact_summary_table": {
+    "headers": [
+      "Regulation",
+      "Topic",
+      "Effect",
+      "Action"
+    ],
+    "rows": [
+      [
+        "NO-Forurensningsloven-2024",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  "references": [
+    {
+      "citation": "Regulation (EU) 2025/40 on packaging and packaging waste",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040",
+      "access_date": "2026-02-28"
+    }
+  ],
+  "total_regulations_tracked": 5,
+  "total_changes_detected": 3,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": true,
+      "level": "status_change",
+      "changes_detected": 1
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": true,
+      "level": "content_update",
+      "changes_detected": 1
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "topic": "water",
+      "change_type": "status_change",
+      "severity": "high",
+      "summary": "Norconsult feasibility study complete — recommends two-stage biological nutrient removal at NOK 11.8 million capital cost, 14-month installation. Board provisionally approved investment. Remediation investment plan must be submitted to Miljødirektoratet by 31 March 2026.",
+      "action_required": "Submit Norconsult remediation plan to Miljødirektoratet by 31 March 2026; issue procurement tender for BNR system contractor.",
+      "current_status": "remediation_plan_ready",
+      "effective_date": "2024-07-01",
+      "enforcement_date": "2026-10-31",
+      "changes": [
+        {
+          "field": "remediation_plan",
+          "old": "feasibility_study_commissioned",
+          "new": "feasibility_study_complete_board_approved",
+          "description": "NOK 11.8m BNR investment approved; plan submission to Miljødirektoratet due 31 March"
+        }
+      ]
+    }
+  ],
+  "content_updates": [
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation — Blister Pack Classification",
+      "topic": "packaging",
+      "change_type": "content_update",
+      "severity": "medium",
+      "summary": "Draft PPWR delegated act classifies Bergen Fish Oils' omega-3 blister packs (aluminium-plastic laminate) as recyclability Class B — recyclable with significant improvements required. Class B packaging avoids the highest EPR surcharge tier but requires redesign achieving mono-material aluminium or recyclable PET construction by 2028. Coveris redesign feasibility assessment commissioned.",
+      "action_required": "Complete Coveris packaging redesign feasibility assessment by 30 April 2026; confirm Class A target achievability by 2028.",
+      "current_status": "in_force",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "changes": [
+        {
+          "field": "blister_pack_classification",
+          "old": "unclassified",
+          "new": "draft_class_B",
+          "description": "Draft delegated act assigns Class B to aluminium-plastic blister packs; redesign required"
+        }
+      ]
+    },
+    {
+      "regulation_id": "NO-Aapenhetsloven-2022",
+      "title": "Norwegian Transparency Act (Åpenhetsloven) — FY2025 Annual Report",
+      "topic": "social_human_rights",
+      "change_type": "content_update",
+      "severity": "medium",
+      "summary": "Nordic Harvest's FY2025 Åpenhetsloven annual due diligence report must disclose the Chilean hatchery labour risk identified in the KPMG DMA, including the assessment methodology, findings, and remediation steps planned. General counsel has confirmed §4 disclosure obligation. The report is due 30 June 2026 on the company website and must be translated to English for international stakeholders.",
+      "action_required": "Draft §4 disclosure covering Chilean hatchery risk by 30 April 2026; initiate on-site audit programme for Chilean suppliers by Q2 2026.",
+      "current_status": "disclosure_obligation_confirmed",
+      "effective_date": "2022-07-01",
+      "enforcement_date": "2026-06-30",
+      "changes": [
+        {
+          "field": "disclosure_obligation",
+          "old": "under_legal_review",
+          "new": "confirmed_mandatory_disclosure_required",
+          "description": "General counsel confirmed §4 Chilean hatchery risk disclosure required in FY2025 annual report"
+        }
+      ]
+    }
+  ],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [],
+  "carried_forward": [],
+  "critical_actions": [
+    {
+      "regulation_id": "NO-Forurensningsloven-2024",
+      "title": "Norwegian Pollution Control Act Amendment",
+      "severity": "high",
+      "action": "Remediation plan submission to Miljødirektoratet — 31 March 2026 deadline"
+    }
+  ],
+  "confidence_scores": {
+    "executive_summary": 0.85,
+    "sections[0]": 0.85,
+    "sections[1]": 0.85,
+    "sections[2]": 0.85
+  },
+  "approval_state": {
+    "status": "draft",
+    "by": null,
+    "at": null
+  },
+  "agent_log": []
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-ba02759f",
+  "client_id": "terra-verde",
+  "source_id": "dre",
+  "source_name": "Di\u00e1rio da Rep\u00fablica Eletr\u00f3nico",
+  "url": "https://dre.pt/dre/legislacao-consolidada/decreto-lei/2022-760000",
+  "access_date": "2026-04-11",
+  "document_title": "DL n.\u00ba 79/2022 \u2014 Portuguese Organic Waste and Biowaste Regulation",
+  "snippet": "Mandatory separate collection of organic waste for food processors above 50 tonnes/year.",
+  "hash": "sha256:ba02759fe369231826304b45a7f5ec9d716f9a194bb413e364a6e848b64fe15b",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "waste",
+  "related_regulation_id": "PT-Biowaste-2022"
+}

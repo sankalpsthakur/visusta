@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-9bdc2787",
+  "client_id": "brosel-backwaren",
+  "source_id": "ris",
+  "source_name": "Rechtsinformationssystem Austria",
+  "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20009209",
+  "access_date": "2026-04-11",
+  "document_title": "EAG \u2014 Erneuerbaren-Ausbau-Gesetz (Austrian Renewable Energy Act)",
+  "snippet": "Austrian RES expansion targets; PPAs and industrial self-consumption frameworks for manufacturers.",
+  "hash": "sha256:9bdc27872249dddb0a4e005c10deb8dda2ce6a77c1ecf80df559ee1abb0645d7",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "ghg",
+  "related_regulation_id": "AT-EAG-2021"
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-d7339055",
+  "client_id": "nordic-harvest",
+  "source_id": "miljodirektoratet",
+  "source_name": "Norwegian Environment Agency",
+  "url": "https://www.miljodirektoratet.no/ansvarsomraader/klima/norges-klimamaal/",
+  "access_date": "2026-04-11",
+  "document_title": "Norway GHG Monitoring and Reporting Framework 2025",
+  "snippet": "Updated GHG inventory methodology; mandatory carbon footprint reporting for food exporters.",
+  "hash": "sha256:d73390552ea7611ff1a6286c9534470e2b08e8276a2cbe932e79b7eb66dc07f2",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.88,
+  "topic": "ghg",
+  "related_regulation_id": "Klimaloven-2017"
+}

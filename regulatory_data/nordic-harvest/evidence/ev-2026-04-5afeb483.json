@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-5afeb483",
+  "client_id": "nordic-harvest",
+  "source_id": "miljodirektoratet",
+  "source_name": "Norwegian Environment Agency",
+  "url": "https://www.miljodirektoratet.no/ansvarsomraader/avfall/emballasjeavfall/",
+  "access_date": "2026-04-11",
+  "document_title": "Milj\u00f8direktoratet Packaging Waste Guidance 2025",
+  "snippet": "Collection and recycling targets for packaging: 80% by 2025, 85% by 2030.",
+  "hash": "sha256:5afeb4830c9ee14437f5643728a0dca98efdeb7ac15895a1e2d76de5d1e3b35f",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.86,
+  "topic": "packaging",
+  "related_regulation_id": "Avfallsforskriften-2004"
+}

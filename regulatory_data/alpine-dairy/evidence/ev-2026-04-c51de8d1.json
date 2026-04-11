@@ -1,0 +1,15 @@
+{
+  "evidence_id": "ev-2026-04-c51de8d1",
+  "client_id": "alpine-dairy",
+  "source_id": "fedlex",
+  "source_name": "Fedlex",
+  "url": "https://www.fedlex.admin.ch/eli/cc/1986/1146_1146_1146/de",
+  "access_date": "2026-04-11",
+  "document_title": "VOCV \u2014 Ordinance on Volatile Organic Compounds",
+  "snippet": "Swiss VOC emission limits for industrial and food processing operations.",
+  "hash": "sha256:c51de8d11b7a0bbdf385f88ec496142e2fb823d9fc68fecb2ee7b6437bb06b4c",
+  "attached_by": "source-scout-agent",
+  "confidence": 0.9,
+  "topic": "ghg",
+  "related_regulation_id": "VOCV-SR-814"
+}

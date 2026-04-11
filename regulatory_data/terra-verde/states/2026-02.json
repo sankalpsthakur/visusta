@@ -1,0 +1,81 @@
+{
+  "screening_period": "2026-02",
+  "screening_date": "2026-02-28",
+  "screened_by": "Automated Screening System",
+  "topics_covered": ["ghg", "packaging", "water", "waste", "social_human_rights"],
+  "data_quality_flags": [],
+  "regulations": [
+    {
+      "regulation_id": "PT-CO2-Tax-2024",
+      "title": "Portuguese Carbon Tax on Industrial Emissions",
+      "topic": "ghg",
+      "status": "declaration_submitted",
+      "severity": "medium",
+      "effective_date": "2025-01-01",
+      "enforcement_date": "2025-01-01",
+      "jurisdiction": "PT",
+      "citation": "Decreto-Lei n.º 12/2025",
+      "summary": "FY2025 declaration submitted 27 February: 1,748 tCO2e = EUR 75,100; payment due 31 March 2026."
+    },
+    {
+      "regulation_id": "EU-PPWR-2025/40",
+      "title": "EU Packaging and Packaging Waste Regulation",
+      "topic": "packaging",
+      "status": "redesign_proposal_received",
+      "severity": "high",
+      "effective_date": "2025-02-11",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32025R0040",
+      "summary": "Draft delegated act confirmed Class C cartons; SIG Combibloc combidome® EUR 280k proposal to achieve Class B by 2027; board decision April 2026."
+    },
+    {
+      "regulation_id": "PT-Deposit-Return-2028",
+      "title": "Portuguese Deposit-Return Scheme",
+      "topic": "packaging",
+      "status": "pilot_active",
+      "severity": "low",
+      "effective_date": "2026-04-01",
+      "enforcement_date": "2028-01-01",
+      "jurisdiction": "PT",
+      "citation": "Portugal Circular 2030",
+      "summary": "10,000 glass bottle units allocated; pilot logistics team briefed; Q2 2026 launch on track."
+    },
+    {
+      "regulation_id": "EU-EUDR-2023/1115",
+      "title": "EU Deforestation-free Products Regulation",
+      "topic": "waste",
+      "status": "in_force",
+      "severity": "low",
+      "effective_date": "2025-12-30",
+      "enforcement_date": "2025-12-30",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32023R1115",
+      "summary": "Citrus Brasil declaration received; Ingredion Brazil pending; Kenyan passion fruit origin confirmed non-deforestation."
+    },
+    {
+      "regulation_id": "EU-CSDDD-2024/1760",
+      "title": "Corporate Sustainability Due Diligence Directive",
+      "topic": "social_human_rights",
+      "status": "guidance_published_contracts_under_review",
+      "severity": "medium",
+      "effective_date": "2024-07-25",
+      "enforcement_date": "2027-07-26",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32024L1760",
+      "summary": "ABIO guidance: organic cert covers environment not labour; 34 farm contracts require ILO 184 clauses at renewal."
+    },
+    {
+      "regulation_id": "EU-CSRD-2022/2464",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "social_human_rights",
+      "status": "dma_complete_FY2025_first_reporting",
+      "severity": "high",
+      "effective_date": "2024-01-05",
+      "enforcement_date": "2026-12-31",
+      "jurisdiction": "EU",
+      "citation": "EUR-Lex 32022L2464",
+      "summary": "DMA complete (BDO signed 28 Feb): E1, E3, E4, S2, G1 material; ESRS disclosure drafting initiated."
+    }
+  ]
+}

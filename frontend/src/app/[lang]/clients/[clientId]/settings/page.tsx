@@ -584,7 +584,7 @@ function PreferencesSectionLoaded({ clientId, initialPrefs }: { clientId: string
               Section order
             </div>
             <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              Applied to monthly reports. Quarterly brief uses a fixed structure.
+              Controls the section order in both monthly and quarterly reports.
             </div>
           </div>
           <div className="flex flex-col gap-1.5">

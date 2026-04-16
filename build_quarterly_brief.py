@@ -591,6 +591,12 @@ def build_content(story, S, quarter_months: list, quarter_display: str, client_i
             if heading not in seen_headings:
                 seen_headings.add(heading)
                 agg_sections.append(section)
+    # Apply section_order from client preferences if available
+    if preferences and preferences.get("section_order"):
+        order = preferences["section_order"]
+        order_index = {heading: i for i, heading in enumerate(order)}
+        agg_sections.sort(key=lambda s: order_index.get(s.get("heading", ""), 999))
+
     for section in agg_sections:
         heading = section.get("heading", "")
         if heading:

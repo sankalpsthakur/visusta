@@ -24,6 +24,7 @@ import { ApprovalTimeline } from '@/components/approval/approval-timeline'
 import { ExportMenu } from '@/components/drafts/export-menu'
 import type { DraftStatus, DraftRevision, SectionEditPayload } from '@/lib/api/draft-hooks'
 import { LOCALE_LABELS, SUPPORTED_LOCALES } from '@/lib/i18n/locales'
+import { useClientLocaleSettings } from '@/lib/api/hooks'
 import { useLocalePath } from '@/lib/i18n/navigation'
 import { useRouter } from 'next/navigation'
 import { Loader2, Layers, GitCompare, Clock, History } from 'lucide-react'
@@ -41,6 +42,7 @@ export default function DraftStudioPage({ params }: PageProps) {
 
   const { data: draft, isLoading, error } = useDraft(clientId, draftId)
   const { data: revisions = [] } = useDraftRevisions(clientId, draftId)
+  const { data: localeSettings } = useClientLocaleSettings(clientId)
   const composeDraft = useComposeDraft(clientId, draftId)
   const translateDraft = useTranslateDraft(clientId, draftId)
   const updateSection = useUpdateDraftSection(clientId, draftId)
@@ -117,9 +119,9 @@ export default function DraftStudioPage({ params }: PageProps) {
           onExport={() => setShowExportMenu(true)}
           onCompose={() => composeDraft.mutate()}
           onTranslate={(locale) => translateDraft.mutate(locale)}
-          availableLocales={SUPPORTED_LOCALES.map((locale) => ({
+          availableLocales={(localeSettings?.enabled_locales ?? SUPPORTED_LOCALES).map((locale) => ({
             code: locale,
-            label: LOCALE_LABELS[locale],
+            label: (LOCALE_LABELS as Record<string, string>)[locale] ?? locale.toUpperCase(),
           }))}
           isComposing={composeDraft.isPending}
           isTranslating={translateDraft.isPending}

@@ -68,6 +68,15 @@ def list_templates() -> List[TemplateResponse]:
     from db import get_db
     with get_db() as conn:
         rows = conn.execute("SELECT * FROM report_templates ORDER BY id").fetchall()
+    if not rows:
+        try:
+            from scripts.seed_templates import seed as _seed_templates
+            _seed_templates()
+            with get_db() as conn:
+                rows = conn.execute("SELECT * FROM report_templates ORDER BY id").fetchall()
+        except Exception as exc:
+            import logging
+            logging.getLogger(__name__).warning("auto-seed templates failed: %s", exc)
     return [_template_row(r) for r in rows]
 
 

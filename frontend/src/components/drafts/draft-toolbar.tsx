@@ -110,6 +110,11 @@ export function DraftToolbar({
             whileTap={{ scale: 0.98 }}
             disabled={isComposing}
             onClick={onCompose}
+            title={
+              isComposing
+                ? 'The AI agent is drafting this report. Compose usually takes 15–30 seconds.'
+                : 'Compose a new revision with the AI agent (takes 15–30 seconds).'
+            }
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -124,7 +129,7 @@ export function DraftToolbar({
               opacity: isComposing ? 0.6 : 1,
             }}
           >
-            {isComposing ? 'Composing…' : 'Compose'}
+            {isComposing ? 'Composing… (15–30s)' : 'Compose'}
           </motion.button>
         )}
 

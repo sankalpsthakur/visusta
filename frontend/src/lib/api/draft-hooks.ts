@@ -3,6 +3,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiDelete, apiGet, apiGetFile, apiPost, apiPut } from './client'
 
+// Compose job polling
+//
+// Compose invokes an LLM that can take 15–30s, which exceeds Render's proxy
+// timeout. The backend returns 202 + { job_id } immediately and we poll
+// GET .../compose/{job_id} until status = done | failed.
+const COMPOSE_POLL_INTERVAL_MS = 2_000
+const COMPOSE_POLL_MAX_ATTEMPTS = 120 // ~4 minutes of safety margin
+
+interface ComposeJobAccepted {
+  job_id: string
+  status: string
+}
+
+interface ComposeJobStatus {
+  job_id: string
+  status: 'pending' | 'running' | 'done' | 'failed'
+  error?: string | null
+  revision?: BackendRevisionDetail | null
+}
+
 type BackendDraftStatus =
   | 'composing'
   | 'review'
@@ -513,8 +533,28 @@ export function useComposeDraft(clientId: string, draftId: string) {
   const qc = useQueryClient()
 
   return useMutation({
-    mutationFn: () =>
-      apiPost<BackendRevisionDetail>(`/api/clients/${clientId}/drafts/${draftId}/compose`),
+    mutationFn: async (): Promise<BackendRevisionDetail> => {
+      const accepted = await apiPost<ComposeJobAccepted>(
+        `/api/clients/${clientId}/drafts/${draftId}/compose`,
+      )
+      // Poll until the background task finishes. isPending stays true on the
+      // mutation for the entire duration — the Compose button keeps showing
+      // "Composing…" and the hook's onSuccess still fires once with the
+      // fully-composed revision.
+      for (let attempt = 0; attempt < COMPOSE_POLL_MAX_ATTEMPTS; attempt += 1) {
+        await sleep(COMPOSE_POLL_INTERVAL_MS)
+        const status = await apiGet<ComposeJobStatus>(
+          `/api/clients/${clientId}/drafts/${draftId}/compose/${accepted.job_id}`,
+        )
+        if (status.status === 'done' && status.revision) {
+          return status.revision
+        }
+        if (status.status === 'failed') {
+          throw new Error(status.error || 'Compose failed')
+        }
+      }
+      throw new Error('Compose timed out after 4 minutes')
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['draft', clientId, draftId] })
       qc.invalidateQueries({ queryKey: ['drafts', clientId] })

@@ -8,7 +8,11 @@ import json
 import uuid
 from typing import Any, List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+import threading
+import time
+
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from pydantic import BaseModel
 
 from api.deps import REGULATORY_DATA_DIR, validate_client
 from api.schemas_mars import (
@@ -28,6 +32,7 @@ from api.schemas_mars import (
 from agents.draft_chat import DraftChatAgent
 from agents.draft_composer import DraftComposerAgent
 from agents.translation_agent import TranslationAgent
+from api.routers.locales import _normalize_locale
 from mars.draft_lifecycle import validate_transition
 from mars.section_model import sections_from_json, sections_to_json
 
@@ -75,6 +80,127 @@ def _revision_detail_row(row: Any) -> RevisionDetailResponse:
         created_at=row["created_at"],
         sections=sections,
     )
+
+
+# ---------------------------------------------------------------------------
+# Compose job registry
+#
+# Compose invokes an LLM that can take 15–30s, which exceeds Render's proxy
+# and the browser's default fetch timeout. We accept the request, launch the
+# work as a FastAPI BackgroundTask (runs in the threadpool after the response
+# is flushed), and expose a status endpoint the client polls.
+#
+# The registry is in-memory and process-local: a worker restart mid-compose
+# loses the job. Same failure mode as the previous synchronous handler; a
+# durable jobs table is out of scope for this fix.
+# ---------------------------------------------------------------------------
+
+_compose_jobs: dict[str, dict[str, Any]] = {}
+_compose_jobs_lock = threading.Lock()
+_COMPOSE_JOB_TTL_SECONDS = 60 * 60  # keep finished jobs queryable for an hour
+
+
+def _register_compose_job(job_id: str, draft_id: int, client_id: str) -> None:
+    with _compose_jobs_lock:
+        # Opportunistic TTL sweep so the dict doesn't grow unbounded.
+        cutoff = time.time() - _COMPOSE_JOB_TTL_SECONDS
+        stale = [jid for jid, entry in _compose_jobs.items() if entry["updated_at"] < cutoff]
+        for jid in stale:
+            _compose_jobs.pop(jid, None)
+        _compose_jobs[job_id] = {
+            "job_id": job_id,
+            "draft_id": draft_id,
+            "client_id": client_id,
+            "status": "pending",
+            "error": None,
+            "revision": None,
+            "updated_at": time.time(),
+        }
+
+
+def _update_compose_job(job_id: str, **fields: Any) -> None:
+    with _compose_jobs_lock:
+        entry = _compose_jobs.get(job_id)
+        if entry is None:
+            return
+        entry.update(fields)
+        entry["updated_at"] = time.time()
+
+
+def _get_compose_job(job_id: str) -> Optional[dict[str, Any]]:
+    with _compose_jobs_lock:
+        entry = _compose_jobs.get(job_id)
+        return dict(entry) if entry else None
+
+
+def _run_compose_job(job_id: str, draft_id: int, client_id: str, note: Optional[str]) -> None:
+    """Background worker: composes the revision and stores the result on the job."""
+    from db import get_db
+
+    _update_compose_job(job_id, status="running")
+    try:
+        with get_db() as conn:
+            draft = conn.execute(
+                "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+                (draft_id, client_id),
+            ).fetchone()
+            if draft is None:
+                raise RuntimeError(f"Draft {draft_id} not found")
+            template_sections = _load_template_sections(conn, draft["template_version_id"])
+            changelog_payload = _load_changelog_payload(client_id, draft["period"])
+            changelog = _load_changelog_entries(client_id, draft["period"])
+            evidence = _load_evidence(client_id)
+
+            agent = DraftComposerAgent()
+            result = agent.run(
+                {
+                    "changelog": changelog,
+                    "changelog_payload": changelog_payload,
+                    "evidence": evidence,
+                    "template_sections": template_sections,
+                    "locale": draft["primary_locale"],
+                }
+            )
+            raw_sections = result.get("sections", [])
+            if not raw_sections:
+                locale = draft["primary_locale"]
+                raw_sections = [{
+                    "section_id": str(uuid.uuid4()),
+                    "heading": "Report Draft",
+                    "locale": locale,
+                    "blocks": [{"block_id": "b1", "block_type": "paragraph", "content": "No content generated. Add sections to the template or provide changelog data."}],
+                    "facts": [],
+                    "citations": [],
+                    "translation_status": "original",
+                    "approval_status": "pending",
+                }]
+            sections = _normalize_sections(
+                raw_sections,
+                locale=draft["primary_locale"],
+                fallback_sections=template_sections,
+            )
+            sections = [
+                section.model_copy(
+                    update={
+                        "section_id": template_sections[index].get("section_id", section.section_id)
+                        if index < len(template_sections) else section.section_id,
+                    }
+                )
+                for index, section in enumerate(sections)
+            ]
+            _clear_approvals(conn, draft_id)
+            row = _insert_revision(
+                conn,
+                draft=draft,
+                sections=sections,
+                authored_by="draft-composer",
+                note=note or "Composed from template and source material",
+                status="composing",
+            )
+        revision = _revision_detail_row(row)
+        _update_compose_job(job_id, status="done", revision=revision.model_dump(mode="json"))
+    except Exception as exc:  # noqa: BLE001 — surface any agent/DB error to the poller
+        _update_compose_job(job_id, status="failed", error=str(exc) or exc.__class__.__name__)
 
 
 def _default_template_sections() -> list[dict[str, Any]]:
@@ -547,80 +673,84 @@ def get_revision(
     return _revision_detail_row(row)
 
 
+class ComposeJobAccepted(BaseModel):
+    """Response body for an accepted compose request."""
+
+    job_id: str
+    status: str = "pending"
+
+
+class ComposeJobStatus(BaseModel):
+    """Poll response for a compose job."""
+
+    job_id: str
+    status: str  # "pending" | "running" | "done" | "failed"
+    error: Optional[str] = None
+    revision: Optional[RevisionDetailResponse] = None
+
+
 @drafts_router.post(
     "/{draft_id}/compose",
-    response_model=RevisionDetailResponse,
-    status_code=201,
-    summary="Compose a new draft revision via agent",
+    response_model=ComposeJobAccepted,
+    status_code=202,
+    summary="Kick off a compose job; poll /compose/{job_id} for the revision",
 )
 def compose_draft(
     draft_id: int,
+    background_tasks: BackgroundTasks,
     client_id: str = Depends(validate_client),
     note: Optional[str] = None,
-) -> RevisionDetailResponse:
-    """Create a new revision by invoking the draft-composer agent."""
+) -> ComposeJobAccepted:
+    """
+    Accept a compose request and run the agent asynchronously.
+
+    Compose can take 15–30s, which exceeds Render's proxy timeout. We validate
+    the draft exists, register a job in the in-memory registry, and schedule
+    the LLM call as a FastAPI BackgroundTask. The client polls
+    `GET /compose/{job_id}` until `status == "done"` (or `"failed"`).
+    """
     from db import get_db
 
     with get_db() as conn:
         draft = conn.execute(
-            "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+            "SELECT id FROM report_drafts WHERE id=? AND client_id=?",
             (draft_id, client_id),
         ).fetchone()
         if draft is None:
             raise HTTPException(404, f"Draft {draft_id} not found")
-        template_sections = _load_template_sections(conn, draft["template_version_id"])
-        changelog_payload = _load_changelog_payload(client_id, draft["period"])
-        changelog = _load_changelog_entries(client_id, draft["period"])
-        evidence = _load_evidence(client_id)
 
-        agent = DraftComposerAgent()
-        result = agent.run(
-            {
-                "changelog": changelog,
-                "changelog_payload": changelog_payload,
-                "evidence": evidence,
-                "template_sections": template_sections,
-                "locale": draft["primary_locale"],
-            }
-        )
-        raw_sections = result.get("sections", [])
-        if not raw_sections:
-            locale = draft["primary_locale"]
-            raw_sections = [{
-                "section_id": str(uuid.uuid4()),
-                "heading": "Report Draft",
-                "locale": locale,
-                "blocks": [{"block_id": "b1", "block_type": "paragraph", "content": "No content generated. Add sections to the template or provide changelog data."}],
-                "facts": [],
-                "citations": [],
-                "translation_status": "original",
-                "approval_status": "pending",
-            }]
-        sections = _normalize_sections(
-            raw_sections,
-            locale=draft["primary_locale"],
-            fallback_sections=template_sections,
-        )
-        sections = [
-            section.model_copy(
-                update={
-                    "section_id": template_sections[index].get("section_id", section.section_id)
-                    if index < len(template_sections) else section.section_id,
-                }
-            )
-            for index, section in enumerate(sections)
-        ]
-        _clear_approvals(conn, draft_id)
-        row = _insert_revision(
-            conn,
-            draft=draft,
-            sections=sections,
-            authored_by="draft-composer",
-            note=note or "Composed from template and source material",
-            status="composing",
-        )
+    job_id = str(uuid.uuid4())
+    _register_compose_job(job_id, draft_id=draft_id, client_id=client_id)
+    background_tasks.add_task(_run_compose_job, job_id, draft_id, client_id, note)
+    return ComposeJobAccepted(job_id=job_id, status="pending")
 
-    return _revision_detail_row(row)
+
+@drafts_router.get(
+    "/{draft_id}/compose/{job_id}",
+    response_model=ComposeJobStatus,
+    summary="Poll the status of a compose job",
+)
+def get_compose_job(
+    draft_id: int,
+    job_id: str,
+    client_id: str = Depends(validate_client),
+) -> ComposeJobStatus:
+    """Return the current status of a compose job."""
+    entry = _get_compose_job(job_id)
+    if entry is None:
+        raise HTTPException(404, f"Compose job {job_id} not found or expired")
+    if entry["client_id"] != client_id or entry["draft_id"] != draft_id:
+        # Don't leak job existence across clients/drafts.
+        raise HTTPException(404, f"Compose job {job_id} not found")
+    revision = None
+    if entry["revision"] is not None:
+        revision = RevisionDetailResponse.model_validate(entry["revision"])
+    return ComposeJobStatus(
+        job_id=entry["job_id"],
+        status=entry["status"],
+        error=entry["error"],
+        revision=revision,
+    )
 
 
 @drafts_router.post(
@@ -647,12 +777,19 @@ def translate_draft(
         if draft["current_revision_id"] is None:
             raise HTTPException(422, "Draft has no current revision to translate")
 
-        # Validate target locale exists
+        # Normalize at the API boundary so aliases like "no"/"nor"/"no-NO"
+        # resolve to canonical codes (e.g. "nb") before hitting the DB check.
+        normalized_locale = _normalize_locale(target_locale)
         locale_row = conn.execute(
-            "SELECT code FROM locales WHERE code=?", (target_locale,)
+            "SELECT code FROM locales WHERE code=? AND is_active=1",
+            (normalized_locale,),
         ).fetchone()
         if locale_row is None:
-            raise HTTPException(422, f"Unknown locale: {target_locale}")
+            raise HTTPException(
+                422,
+                f"Unknown locale: {target_locale!r} (normalized to {normalized_locale!r})",
+            )
+        target_locale = normalized_locale
 
         src_rev = conn.execute(
             "SELECT * FROM draft_revisions WHERE id=?",

@@ -499,8 +499,9 @@ export function useCreateDraft(clientId: string) {
         primary_locale: payload.locale,
         created_by: 'web',
       })
-      await apiPost<BackendRevisionDetail>(`/api/clients/${clientId}/drafts/${draft.id}/compose`)
-      return mapDraftListItem(draft, 1)
+      // Compose is triggered separately from the draft studio — the LLM call
+      // takes 15-30s which exceeds proxy/fetch timeouts when chained inline.
+      return mapDraftListItem(draft, 0)
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['drafts', clientId] })

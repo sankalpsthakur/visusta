@@ -112,8 +112,12 @@ class DraftChatAgent(Agent):
         history: list[dict],
     ) -> str:
         heading = section.get("heading", "")
+        # Stored blocks normalize text under "content"; LLM/composer sometimes
+        # emits "text". Read both so the model sees the actual section body.
         block_texts = "\n".join(
-            b.get("text", "") for b in section.get("blocks", []) if b.get("text")
+            (b.get("content") or b.get("text") or "")
+            for b in section.get("blocks", [])
+            if (b.get("content") or b.get("text"))
         )
         history_lines = "\n".join(
             f"{m['role'].upper()}: {m['content']}"

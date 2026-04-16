@@ -39,6 +39,15 @@ class DraftComposerAgent(Agent):
 
         self.log(f"Composing draft for locale={locale}, changelog_entries={len(changelog)}")
 
+        # Build payload + evidence_by_id once so both stub and LLM paths can hydrate
+        # citations from the same source material.
+        payload = self._normalize_payload(changelog, changelog_payload)
+        evidence_by_id = {
+            evidence_item.get("evidence_id"): evidence_item
+            for evidence_item in evidence
+            if isinstance(evidence_item, dict) and evidence_item.get("evidence_id")
+        }
+
         if isinstance(self._llm, StubLLM):
             raw_sections = self._compose_without_llm(
                 changelog=changelog,
@@ -47,12 +56,23 @@ class DraftComposerAgent(Agent):
                 template_sections=template_sections,
                 locale=locale,
             )
+            # Stub path already emits {label,url} dicts via _collect_citations;
+            # no server-side hydration needed.
+            sections = self._hydrate_sections(raw_sections, locale, template_sections)
         else:
             prompt = self._build_prompt(changelog, evidence, template_sections, locale)
             result: dict[str, Any] = self._llm.generate_structured(prompt)
             raw_sections = result.get("sections", [])
-
-        sections = self._hydrate_sections(raw_sections, locale, template_sections)
+            # LLM prompt only knows to emit citations as List[str]; hydrate URLs
+            # server-side from payload/evidence so citations come back as
+            # {label, url} with real URLs whenever source data has them.
+            sections = self._hydrate_sections(
+                raw_sections,
+                locale,
+                template_sections,
+                payload=payload,
+                evidence_by_id=evidence_by_id,
+            )
         self.log(f"Composed {len(sections)} sections")
 
         return {"sections": sections, "locale": locale, "log": self.log_entries}
@@ -99,16 +119,26 @@ class DraftComposerAgent(Agent):
         raw_sections: list[dict],
         locale: str,
         template_sections: list[dict],
+        payload: dict[str, Any] | None = None,
+        evidence_by_id: dict[str, dict[str, Any]] | None = None,
     ) -> list[dict]:
-        """Merge LLM output with template section definitions, adding IDs."""
+        """Merge LLM output with template section definitions, adding IDs.
+
+        When ``payload`` and ``evidence_by_id`` are provided (LLM path), this
+        hydrates citations with URLs drawn from the same source material the
+        stub path uses — coercing any LLM-emitted string citations to
+        ``{label: str, url: None}`` and then augmenting/overriding them with
+        ``{label, url}`` dicts produced by ``_collect_citations``.
+        """
         # Build a heading→template_section index for merging
         tpl_index = {
             s.get("heading", "").lower(): s
             for s in template_sections
         }
+        hydrate_urls = payload is not None and evidence_by_id is not None
 
         hydrated = []
-        for raw in raw_sections:
+        for index, raw in enumerate(raw_sections):
             heading = raw.get("heading", "")
             tpl = tpl_index.get(heading.lower(), {})
             # Normalize LLM block format → DB block format
@@ -122,13 +152,43 @@ class DraftComposerAgent(Agent):
                     "metadata": blk.get("metadata", {}),
                 })
 
+            # Coerce raw citations to {label, url} dicts. LLM emits strings per
+            # the prompt contract; stub path already emits dicts.
+            raw_citations = raw.get("citations", []) or []
+            normalized_citations: list[dict[str, Any]] = []
+            for citation in raw_citations:
+                if isinstance(citation, dict):
+                    label = citation.get("label")
+                    if label is None:
+                        continue
+                    url = citation.get("url")
+                    normalized_citations.append(
+                        {"label": str(label), "url": str(url) if url else None}
+                    )
+                elif citation:
+                    normalized_citations.append({"label": str(citation), "url": None})
+
+            # If the source data is available, augment with server-side URLs so
+            # labels the LLM returned as bare strings pick up real URLs when we
+            # have them in payload/evidence.
+            if hydrate_urls:
+                section_detail = self._match_detail_section(
+                    payload, heading or tpl.get("heading", ""), index
+                )
+                source_citations = self._collect_citations(
+                    payload, section_detail, evidence_by_id
+                )
+                normalized_citations = self._merge_citations(
+                    normalized_citations, source_citations
+                )
+
             hydrated.append({
                 "section_id": str(uuid.uuid4()),
                 "heading": heading or tpl.get("heading", ""),
                 "locale": locale,
                 "blocks": normalized_blocks,
                 "facts": raw.get("facts", []),
-                "citations": raw.get("citations", []),
+                "citations": normalized_citations,
                 "translation_status": "original",
                 "approval_status": "pending",
                 # Carry forward template metadata if present
@@ -151,6 +211,57 @@ class DraftComposerAgent(Agent):
                 })
 
         return hydrated
+
+    def _merge_citations(
+        self,
+        llm_citations: list[dict[str, Any]],
+        source_citations: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        """Combine LLM-returned citations with server-collected ones.
+
+        Dedup key is ``(label, url)``. When the LLM emitted a bare label
+        (url=None) and source data has the same label with a URL, the
+        dict-with-URL wins (the bare version is dropped in favour of the
+        URL-bearing one). Otherwise preserve order: LLM first, then any
+        additional source citations.
+        """
+        by_label_with_url: dict[str, str] = {}
+        for citation in source_citations:
+            label = citation.get("label")
+            url = citation.get("url")
+            if label and url and label not in by_label_with_url:
+                by_label_with_url[label] = url
+
+        merged: list[dict[str, Any]] = []
+        seen: set[tuple[str, str | None]] = set()
+        for citation in llm_citations:
+            label = citation.get("label")
+            if not label:
+                continue
+            url = citation.get("url")
+            # If LLM gave a bare label but we have a URL for it, upgrade.
+            if url is None and label in by_label_with_url:
+                url = by_label_with_url[label]
+            key = (label, url)
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append({"label": label, "url": url})
+        for citation in source_citations:
+            label = citation.get("label")
+            if not label:
+                continue
+            url = citation.get("url")
+            key = (label, url)
+            if key in seen:
+                continue
+            # Also skip if we already emitted this label with a URL (avoid
+            # duplicate rows where the bare version was upgraded above).
+            if url is None and (label, by_label_with_url.get(label)) in seen:
+                continue
+            seen.add(key)
+            merged.append({"label": label, "url": url})
+        return merged[:6]
 
     def _compose_without_llm(
         self,

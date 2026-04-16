@@ -182,7 +182,8 @@ class DraftChatAgent(Agent):
             for fact in section.get("facts", [])[:3]:
                 additions.append(str(fact))
             for citation in section.get("citations", [])[:2]:
-                additions.append(f"Reference: {citation}")
+                label = citation.get("label", "") if isinstance(citation, dict) else str(citation)
+                additions.append(f"Reference: {label}")
             expanded_blocks = existing_blocks
             if additions:
                 expanded_blocks = existing_blocks + [{"type": "bullet_list", "text": "\n".join(additions)}]

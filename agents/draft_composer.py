@@ -242,7 +242,7 @@ class DraftComposerAgent(Agent):
         change_entries: list[dict[str, Any]],
         evidence_by_id: dict[str, dict[str, Any]],
         index: int,
-    ) -> tuple[list[dict[str, Any]], list[str], list[str]]:
+    ) -> tuple[list[dict[str, Any]], list[str], list[dict[str, Any]]]:
         key = "_".join(part for part in (self._normalize_key(section_id), self._normalize_key(heading)) if part)
         section_detail = self._match_detail_section(payload, heading, index)
 
@@ -451,16 +451,24 @@ class DraftComposerAgent(Agent):
         payload: dict[str, Any],
         section_detail: dict[str, Any],
         evidence_by_id: dict[str, dict[str, Any]],
-    ) -> list[str]:
-        citations: list[str] = []
+    ) -> list[dict[str, Any]]:
+        """Build citations as {label, url} dicts.
+
+        Prior to this, title and URL were flattened into a single string so the
+        URL was unrecoverable downstream. Keep both fields separate so the
+        renderer can emit a real anchor tag.
+        """
+        citations: list[dict[str, Any]] = []
         references = payload.get("references")
         if isinstance(references, list):
             for reference in references[:4]:
                 if not isinstance(reference, dict):
                     continue
-                citation = reference.get("citation") or reference.get("url")
-                if citation:
-                    citations.append(str(citation))
+                label = reference.get("citation") or reference.get("url")
+                if not label:
+                    continue
+                url = reference.get("url")
+                citations.append({"label": str(label), "url": str(url) if url else None})
         evidence_refs = section_detail.get("evidence_refs") if isinstance(section_detail, dict) else []
         if isinstance(evidence_refs, list):
             for evidence_id in evidence_refs[:4]:
@@ -469,9 +477,13 @@ class DraftComposerAgent(Agent):
                     continue
                 title = evidence.get("document_title") or evidence.get("source_name") or evidence_id
                 url = evidence.get("url")
-                citations.append(f"{title} — {url}" if url else str(title))
-        deduped = []
+                citations.append({"label": str(title), "url": str(url) if url else None})
+        deduped: list[dict[str, Any]] = []
+        seen: set[tuple[str, str | None]] = set()
         for citation in citations:
-            if citation not in deduped:
-                deduped.append(citation)
+            key = (citation["label"], citation.get("url"))
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(citation)
         return deduped[:6]

@@ -100,11 +100,32 @@ export function DocumentViewer({ draft, selectedSectionId, onSelectSection }: Do
                   <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>
                     Citations
                   </div>
-                  {section.citations.map((citation, i) => (
-                    <div key={i} style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'monospace', marginBottom: 2 }}>
-                      [{i + 1}] {citation}
-                    </div>
-                  ))}
+                  {section.citations.map((citation, i) => {
+                    // Runtime shape is {label, url?} for new revisions and a plain string
+                    // for legacy revisions; the declared TS type in draft-hooks stays
+                    // as string[] because that file is out of scope for this change.
+                    const c = citation as unknown as string | { label: string; url?: string | null }
+                    const label = typeof c === 'string' ? c : c.label
+                    const url = typeof c === 'string' ? null : c.url ?? null
+                    return (
+                      <div key={i} style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'monospace', marginBottom: 2 }}>
+                        {i + 1}.{' '}
+                        {url ? (
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                            style={{ color: 'var(--brand-accent)', textDecoration: 'underline' }}
+                          >
+                            {label}
+                          </a>
+                        ) : (
+                          <span>{label}</span>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </motion.div>

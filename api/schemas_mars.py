@@ -5,7 +5,7 @@ Pydantic models for the MARS (Multilingual Adaptive Report Studio) API.
 from __future__ import annotations
 
 from typing import Any, Dict, List, Literal, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 # ── Locales ────────────────────────────────────────────────────────────────────
@@ -175,15 +175,51 @@ class SectionBlock(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 
+class Citation(BaseModel):
+    """A source reference with an optional URL.
+
+    Accepts both the new dict shape and the legacy plain-string shape so
+    revisions persisted before this schema change keep deserializing.
+    """
+
+    label: str
+    url: Optional[str] = None
+
+
 class DraftSection(BaseModel):
     section_id: str
     heading: str
     locale: str
     blocks: List[SectionBlock] = Field(default_factory=list)
     facts: List[str] = Field(default_factory=list)
-    citations: List[str] = Field(default_factory=list)
+    citations: List[Citation] = Field(default_factory=list)
     translation_status: Optional[str] = None   # None | 'pending' | 'done' | 'failed'
     approval_status: Optional[str] = None      # None | 'pending' | 'approved' | 'rejected' | 'needs_revision'
+
+    @field_validator("citations", mode="before")
+    @classmethod
+    def _coerce_citations(cls, value: Any) -> Any:
+        """Accept legacy List[str] citations alongside the new List[Citation] shape.
+
+        Old revision blobs were written as plain strings like
+        "Stortinget — Norwegian Parliament" or "Title — https://...". They are
+        coerced to ``{"label": <string>, "url": None}`` here so Pydantic's
+        standard validation can then build ``Citation`` objects. New dict-shaped
+        entries pass through untouched.
+        """
+        if not isinstance(value, list):
+            return value
+        coerced: List[Any] = []
+        for item in value:
+            if isinstance(item, str):
+                coerced.append({"label": item, "url": None})
+            elif isinstance(item, dict):
+                coerced.append(item)
+            elif item is None:
+                continue
+            else:
+                coerced.append({"label": str(item), "url": None})
+        return coerced
 
 
 # ── Draft revisions ────────────────────────────────────────────────────────────

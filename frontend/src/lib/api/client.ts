@@ -61,7 +61,7 @@ async function requestFile(
   const blob = await res.blob()
   return {
     blob,
-    filename: parseFilename(res.headers.get('content-disposition')) || 'download.pdf',
+    filename: parseFilename(res.headers.get('content-disposition')) || 'download',
     contentType: res.headers.get('content-type') || blob.type || 'application/octet-stream',
   }
 }
@@ -107,6 +107,10 @@ export async function apiPostFile(path: string, body?: unknown): Promise<ApiFile
     headers: jsonHeaders(body),
     body: body === undefined ? undefined : JSON.stringify(body),
   })
+}
+
+export async function apiGetFile(path: string): Promise<ApiFileResponse> {
+  return requestFile(path)
 }
 
 export async function apiDelete(path: string): Promise<void> {

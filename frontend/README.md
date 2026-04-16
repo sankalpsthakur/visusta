@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Visusta Frontend
 
-## Getting Started
+Locale-aware Next.js app for the Visusta ESG Regulatory Intelligence platform.
 
-First, run the development server:
+## Overview
+
+- App Router pages live under `src/app/[lang]/...`.
+- Supported locales come from `src/lib/i18n/locales.ts`.
+- `src/proxy.ts` redirects `/` and other unscoped routes to the best matching locale, defaulting to `en`.
+- Invalid locale prefixes return Next.js `notFound`.
+
+Primary areas of the UI:
+
+- dashboard and client overview
+- regulatory changelog browsing
+- templates and versioning
+- client drafts, approvals, and exports
+- sources, keywords, evidence, and reports
+
+## API Contract
+
+The frontend calls the FastAPI backend directly with `fetch`.
+
+- Default base URL: `http://localhost:8000`
+- Override with `NEXT_PUBLIC_API_URL`
+- API health check: `GET /api/health`
+- Client, template, locale, draft, source, evidence, and export routes are all prefixed with `/api`
+
+The Playwright config uses `NEXT_PUBLIC_API_URL=http://localhost:8010` so the browser suite talks to the local test backend.
+
+## Setup
 
 ```bash
+cd frontend
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. The app will redirect to a locale path such as `/en`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd frontend
+npm run build
+npm run start -- --port 3100
+```
 
-## Learn More
+To point at a different API server:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:8010 npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tests
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Lint: `npm run lint`
+- E2E: `npx playwright test`
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`frontend/playwright.config.ts` launches the API on `8010` and the app on `3100`, then runs the browser suite in Chromium.

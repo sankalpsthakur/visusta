@@ -1,0 +1,76 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "back": "Back",
+    "configure": "Configure",
+    "viewAll": "View all"
+  },
+  "sidebar": {
+    "overview": "Overview",
+    "clients": "Clients",
+    "templates": "Templates",
+    "dashboard": "Dashboard",
+    "regulatory": "Regulatory",
+    "reports": "Reports",
+    "audit": "Audit",
+    "settings": "Settings",
+    "evidence": "Evidence",
+    "drafts": "Drafts",
+    "sources": "Sources"
+  },
+  "home": {
+    "title": "Visusta",
+    "subtitle": "ESG Regulatory Intelligence",
+    "activeClients": "active clients"
+  },
+  "clients": {
+    "title": "Clients",
+    "activeWorkspaces": "active workspaces",
+    "addClient": "Add Client",
+    "noFacilities": "No facilities",
+    "newClient": "New Client",
+    "displayName": "Display name",
+    "clientId": "Client ID",
+    "facilities": "Facilities",
+    "jurisdictions": "Jurisdictions",
+    "topics": "Topics",
+    "createClient": "Create client",
+    "creating": "Creating\u2026"
+  },
+  "regulatory": {
+    "title": "Regulatory"
+  },
+  "reports": {
+    "title": "Reports"
+  },
+  "evidence": {
+    "title": "Evidence",
+    "noRecords": "No evidence records yet.",
+    "newThisWeek": "new this week",
+    "noNewThisWeek": "No new records this week"
+  },
+  "audit": {
+    "title": "Audit"
+  },
+  "settings": {
+    "title": "Settings"
+  },
+  "templates": {
+    "title": "Templates"
+  },
+  "drafts": {
+    "title": "Drafts"
+  },
+  "sources": {
+    "title": "Sources"
+  },
+  "approval": {
+    "title": "Approval"
+  }
+}

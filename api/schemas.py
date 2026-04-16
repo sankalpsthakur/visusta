@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 # ── Request bodies ─────────────────────────────────────────────────────────────
 
 class MonthlyReportRequest(BaseModel):
-    period: str = Field(..., example="2026-02", description="Period in YYYY-MM format")
+    period: str = Field(..., json_schema_extra={"example": "2026-02"}, description="Period in YYYY-MM format")
     tone: Optional[str] = None
     depth: Optional[str] = None
     chart_mix: Optional[List[str]] = None
@@ -19,8 +19,8 @@ class MonthlyReportRequest(BaseModel):
 
 
 class QuarterlyReportRequest(BaseModel):
-    quarter: int = Field(..., ge=1, le=4, example=1, description="Quarter number (1-4)")
-    year: int = Field(..., ge=2000, le=2100, example=2026, description="Four-digit year")
+    quarter: int = Field(..., ge=1, le=4, json_schema_extra={"example": 1}, description="Quarter number (1-4)")
+    year: int = Field(..., ge=2000, le=2100, json_schema_extra={"example": 2026}, description="Four-digit year")
     tone: Optional[str] = None
     depth: Optional[str] = None
     chart_mix: Optional[List[str]] = None
@@ -28,7 +28,7 @@ class QuarterlyReportRequest(BaseModel):
 
 
 class ScreeningRunRequest(BaseModel):
-    period: str = Field(..., example="2026-02", description="Period in YYYY-MM format")
+    period: str = Field(..., json_schema_extra={"example": "2026-02"}, description="Period in YYYY-MM format")
 
 
 # ── Facility schema ────────────────────────────────────────────────────────────

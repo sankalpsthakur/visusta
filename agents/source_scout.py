@@ -4,13 +4,15 @@ from datetime import date
 from pathlib import Path
 
 from .base import Agent
+from .llm import LLMInterface, StubLLM
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 class SourceScoutAgent(Agent):
-    def __init__(self):
+    def __init__(self, llm: LLMInterface | None = None):
         super().__init__("source-scout")
+        self._llm = llm or StubLLM()
 
     def run(self, context: dict) -> dict:
         client_id = context["client_id"]
@@ -29,6 +31,51 @@ class SourceScoutAgent(Agent):
             self.log(f"Ingested URL: {url}")
 
         return {"evidence_ids": created, "log": self.log_entries}
+
+    def propose_sources(self, client_id: str, context: dict | None = None) -> dict:
+        """Propose new regulatory sources for *client_id*.
+
+        Reads the client's regulatory_data directory for topics/jurisdictions,
+        then asks the LLM for source suggestions.
+
+        Returns:
+            {
+                "proposals": list[dict],  # each: {url, title, publisher, rationale}
+                "log": list[dict],
+            }
+        """
+        ctx = context or {}
+        client_dir = PROJECT_ROOT / "regulatory_data" / client_id
+
+        topics: list[str] = ctx.get("topics", [])
+        jurisdictions: list[str] = ctx.get("jurisdictions", [])
+
+        # Auto-discover topics from client config if not provided
+        config_path = client_dir / "client_config.json"
+        if config_path.exists() and not topics:
+            try:
+                with open(config_path) as f:
+                    cfg = json.load(f)
+                topics = cfg.get("required_topics", [])
+                jurisdictions = cfg.get("allowed_countries", [])
+            except (json.JSONDecodeError, OSError):
+                pass
+
+        prompt = (
+            f"source proposal for client={client_id}\n"
+            f"Topics: {', '.join(topics)}\n"
+            f"Jurisdictions: {', '.join(jurisdictions)}"
+        )
+        self.log(
+            f"Proposing sources for client={client_id}, "
+            f"topics={topics}, jurisdictions={jurisdictions}"
+        )
+
+        result = self._llm.generate_structured(prompt)
+        proposals: list[dict] = result.get("proposals", [])
+
+        self.log(f"Proposed {len(proposals)} sources")
+        return {"proposals": proposals, "log": self.log_entries}
 
     def _make_record(self, client_id: str, url: str, **meta) -> dict:
         today = date.today().isoformat()

@@ -1,0 +1,84 @@
+{
+  "screening_period": "2026-02",
+  "generated_date": "2026-04-10",
+  "previous_period": "2026-01",
+  "executive_summary": "Regulatory Screening Report for 2026-02\n\u2022 0 regulations tracked\n\u2022 0 new regulations identified\n\u2022 2 changes detected (0 critical)\n\nBY TOPIC (change since last period):\n  ghg: CHANGED (amendment_in_progress)\n  packaging: CHANGED (law_passed)\n  water: no change\n  waste: no change\n  social_human_rights: no change\n",
+  "total_regulations_tracked": 0,
+  "total_changes_detected": 2,
+  "topic_change_statuses": {
+    "ghg": {
+      "changed_since_last": true,
+      "level": "amendment_in_progress",
+      "changes_detected": 1
+    },
+    "packaging": {
+      "changed_since_last": true,
+      "level": "law_passed",
+      "changes_detected": 1
+    },
+    "water": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "waste": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    },
+    "social_human_rights": {
+      "changed_since_last": false,
+      "level": null,
+      "changes_detected": 0
+    }
+  },
+  "new_regulations": [],
+  "status_changes": [],
+  "content_updates": [],
+  "timeline_changes": [],
+  "metadata_updates": [],
+  "ended_regulations": [
+    {
+      "regulation_id": "EU-CSRD-2022",
+      "title": "Corporate Sustainability Reporting Directive",
+      "topic": "ghg",
+      "change_type": "regulation_removed",
+      "severity": "high",
+      "summary": "Regulation no longer tracked - may be expired or repealed",
+      "action_required": "Verify status with regulatory source",
+      "current_status": "amendment_in_progress",
+      "effective_date": null,
+      "enforcement_date": null,
+      "changes": [
+        {
+          "field": "presence",
+          "old": "tracked",
+          "new": "not_found",
+          "description": "Regulation not found in current screening"
+        }
+      ]
+    },
+    {
+      "regulation_id": "DE-Packaging-Act",
+      "title": "German Packaging Act",
+      "topic": "packaging",
+      "change_type": "regulation_removed",
+      "severity": "high",
+      "summary": "Regulation no longer tracked - may be expired or repealed",
+      "action_required": "Verify status with regulatory source",
+      "current_status": "law_passed",
+      "effective_date": null,
+      "enforcement_date": null,
+      "changes": [
+        {
+          "field": "presence",
+          "old": "tracked",
+          "new": "not_found",
+          "description": "Regulation not found in current screening"
+        }
+      ]
+    }
+  ],
+  "carried_forward": [],
+  "critical_actions": []
+}

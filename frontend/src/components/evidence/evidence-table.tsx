@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Skeleton } from '@/components/ui/skeleton'
 import { EmptyState } from '@/components/shared/empty-state'
 import { useDeleteEvidence, type EvidenceRecord } from '@/lib/api/hooks'
+import { useLocale } from '@/lib/i18n/dictionary-context'
 import { FileText, Trash2 } from 'lucide-react'
 
 function confidenceColor(confidence: number): string {
@@ -72,6 +73,7 @@ function RowSkeleton({ i }: { i: number }) {
 
 function EvidenceRow({ record, clientId }: { record: EvidenceRecord; clientId: string }) {
   const deleteEvidence = useDeleteEvidence(clientId)
+  const locale = useLocale()
 
   return (
     <motion.div
@@ -80,7 +82,7 @@ function EvidenceRow({ record, clientId }: { record: EvidenceRecord; clientId: s
       style={{ borderTop: '1px solid var(--border-color)' }}
     >
       <Link
-        href={`/clients/${clientId}/evidence/${record.evidence_id}`}
+        href={`/${locale}/clients/${clientId}/evidence/${record.evidence_id}`}
         className="text-sm font-medium transition-opacity hover:opacity-70 line-clamp-1"
         style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}
       >
@@ -97,7 +99,7 @@ function EvidenceRow({ record, clientId }: { record: EvidenceRecord; clientId: s
       <ConfidenceDot confidence={record.confidence ?? 0} />
       <div className="flex items-center gap-2">
         <Link
-          href={`/clients/${clientId}/evidence/${record.evidence_id}`}
+          href={`/${locale}/clients/${clientId}/evidence/${record.evidence_id}`}
           className="text-xs px-2 py-1 rounded transition-opacity hover:opacity-70"
           style={{
             background: 'var(--bg-elevated)',

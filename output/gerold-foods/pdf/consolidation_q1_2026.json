@@ -1,0 +1,30 @@
+{
+  "quarter": "Q1 2026",
+  "reporting_period": "January - March 2026",
+  "generated_at": "2026-04-10T13:19:53.664811",
+  "regulations": [],
+  "themes": [],
+  "risk_assessment": {
+    "high_risk_regulations": [],
+    "compliance_gaps": [],
+    "monitoring_required": []
+  },
+  "resource_implications": {
+    "investment_summary": {},
+    "affected_departments": [],
+    "estimated_effort": "Moderate"
+  },
+  "stats": {
+    "total_entries_processed": 2,
+    "valid_entries": 0,
+    "invalid_entries": 2,
+    "regulations_consolidated": 0,
+    "by_impact": {},
+    "by_scope": {},
+    "month_coverage": {
+      "January": 0,
+      "February": 0,
+      "March": 0
+    }
+  }
+}

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { useLocale } from '@/lib/i18n/dictionary-context'
 
 interface NavItemProps {
   href: string
@@ -13,7 +14,12 @@ interface NavItemProps {
 
 export function NavItem({ href, label, icon, collapsed = false }: NavItemProps) {
   const pathname = usePathname()
-  const isActive = pathname === href || (href !== '/' && pathname.startsWith(href))
+  const locale = useLocale()
+  const localePrefix = `/${locale}`
+  const strip = (p: string) => p.startsWith(localePrefix) ? (p.slice(localePrefix.length) || '/') : p
+  const strippedPathname = strip(pathname)
+  const strippedHref = strip(href)
+  const isActive = strippedPathname === strippedHref || (strippedHref !== '/' && strippedPathname.startsWith(strippedHref))
 
   return (
     <Link href={href} className="relative block">

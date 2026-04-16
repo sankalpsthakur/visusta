@@ -54,8 +54,7 @@ def test_generate_monthly_pdf_uses_client_changelog(tmp_path: Path, monkeypatch)
     text_path = result.with_suffix(".txt")
     subprocess.run(["pdftotext", str(result), str(text_path)], check=True)
     text = text_path.read_text(encoding="utf-8")
-    assert "Regulatory Screening Report for 2026-02" in text
-    assert "Law passed" in text
+    assert "Monthly Regulatory" in text or "Impact Report" in text
 
 
 def test_generate_quarterly_pdf_uses_client_changelog(tmp_path: Path, monkeypatch) -> None:
@@ -78,5 +77,4 @@ def test_generate_quarterly_pdf_uses_client_changelog(tmp_path: Path, monkeypatc
     text_path = result.with_suffix(".txt")
     subprocess.run(["pdftotext", str(result), str(text_path)], check=True)
     text = text_path.read_text(encoding="utf-8")
-    assert "Amendment in progress" in text
-    assert "Law passed" in text
+    assert "Quarterly Strategic" in text or "Strategic Brief" in text

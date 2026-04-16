@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { NavItem } from './nav-item'
 import { ClientSwitcher } from './client-switcher'
+import { LocaleSwitcher } from './locale-switcher'
 import { useHealth } from '@/lib/api/hooks'
 import { useActiveClient } from '@/lib/clients/context'
+import { useLocale } from '@/lib/i18n/dictionary-context'
 import {
   LayoutDashboard,
   Home,
@@ -16,13 +18,18 @@ import {
   Users,
   ChevronLeft,
   ChevronRight,
+  LayoutTemplate,
+  BookOpen,
+  Radio,
 } from 'lucide-react'
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const { data: health } = useHealth()
   const { activeClient } = useActiveClient()
-  const clientBase = activeClient ? `/clients/${activeClient.id}` : null
+  const locale = useLocale()
+  const localePath = (path: string) => `/${locale}${path}`
+  const clientBase = activeClient ? localePath(`/clients/${activeClient.id}`) : null
 
   const width = collapsed ? 64 : 280
 
@@ -91,8 +98,9 @@ export function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-2 py-3 overflow-y-auto">
         <div className="space-y-0.5">
-          <NavItem href="/" label="Overview" icon={<Home className="w-4 h-4" />} collapsed={collapsed} />
-          <NavItem href="/clients" label="Clients" icon={<Users className="w-4 h-4" />} collapsed={collapsed} />
+          <NavItem href={localePath('/')} label="Overview" icon={<Home className="w-4 h-4" />} collapsed={collapsed} />
+          <NavItem href={localePath('/clients')} label="Clients" icon={<Users className="w-4 h-4" />} collapsed={collapsed} />
+          <NavItem href={localePath('/templates')} label="Templates" icon={<LayoutTemplate className="w-4 h-4" />} collapsed={collapsed} />
         </div>
         {clientBase && (
           <>
@@ -114,6 +122,8 @@ export function Sidebar() {
               <NavItem href={`${clientBase}/reports`} label="Reports" icon={<FileText className="w-4 h-4" />} collapsed={collapsed} />
               <NavItem href={`${clientBase}/audit`} label="Audit" icon={<ClipboardList className="w-4 h-4" />} collapsed={collapsed} />
               <NavItem href={`${clientBase}/settings`} label="Settings" icon={<Settings className="w-4 h-4" />} collapsed={collapsed} />
+              <NavItem href={`${clientBase}/drafts`} label="Drafts" icon={<BookOpen className="w-4 h-4" />} collapsed={collapsed} />
+              <NavItem href={`${clientBase}/sources`} label="Sources" icon={<Radio className="w-4 h-4" />} collapsed={collapsed} />
             </div>
           </>
         )}
@@ -148,6 +158,16 @@ export function Sidebar() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Locale switcher */}
+      {!collapsed && (
+        <div
+          className="px-3 py-2 flex-shrink-0"
+          style={{ borderTop: '1px solid var(--border-color)' }}
+        >
+          <LocaleSwitcher />
+        </div>
+      )}
     </motion.aside>
   )
 }

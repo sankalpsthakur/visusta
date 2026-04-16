@@ -48,10 +48,10 @@ export interface ChangelogResponse {
   new_regulations: ChangeEntry[]
   status_changes: ChangeEntry[]
   content_updates: ChangeEntry[]
-  timeline_changes: ChangeEntry[]
-  metadata_updates: ChangeEntry[]
-  ended_regulations: ChangeEntry[]
-  carried_forward: ChangeEntry[]
+  timeline_changes?: ChangeEntry[]
+  metadata_updates?: ChangeEntry[]
+  ended_regulations?: ChangeEntry[]
+  carried_forward?: ChangeEntry[]
   critical_actions: ChangeEntry[]
 }
 
@@ -257,7 +257,8 @@ export function useUpdateSources(clientId: string) {
   return useMutation({
     mutationFn: (sources: SourceConfig[]) =>
       apiPut<SourceConfig[]>(`/api/clients/${clientId}/sources`, sources),
-    onSuccess: () => {
+    onSuccess: (sources) => {
+      queryClient.setQueryData(['sources', clientId], sources)
       queryClient.invalidateQueries({ queryKey: ['sources', clientId] })
       queryClient.invalidateQueries({ queryKey: ['client', clientId] })
       queryClient.invalidateQueries({ queryKey: ['clients'] })

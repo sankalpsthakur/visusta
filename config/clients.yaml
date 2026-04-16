@@ -10,11 +10,12 @@ clients:
     - EU
     - DE
     required_topics:
-    - ghg
-    - packaging
     - water
     - waste
     - social_human_rights
+    - packaging
+    - ghg
+    - biodiversity
     branding:
       primary_color: '#8B2F1E'
       accent_color: '#3F4E31'
@@ -45,6 +46,41 @@ clients:
       url: https://www.zsvr.de
       frequency: weekly
       source_type: registry
+    - id: pw_1776116804372
+      display_name: Playwright Source 1776116804372
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
+    - id: pw_1776116861552
+      display_name: Playwright Source 1776116861552
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
+    - id: pw_1776116900945
+      display_name: Playwright Source 1776116900945
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
+    - id: pw_1776116946444
+      display_name: Playwright Source 1776116946444
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
+    - id: pw_1776117093719
+      display_name: Playwright Source 1776117093719
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
+    - id: pw_1776325283305
+      display_name: Playwright Source 1776325283305
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
+    - id: pw_1776325669053
+      display_name: Playwright Source 1776325669053
+      url: https://eur-lex.europa.eu
+      frequency: weekly
+      source_type: gazette
     thresholds:
       critical_enforcement_window_days: 90
       min_confidence: 0.6
@@ -92,12 +128,12 @@ clients:
       frequency: daily
       source_type: gazette
     - id: bafu
-      display_name: "BAFU \u2014 Swiss Federal Office for the Environment"
+      display_name: BAFU — Swiss Federal Office for the Environment
       url: https://www.bafu.admin.ch
       frequency: weekly
       source_type: agency
     - id: uvek
-      display_name: "UVEK \u2014 Swiss Ministry of Environment"
+      display_name: UVEK — Swiss Ministry of Environment
       url: https://www.uvek.admin.ch
       frequency: weekly
       source_type: ministry
@@ -161,7 +197,7 @@ clients:
       frequency: weekly
       source_type: agency
     - id: stortinget
-      display_name: "Stortinget \u2014 Norwegian Parliament"
+      display_name: Stortinget — Norwegian Parliament
       url: https://www.stortinget.no
       frequency: weekly
       source_type: legislature
@@ -269,12 +305,12 @@ clients:
     created_at: '2026-02-01'
     sources:
     - id: dre
-      display_name: "Di\xE1rio da Rep\xFAblica Eletr\xF3nico"
+      display_name: Diário da República Eletrónico
       url: https://dre.pt
       frequency: daily
       source_type: gazette
     - id: apa
-      display_name: "Ag\xEAncia Portuguesa do Ambiente"
+      display_name: Agência Portuguesa do Ambiente
       url: https://apambiente.pt
       frequency: weekly
       source_type: agency
@@ -302,7 +338,7 @@ clients:
       - impact_summary
       - references
   brosel-backwaren:
-    display_name: "Br\xF6sel Backwaren GmbH"
+    display_name: Brösel Backwaren GmbH
     facilities:
     - name: Munich Bread Works
       jurisdiction: DE

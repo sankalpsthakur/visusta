@@ -1,7 +1,11 @@
 # Monthly Regulatory Screening Workflow - Technical Design
 
 ## Overview
-Automated system to screen for regulatory changes across GHG, Packaging, Water, Waste, and Social/Human Rights topics, generating a monthly technical changelog.
+This document describes the monthly screening layer that produces the changelog artifact.
+
+Historically, that artifact fed standalone monthly reporting and quarterly consolidation. In the current MARS draft-first flow, the changelog is an input to draft composition alongside template sections, evidence, keyword rules, and source proposals.
+
+The supported live path is monthly screening -> changelog JSON -> draft revision -> approval -> export job.
 
 ---
 
@@ -466,6 +470,18 @@ class MonthlyChangelog:
   ]
 }
 ```
+
+### 3.3 Current handoff contract
+
+The monthly changelog JSON should be treated as a handoff format, not the final report.
+
+Current code expects a JSON object with top-level lists that can be flattened for:
+
+- source proposal impact previews
+- draft composition input
+- evidence alignment
+
+The draft composer reads changelog entries and evidence, then creates a new revision rather than rendering the changelog directly into PDF output.
 
 ---
 
@@ -1360,6 +1376,16 @@ class FieldChange:
     description: Optional[str] = None
 ```
 
+### 4.2 Integration with MARS draft composition
+
+The screening workflow feeds the current draft-first layer indirectly:
+
+- `drafts/{draft_id}/compose` reads changelog entries from `REGULATORY_DATA_DIR/{client_id}/changelogs`.
+- Evidence files under `REGULATORY_DATA_DIR/{client_id}/evidence` can be passed into draft composition.
+- `source-proposals/suggest` and `source-proposals/{id}/impact` use the changelog artifact to estimate source coverage.
+- `keywords/preview` is a separate client-scoped helper for testing terms against sample text.
+- `exports/import-docx` turns a reviewed DOCX into a new draft revision checkpoint.
+
 ---
 
 ## 5. Edge Case Handling
@@ -1747,5 +1773,6 @@ This workflow provides:
 1. **Structured Input**: JSON/dataclass format for monthly screening data with full metadata
 2. **Robust Change Detection**: Field-by-field comparison with intelligent classification
 3. **Rich Output**: Categorized changelog with severity levels and action recommendations
-4. **Complete Implementation**: Ready-to-use Python classes with all core functions
-5. **Edge Case Handling**: Specific logic for new, changed, unchanged, and removed regulations
+4. **MARS Handoff**: A stable monthly artifact that can feed draft composition, source impact previews, and DOCX revision checkpoints
+5. **Complete Implementation**: Ready-to-use Python classes with all core functions
+6. **Edge Case Handling**: Specific logic for new, changed, unchanged, and removed regulations

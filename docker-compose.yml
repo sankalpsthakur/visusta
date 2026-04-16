@@ -1,0 +1,19 @@
+services:
+  visusta:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      # Persistent SQLite database
+      - visusta-data:/app/data
+      # Persistent output files (PDFs, charts)
+      - visusta-output:/app/output
+      - visusta-charts:/app/charts
+    restart: unless-stopped
+
+volumes:
+  visusta-data:
+  visusta-output:
+  visusta-charts:

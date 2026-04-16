@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useEffect, useState } from 'react'
+import { use, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   useComposeDraft,
@@ -26,7 +26,7 @@ import type { DraftStatus, DraftRevision, SectionEditPayload } from '@/lib/api/d
 import { LOCALE_LABELS, SUPPORTED_LOCALES } from '@/lib/i18n/locales'
 import { useLocalePath } from '@/lib/i18n/navigation'
 import { useRouter } from 'next/navigation'
-import { Loader2, Layers, GitCompare, Clock } from 'lucide-react'
+import { Loader2, Layers, GitCompare, Clock, History } from 'lucide-react'
 
 type RightPanel = 'chat' | 'revisions' | 'diff' | 'history'
 
@@ -53,33 +53,29 @@ export default function DraftStudioPage({ params }: PageProps) {
   const [rightPanel, setRightPanel] = useState<RightPanel>('chat')
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [diffRevision, setDiffRevision] = useState<DraftRevision | null>(null)
+  const [exportError, setExportError] = useState<string | null>(null)
 
-  const selectedSection = draft?.sections.find((s) => s.section_id === selectedSectionId) ?? null
+  const effectiveSelectedId = selectedSectionId && draft?.sections.some((s) => s.section_id === selectedSectionId)
+    ? selectedSectionId
+    : draft?.sections[0]?.section_id ?? null
+
+  const selectedSection = draft?.sections.find((s) => s.section_id === effectiveSelectedId) ?? null
   const editingSection = draft?.sections.find((s) => s.section_id === editingSectionId) ?? null
 
-  useEffect(() => {
-    if (!draft?.sections.length) {
-      return
-    }
-
-    const hasSelectedSection = selectedSectionId
-      ? draft.sections.some((section) => section.section_id === selectedSectionId)
-      : false
-
-    if (!hasSelectedSection) {
-      setSelectedSectionId(draft.sections[0]?.section_id ?? null)
-    }
-  }, [draft?.sections, selectedSectionId])
-
   async function handleExport(format: 'pdf' | 'docx' | 'json') {
-    const result = await exportDraft.mutateAsync(format)
-    const link = document.createElement('a')
-    link.href = result.url
-    link.download = result.filename
-    link.rel = 'noopener'
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
+    setExportError(null)
+    try {
+      const result = await exportDraft.mutateAsync(format)
+      const link = document.createElement('a')
+      link.href = result.url
+      link.download = result.filename
+      link.rel = 'noopener'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    } catch (error) {
+      setExportError(error instanceof Error ? error.message : 'Export failed')
+    }
   }
 
   function handleSaveSection(sectionId: string, payload: SectionEditPayload) {
@@ -89,7 +85,8 @@ export default function DraftStudioPage({ params }: PageProps) {
 
   const PANELS: { id: RightPanel; icon: React.ReactNode; label: string }[] = [
     { id: 'chat', icon: <Layers size={13} />, label: 'AI' },
-    { id: 'revisions', icon: <Clock size={13} />, label: 'History' },
+    { id: 'revisions', icon: <Clock size={13} />, label: 'Revisions' },
+    { id: 'history', icon: <History size={13} />, label: 'History' },
     { id: 'diff', icon: <GitCompare size={13} />, label: 'Diff' },
   ]
 
@@ -133,9 +130,47 @@ export default function DraftStudioPage({ params }: PageProps) {
             isOpen={showExportMenu}
             onClose={() => setShowExportMenu(false)}
             onExport={handleExport}
+            draftStatus={draft.status}
           />
         </div>
       </div>
+
+      {exportError && (
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            margin: '10px 16px 0',
+            padding: '10px 14px',
+            borderRadius: 10,
+            border: '1px solid rgba(239,68,68,0.24)',
+            background: 'rgba(239,68,68,0.08)',
+            color: '#b91c1c',
+            fontSize: 13,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 12,
+          }}
+        >
+          <span>{exportError}</span>
+          <button
+            type="button"
+            onClick={() => setExportError(null)}
+            style={{
+              border: 'none',
+              background: 'transparent',
+              color: 'inherit',
+              fontSize: 12,
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              flexShrink: 0,
+            }}
+          >
+            Dismiss
+          </button>
+        </motion.div>
+      )}
 
       {/* Main layout */}
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '240px 1fr 320px', overflow: 'hidden' }}>
@@ -157,7 +192,7 @@ export default function DraftStudioPage({ params }: PageProps) {
             <DraftSection
               key={section.section_id}
               section={section}
-              isSelected={selectedSectionId === section.section_id}
+              isSelected={effectiveSelectedId === section.section_id}
               onSelect={() => { setSelectedSectionId(section.section_id); setEditingSectionId(null) }}
               onEdit={() => setEditingSectionId(section.section_id)}
             />
@@ -181,6 +216,7 @@ export default function DraftStudioPage({ params }: PageProps) {
                 }}
               >
                 <SectionEditor
+                  key={editingSection.section_id}
                   section={editingSection}
                   onSave={handleSaveSection}
                   isSaving={updateSection.isPending}
@@ -196,7 +232,7 @@ export default function DraftStudioPage({ params }: PageProps) {
               >
                 <DocumentViewer
                   draft={draft}
-                  selectedSectionId={selectedSectionId}
+                  selectedSectionId={effectiveSelectedId}
                   onSelectSection={(id) => setSelectedSectionId(id)}
                 />
               </motion.div>
@@ -278,7 +314,7 @@ export default function DraftStudioPage({ params }: PageProps) {
                   <ChatSidebar
                     clientId={clientId}
                     draftId={draftId}
-                    activeSectionId={selectedSectionId ?? undefined}
+                    activeSectionId={effectiveSelectedId ?? undefined}
                   />
                 </motion.div>
               )}
@@ -317,7 +353,7 @@ export default function DraftStudioPage({ params }: PageProps) {
                     />
                   ) : (
                     <div style={{ textAlign: 'center', padding: '32px 0', color: 'var(--text-muted)', fontSize: 12 }}>
-                      Select a revision from History to view diff
+                      Select a revision from Revisions to view diff
                     </div>
                   )}
                 </motion.div>

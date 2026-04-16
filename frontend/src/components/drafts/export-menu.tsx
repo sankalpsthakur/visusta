@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, FileJson, File, Download, Loader2 } from 'lucide-react'
+import { FileText, FileJson, File, Download, Loader2, Lock } from 'lucide-react'
+import type { DraftStatus } from '@/lib/api/draft-hooks'
 
 type ExportFormat = 'pdf' | 'docx' | 'json'
 
@@ -10,6 +11,7 @@ interface ExportMenuProps {
   onExport: (format: ExportFormat) => Promise<void>
   isOpen: boolean
   onClose: () => void
+  draftStatus: DraftStatus
 }
 
 const FORMAT_OPTIONS: { format: ExportFormat; label: string; description: string; icon: React.ReactNode }[] = [
@@ -18,9 +20,10 @@ const FORMAT_OPTIONS: { format: ExportFormat; label: string; description: string
   { format: 'json', label: 'JSON', description: 'Structured data export', icon: <FileJson size={15} /> },
 ]
 
-export function ExportMenu({ onExport, isOpen, onClose }: ExportMenuProps) {
+export function ExportMenu({ onExport, isOpen, onClose, draftStatus }: ExportMenuProps) {
   const [loadingFormat, setLoadingFormat] = useState<ExportFormat | null>(null)
   const ref = useRef<HTMLDivElement>(null)
+  const pdfLocked = draftStatus !== 'approved' && draftStatus !== 'exported'
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -67,12 +70,16 @@ export function ExportMenu({ onExport, isOpen, onClose }: ExportMenuProps) {
             </div>
             {FORMAT_OPTIONS.map(({ format, label, description, icon }) => {
               const loading = loadingFormat === format
+              const isLocked = format === 'pdf' && pdfLocked
               return (
                 <motion.button
                   key={format}
                   whileHover={{ background: 'var(--bg-surface-raised)' }}
-                  onClick={() => handleSelect(format)}
-                  disabled={!!loadingFormat}
+                  onClick={() => {
+                    if (isLocked) return
+                    void handleSelect(format)
+                  }}
+                  disabled={!!loadingFormat || isLocked}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -81,9 +88,9 @@ export function ExportMenu({ onExport, isOpen, onClose }: ExportMenuProps) {
                     padding: '10px 14px',
                     border: 'none',
                     background: 'transparent',
-                    cursor: loadingFormat ? 'not-allowed' : 'pointer',
+                    cursor: loadingFormat || isLocked ? 'not-allowed' : 'pointer',
                     textAlign: 'left',
-                    opacity: loadingFormat && !loading ? 0.4 : 1,
+                    opacity: (loadingFormat && !loading) || isLocked ? 0.4 : 1,
                   }}
                 >
                   <div
@@ -104,9 +111,15 @@ export function ExportMenu({ onExport, isOpen, onClose }: ExportMenuProps) {
                   </div>
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{label}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{description}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                      {isLocked ? 'Requires approved status' : description}
+                    </div>
                   </div>
-                  {!loading && <Download size={12} color="var(--text-muted)" style={{ marginLeft: 'auto' }} />}
+                  {isLocked ? (
+                    <Lock size={12} color="var(--text-muted)" style={{ marginLeft: 'auto' }} />
+                  ) : (
+                    !loading && <Download size={12} color="var(--text-muted)" style={{ marginLeft: 'auto' }} />
+                  )}
                 </motion.button>
               )
             })}

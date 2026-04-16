@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { LayoutTemplate, Tag, Clock, FileText, ChevronRight, Lock } from 'lucide-react'
+import { LayoutTemplate, Tag, Clock, FileText, ChevronRight } from 'lucide-react'
 import type { Template } from '@/lib/api/template-hooks'
 
 interface TemplateCardProps {
@@ -35,28 +35,6 @@ export function TemplateCard({ template, onClick }: TemplateCardProps) {
         position: 'relative',
       }}
     >
-      {template.is_system && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-            fontSize: 10,
-            color: 'var(--text-muted)',
-            background: 'var(--bg-surface-raised)',
-            padding: '2px 8px',
-            borderRadius: 999,
-            border: '1px solid var(--border-subtle)',
-          }}
-        >
-          <Lock size={9} />
-          System
-        </div>
-      )}
-
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
         <div
           style={{

@@ -4,7 +4,6 @@ Exports router — POST pdf/docx, GET download, POST import-docx.
 
 from __future__ import annotations
 
-import threading
 from pathlib import Path
 from typing import List
 
@@ -55,12 +54,8 @@ def _export_path(client_id: str, draft_id: int, job_id: int, fmt: str) -> Path:
 
 def _process_export_job(job_id: int) -> None:
     from db import get_db
-
     with get_db() as conn:
-        row = conn.execute(
-            "SELECT * FROM export_jobs WHERE id=?",
-            (job_id,),
-        ).fetchone()
+        row = conn.execute("SELECT * FROM export_jobs WHERE id=?", (job_id,)).fetchone()
         if row is None:
             return
 
@@ -68,7 +63,12 @@ def _process_export_job(job_id: int) -> None:
             "SELECT * FROM report_drafts WHERE id=?",
             (row["draft_id"],),
         ).fetchone()
-        if draft is None or row["revision_id"] is None:
+        revision = conn.execute(
+            "SELECT * FROM draft_revisions WHERE id=?",
+            (row["revision_id"],),
+        ).fetchone() if row["revision_id"] is not None else None
+
+        if draft is None or revision is None:
             conn.execute(
                 """UPDATE export_jobs
                    SET status='failed', error=?, updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
@@ -84,36 +84,43 @@ def _process_export_job(job_id: int) -> None:
             (job_id,),
         )
 
-        revision = conn.execute(
-            "SELECT * FROM draft_revisions WHERE id=?",
-            (row["revision_id"],),
-        ).fetchone()
-        if revision is None:
-            conn.execute(
-                """UPDATE export_jobs
-                   SET status='failed', error=?, updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
-                   WHERE id=?""",
-                ("Revision not found", job_id),
+    sections = sections_from_json(revision["sections_json"])
+    output_path = _export_path(draft["client_id"], draft["id"], job_id, row["format"])
+
+    from config import load_client_registry
+
+    registry = load_client_registry()
+    client_config = registry.get(draft["client_id"], {})
+    client_branding = dict(client_config.get("branding") or {})
+    if client_config.get("display_name"):
+        client_branding["company_name"] = client_config.get("display_name")
+
+    try:
+        if row["format"] == "pdf":
+            export_sections_to_pdf(
+                sections,
+                output_path,
+                locale=row["locale"] or draft["primary_locale"],
+                client_branding=client_branding or None,
             )
-            return
-
-        sections = sections_from_json(revision["sections_json"])
-        output_path = _export_path(draft["client_id"], draft["id"], job_id, row["format"])
-
-        try:
-            if row["format"] == "pdf":
-                export_sections_to_pdf(sections, output_path, locale=row["locale"] or draft["primary_locale"])
-            else:
-                export_sections_to_docx(sections, output_path, locale=row["locale"] or draft["primary_locale"])
-        except Exception as exc:  # pragma: no cover - defensive
+        else:
+            export_sections_to_docx(
+                sections,
+                output_path,
+                locale=row["locale"] or draft["primary_locale"],
+                client_branding=client_branding or None,
+            )
+    except Exception as exc:  # pragma: no cover - defensive
+        with get_db() as conn:
             conn.execute(
                 """UPDATE export_jobs
                    SET status='failed', error=?, updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
                    WHERE id=?""",
                 (str(exc), job_id),
             )
-            return
+        return
 
+    with get_db() as conn:
         conn.execute(
             """UPDATE export_jobs
                SET status='completed', output_path=?, updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
@@ -144,7 +151,7 @@ def list_exports(
     return [_job_row(r) for r in rows]
 
 
-@exports_router.post("", response_model=ExportJobResponse, status_code=202, summary="Request export")
+@exports_router.post("", response_model=ExportJobResponse, status_code=201, summary="Request export")
 def request_export(
     draft_id: int,
     body: ExportRequest,
@@ -152,8 +159,7 @@ def request_export(
     client_id: str = Depends(validate_client),
 ) -> ExportJobResponse:
     """
-    DOCX exports complete immediately.
-    PDF exports are queued and processed asynchronously.
+    DOCX and PDF exports both complete within the request lifecycle.
     """
     from db import get_db
     with get_db() as conn:
@@ -176,28 +182,34 @@ def request_export(
         if revision_id is None:
             raise HTTPException(422, "Draft has no revision to export")
 
+        revision = conn.execute(
+            "SELECT * FROM draft_revisions WHERE id=? AND draft_id=?",
+            (revision_id, draft_id),
+        ).fetchone()
+        if revision is None:
+            raise HTTPException(422, "Revision does not belong to this draft")
+
+        sections = sections_from_json(revision["sections_json"])
+        resolved_locale = body.locale or (sections[0].locale if sections else draft["primary_locale"])
+
         cur = conn.execute(
             """INSERT INTO export_jobs
                (draft_id, revision_id, format, locale, status, requested_by)
                VALUES (?, ?, ?, ?, 'pending', ?)""",
-            (draft_id, revision_id, body.format, body.locale, body.requested_by),
+            (draft_id, revision_id, body.format, resolved_locale, body.requested_by),
         )
         row = conn.execute(
             "SELECT * FROM export_jobs WHERE id=?", (cur.lastrowid,)
         ).fetchone()
 
-    if body.format == "docx":
-        _process_export_job(row["id"])
-        response.status_code = 201
-        from db import get_db
-        with get_db() as conn:
-            row = conn.execute(
-                "SELECT * FROM export_jobs WHERE id=?",
-                (row["id"],),
-            ).fetchone()
-    else:
-        worker = threading.Thread(target=_process_export_job, args=(row["id"],), daemon=True)
-        worker.start()
+    _process_export_job(row["id"])
+    response.status_code = 201
+    from db import get_db
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM export_jobs WHERE id=?",
+            (row["id"],),
+        ).fetchone()
 
     return _job_row(row)
 
@@ -278,6 +290,9 @@ async def import_docx(
             raise HTTPException(404, f"Draft {draft_id} not found")
 
         sections, warnings = parse_docx_to_sections(content, draft["primary_locale"])
+        if not sections:
+            detail = warnings[0] if warnings else "No sections could be parsed from the DOCX upload."
+            raise HTTPException(422, detail)
 
         last_rev = conn.execute(
             "SELECT MAX(revision_number) AS max_rev FROM draft_revisions WHERE draft_id=?",
@@ -298,6 +313,15 @@ async def import_docx(
             ),
         )
         rev_id = cur.lastrowid
+
+        conn.execute("DELETE FROM approval_states WHERE draft_id=?", (draft_id,))
+
+        conn.execute(
+            """UPDATE report_drafts
+               SET status='revision', updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
+               WHERE id=? AND status IN ('approved', 'exported')""",
+            (draft_id,),
+        )
 
         conn.execute(
             """UPDATE report_drafts

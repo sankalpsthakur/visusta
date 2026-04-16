@@ -1,6 +1,6 @@
 'use client'
 
-import { use } from 'react'
+import { use, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { PageTransition } from '@/components/shared/page-transition'
@@ -170,7 +170,7 @@ function EvidenceCard({ clientId }: { clientId: string }) {
   const records = data?.evidence ?? []
   const total = data?.total ?? records.length
 
-  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  const [oneWeekAgo] = useState(() => new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10))
   const recentCount = records.filter((r) => r.access_date && r.access_date.slice(0, 10) >= oneWeekAgo).length
   const recent3 = records.slice(0, 3)
 
@@ -243,7 +243,6 @@ export default function ClientDashboardPage({ params }: ClientDashboardProps) {
   const { data: changelog, isLoading, error } = useLatestChangelog(clientId)
 
   const timelineEntries = changelog ? deriveTimelineEntries(changelog) : []
-  const isNewClient = !isLoading && !changelog && !error
 
   const topicCount = changelog
     ? Object.keys(changelog.topic_change_statuses).length

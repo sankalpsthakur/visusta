@@ -112,6 +112,21 @@ export type DraftStatus = BackendDraftStatus
 export type ApprovalStatus = 'pending' | 'approved' | 'rejected' | 'needs_revision'
 export type TranslationStatus = 'pending' | 'original' | 'translated' | 'low_confidence' | 'failed'
 
+export const DRAFT_STATUS_TRANSITIONS: Record<DraftStatus, DraftStatus[]> = {
+  composing: ['review'],
+  review: ['revision', 'translating', 'approval', 'archived'],
+  revision: ['review'],
+  translating: ['review', 'revision'],
+  approval: ['approved', 'revision'],
+  approved: ['exported', 'archived'],
+  exported: ['archived'],
+  archived: [],
+}
+
+export function getDraftStatusTransitions(status: DraftStatus): DraftStatus[] {
+  return DRAFT_STATUS_TRANSITIONS[status] ?? []
+}
+
 export interface DraftBlock {
   block_id?: string
   type: 'paragraph' | 'heading' | 'bullet_list' | 'chart' | 'table' | string

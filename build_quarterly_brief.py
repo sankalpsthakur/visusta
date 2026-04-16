@@ -10,6 +10,7 @@ import os
 import json
 import re
 from datetime import date
+from xml.sax.saxutils import escape
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm, cm
 from reportlab.lib.colors import HexColor, white, black
@@ -21,6 +22,8 @@ from reportlab.platypus import (
     PageBreak, Image, KeepTogether, NextPageTemplate, HRFlowable
 )
 from reportlab.pdfgen import canvas
+
+from config import load_client_registry
 
 # ── Brand Colors ──────────────────────────────────────────────────
 C_PRIMARY_DARK = HexColor('#0D3B26')
@@ -98,27 +101,88 @@ def _topic_label(topic: str) -> str:
     return mapping.get(topic, topic)
 
 
+def _hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
+    value = hex_color.strip().lstrip("#")
+    if len(value) == 3:
+        value = "".join(ch * 2 for ch in value)
+    if len(value) != 6:
+        raise ValueError(f"Invalid hex color: {hex_color}")
+    return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def _rgb_to_hex(rgb: tuple[int, int, int]) -> str:
+    return "#{:02X}{:02X}{:02X}".format(*rgb)
+
+
+def _shade_hex(hex_color: str, factor: float) -> str:
+    r, g, b = _hex_to_rgb(hex_color)
+    if factor < 1:
+        r = round(r * factor)
+        g = round(g * factor)
+        b = round(b * factor)
+    else:
+        r = round(r + (255 - r) * (factor - 1))
+        g = round(g + (255 - g) * (factor - 1))
+        b = round(b + (255 - b) * (factor - 1))
+    return _rgb_to_hex((max(0, min(255, r)), max(0, min(255, g)), max(0, min(255, b))))
+
+
+def _load_branding(client_id: str, client_context: dict | None = None) -> dict:
+    registry = load_client_registry()
+    client = registry.get(client_id, {}) if isinstance(registry, dict) else {}
+    context = client_context or {}
+    display_name = client.get("display_name") or context.get("display_name") or client_id
+    primary_hex = (
+        (client.get("branding") or {}).get("primary_color")
+        or context.get("primary_color")
+        or "#1A6B4B"
+    )
+    if not isinstance(primary_hex, str):
+        primary_hex = "#1A6B4B"
+    try:
+        primary = HexColor(primary_hex)
+    except Exception:
+        primary_hex = "#1A6B4B"
+        primary = HexColor(primary_hex)
+    if not primary_hex.startswith("#"):
+        primary_hex = f"#{primary_hex}"
+    return {
+        "display_name": display_name,
+        "primary_hex": primary_hex.upper(),
+        "primary": primary,
+        "primary_dark": HexColor(_shade_hex(primary_hex, 0.72)),
+        "primary_light": HexColor(_shade_hex(primary_hex, 1.42)),
+        "primary_soft": HexColor(_shade_hex(primary_hex, 1.75)),
+    }
+
+
 # ══════════════════════════════════════════════════════════════════
 # Page Templates
 # ══════════════════════════════════════════════════════════════════
-def _draw_header_footer(canvas_obj, doc, is_cover=False, quarter_display=""):
+def _draw_header_footer(canvas_obj, doc, is_cover=False, quarter_display="", brand=None):
+    brand = brand or {
+        "display_name": "Visusta",
+        "primary": C_PRIMARY,
+        "primary_dark": C_PRIMARY_DARK,
+        "primary_light": C_PRIMARY_LIGHT,
+        "primary_soft": HexColor('#8FB8A2'),
+        "primary_hex": "#1A6B4B",
+    }
     canvas_obj.saveState()
     if not is_cover:
         # Top accent bar
-        canvas_obj.setFillColor(C_PRIMARY_DARK)
+        canvas_obj.setFillColor(brand["primary"])
         canvas_obj.rect(0, PAGE_H - 3*mm, PAGE_W, 3*mm, fill=1, stroke=0)
 
         # Header
-        canvas_obj.setStrokeColor(C_PRIMARY)
+        canvas_obj.setStrokeColor(brand["primary"])
         canvas_obj.setLineWidth(1.5)
         canvas_obj.line(25*mm, PAGE_H - 18*mm, PAGE_W - 25*mm, PAGE_H - 18*mm)
 
         canvas_obj.setFont('Helvetica-Bold', 8)
-        canvas_obj.setFillColor(C_PRIMARY_DARK)
-        canvas_obj.drawString(25*mm, PAGE_H - 16*mm, 'VISUSTA')
+        canvas_obj.setFillColor(brand["primary_dark"])
+        canvas_obj.drawString(25*mm, PAGE_H - 16*mm, brand["display_name"])
         canvas_obj.setFont('Helvetica', 7)
-        canvas_obj.setFillColor(C_WARM_GRAY)
-        canvas_obj.drawString(50*mm, PAGE_H - 16*mm, '— make visions real.')
         canvas_obj.setFillColor(C_MUTED)
         header_right = f'Quarterly Strategic Brief | {quarter_display}' if quarter_display else 'Quarterly Strategic Brief'
         canvas_obj.drawRightString(PAGE_W - 25*mm, PAGE_H - 16*mm, header_right)
@@ -129,15 +193,15 @@ def _draw_header_footer(canvas_obj, doc, is_cover=False, quarter_display=""):
         canvas_obj.line(25*mm, 18*mm, PAGE_W - 25*mm, 18*mm)
         canvas_obj.setFont('Helvetica', 7)
         canvas_obj.setFillColor(C_MUTED)
-        canvas_obj.drawString(25*mm, 13*mm, 'visusta GmbH | visusta.ch | Confidential')
+        canvas_obj.drawString(25*mm, 13*mm, f'{brand["display_name"]} | Confidential')
         canvas_obj.drawRightString(PAGE_W - 25*mm, 13*mm, f'Page {doc.page}')
     canvas_obj.restoreState()
 
 def on_cover(c, d): _draw_header_footer(c, d, True)
 
-def _make_on_page(quarter_display: str):
+def _make_on_page(quarter_display: str, brand: dict):
     def on_page(c, d):
-        _draw_header_footer(c, d, False, quarter_display=quarter_display)
+        _draw_header_footer(c, d, False, quarter_display=quarter_display, brand=brand)
     return on_page
 
 
@@ -253,18 +317,18 @@ def pro_table(headers, rows, col_widths, S):
 # ══════════════════════════════════════════════════════════════════
 # Cover Page
 # ══════════════════════════════════════════════════════════════════
-def build_cover(story, S, quarter_display: str, client_context: dict):
+def build_cover(story, S, quarter_display: str, client_context: dict, brand: dict):
     facility_line = client_context.get("facility_line", "")
     audience = client_context.get("audience", "")
     jurisdiction_label = client_context.get("jurisdiction_label", "")
+    display_name = brand["display_name"]
 
     items = []
     items.append(Spacer(1, 45*mm))
     items.append(Paragraph(
-        '<font size="12" color="#8FB8A2">visusta</font>  '
-        '<font size="9" color="#5F9A7E">\u2014 make visions real.</font>',
+        f'<b>{escape(display_name)}</b>',
         ParagraphStyle('logo', fontName='Helvetica-Bold', fontSize=12, leading=16,
-                       textColor=HexColor('#8FB8A2'))
+                       textColor=brand["primary_soft"])
     ))
     items.append(Spacer(1, 25*mm))
     items.append(Paragraph('Quarterly Strategic<br/>Brief', S['cover_title']))
@@ -272,7 +336,7 @@ def build_cover(story, S, quarter_display: str, client_context: dict):
     if jurisdiction_label:
         items.append(Paragraph(jurisdiction_label, S['cover_subtitle']))
     items.append(Spacer(1, 12*mm))
-    items.append(HRFlowable(width='60%', thickness=1, color=HexColor('#2E8B63'),
+    items.append(HRFlowable(width='60%', thickness=1, color=brand["primary"],
                              spaceBefore=0, spaceAfter=12, hAlign='LEFT'))
     m = S['cover_meta']
     items.append(Paragraph(f'<b>Reporting Period:</b>  {quarter_display}', m))
@@ -282,14 +346,14 @@ def build_cover(story, S, quarter_display: str, client_context: dict):
         items.append(Paragraph(f'<b>Facilities:</b>  {facility_line}', m))
     items.append(Spacer(1, 30*mm))
     items.append(Paragraph(
-        '<font size="8" color="#5F9A7E">CLASSIFICATION: CONFIDENTIAL \u2014 INTERNAL USE ONLY</font>',
-        ParagraphStyle('cls', fontName='Helvetica', fontSize=8, textColor=HexColor('#5F9A7E'))
+        '<font size="8">CLASSIFICATION: CONFIDENTIAL \u2014 INTERNAL USE ONLY</font>',
+        ParagraphStyle('cls', fontName='Helvetica', fontSize=8, textColor=brand["primary_soft"])
     ))
 
     inner_rows = [[item] for item in items]
     ct = Table(inner_rows, colWidths=[PAGE_W - 50*mm])
     ct.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,-1), C_PRIMARY_DARK),
+        ('BACKGROUND', (0,0), (-1,-1), brand["primary_dark"]),
         ('LEFTPADDING', (0,0), (-1,-1), 20*mm),
         ('RIGHTPADDING', (0,0), (-1,-1), 15*mm),
         ('TOPPADDING', (0,0), (-1,-1), 0),
@@ -297,7 +361,7 @@ def build_cover(story, S, quarter_display: str, client_context: dict):
     ]))
     outer = Table([[ct]], colWidths=[PAGE_W - 50*mm])
     outer.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,-1), C_PRIMARY_DARK),
+        ('BACKGROUND', (0,0), (-1,-1), brand["primary_dark"]),
         ('TOPPADDING', (0,0), (-1,-1), 0),
         ('BOTTOMPADDING', (0,0), (-1,-1), 0),
         ('LEFTPADDING', (0,0), (-1,-1), 0),
@@ -327,7 +391,7 @@ def _synthesize_executive_summary(changelogs: dict) -> str:
 # ══════════════════════════════════════════════════════════════════
 # Content
 # ══════════════════════════════════════════════════════════════════
-def build_content(story, S, quarter_months: list, quarter_display: str, client_id: str, preferences: dict | None = None):
+def build_content(story, S, quarter_months: list, quarter_display: str, client_id: str, brand: dict, preferences: dict | None = None):
     body = S['body']
 
     prefs = preferences or {}
@@ -393,7 +457,7 @@ def build_content(story, S, quarter_months: list, quarter_display: str, client_i
         ))
         story.append(Spacer(1, 4*mm))
         story.append(Paragraph(
-            '\u00a9 visusta GmbH \u2014 visusta.ch \u2014 All rights reserved.',
+            f'\u00a9 {escape(brand["display_name"])} \u2014 All rights reserved.',
             ParagraphStyle('fn', fontName='Helvetica', fontSize=7, leading=10,
                            textColor=C_MUTED, alignment=TA_CENTER)
         ))
@@ -590,7 +654,7 @@ def build_content(story, S, quarter_months: list, quarter_display: str, client_i
                     f'<b>[{citation_index}]</b> <i>{rec["document_title"]}</i>. '
                     f'{rec["source_name"]}. '
                     f'Accessed {rec["access_date"]}. '
-                    f'<link href="{rec["url"]}" color="#8B2F1E">{rec["url"]}</link>'
+                    f'<link href="{rec["url"]}" color="{brand["primary_hex"]}">{rec["url"]}</link>'
                 )
                 story.append(Paragraph(citation, S['body_small']))
                 story.append(Spacer(1, 2*mm))
@@ -603,7 +667,7 @@ def build_content(story, S, quarter_months: list, quarter_display: str, client_i
             line = (
                 f'<b>[{citation_index}]</b> <i>{citation_text}</i>. '
                 f'Accessed {access_date}. '
-                f'<link href="{url}" color="#8B2F1E">{url}</link>'
+                f'<link href="{url}" color="{brand["primary_hex"]}">{url}</link>'
             ) if url else (
                 f'<b>[{citation_index}]</b> <i>{citation_text}</i>. '
                 f'Accessed {access_date}.'
@@ -641,6 +705,7 @@ def build_pdf(period: str = _DEFAULT_PERIOD, client_id: str | None = None, outpu
 
     latest_period = max(available_changelogs.keys())
     client_context = available_changelogs[latest_period].get("client_context") or {}
+    brand = _load_branding(client_id, client_context)
 
     out_file = output_path or os.path.join(
         OUTPUT_DIR,
@@ -651,23 +716,23 @@ def build_pdf(period: str = _DEFAULT_PERIOD, client_id: str | None = None, outpu
                         topPadding=10*mm, bottomPadding=10*mm, id='cf')
     content_frame = Frame(25*mm, 22*mm, PAGE_W - 50*mm, PAGE_H - 45*mm, id='ctf')
 
-    on_page = _make_on_page(quarter_display)
+    on_page = _make_on_page(quarter_display, brand)
     doc = BaseDocTemplate(
         out_file, pagesize=A4,
         pageTemplates=[
             PageTemplate(id='cover', frames=[cover_frame], onPage=on_cover),
             PageTemplate(id='content', frames=[content_frame], onPage=on_page),
         ],
-        title=f'Visusta Quarterly Strategic Brief \u2014 {quarter_display}',
-        author='visusta GmbH',
-        subject='EU & German Sustainability Regulatory Strategy',
-        creator='VARI \u2014 Visusta Autonomous Regulatory Intelligence'
+        title=f'{brand["display_name"]} Quarterly Strategic Brief \u2014 {quarter_display}',
+        author=brand["display_name"],
+        subject=f'{brand["display_name"]} Quarterly Strategic Brief',
+        creator='Regulatory report builder'
     )
 
     story = []
-    build_cover(story, S, quarter_display=quarter_display, client_context=client_context)
+    build_cover(story, S, quarter_display=quarter_display, client_context=client_context, brand=brand)
     story.append(NextPageTemplate('content'))
-    build_content(story, S, quarter_months=quarter_months, quarter_display=quarter_display, client_id=client_id, preferences=preferences)
+    build_content(story, S, quarter_months=quarter_months, quarter_display=quarter_display, client_id=client_id, brand=brand, preferences=preferences)
     os.makedirs(os.path.dirname(out_file) or ".", exist_ok=True)
     doc.build(story)
 

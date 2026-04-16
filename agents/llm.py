@@ -1,11 +1,13 @@
 """
 LLM interface abstraction for MARS agents.
 
-Production code swaps StubLLM for a real Claude/OpenAI implementation
-without changing any agent code.
+Production uses GeminiLLM (Google Generative AI SDK).
+StubLLM provides deterministic fallbacks for testing.
 """
 from __future__ import annotations
 
+import json
+import os
 from abc import ABC, abstractmethod
 from typing import Any
 
@@ -24,6 +26,40 @@ class LLMInterface(ABC):
         Implementations must guarantee the return value is a dict.
         Callers handle KeyError / missing keys themselves.
         """
+
+
+class GeminiLLM(LLMInterface):
+    """Real LLM backend using Google GenAI SDK."""
+
+    def __init__(self, model: str = "gemma-4-26b-a4b-it"):
+        from google import genai
+        self._client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+        self._model = model
+
+    def generate(self, prompt: str, **kwargs: Any) -> str:
+        response = self._client.models.generate_content(
+            model=self._model,
+            contents=prompt,
+        )
+        return response.text
+
+    def generate_structured(self, prompt: str, **kwargs: Any) -> dict:
+        response = self._client.models.generate_content(
+            model=self._model,
+            contents=f"{prompt}\n\nRespond with valid JSON only. No markdown, no explanation — just the JSON object.",
+        )
+        text = response.text.strip()
+        # Handle potential markdown code blocks
+        if text.startswith("```"):
+            text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
+        return json.loads(text)
+
+
+def get_llm(model: str = "gemma-4-26b-a4b-it") -> LLMInterface:
+    """Return GeminiLLM if GOOGLE_API_KEY is set, otherwise StubLLM."""
+    if os.environ.get("GOOGLE_API_KEY"):
+        return GeminiLLM(model=model)
+    return StubLLM()
 
 
 class StubLLM(LLMInterface):

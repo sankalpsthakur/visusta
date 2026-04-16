@@ -75,10 +75,18 @@ def _transition(client: TestClient, draft_id: int, target: str) -> dict:
 
 def _approve_draft(client: TestClient, draft_id: int) -> dict:
     """Drive a draft through composing→review→approval→approved."""
-    _compose(client, draft_id)
+    revision = _compose(client, draft_id)
     _transition(client, draft_id, "review")
     _transition(client, draft_id, "approval")
-    return _transition(client, draft_id, "approved")
+    for section in revision["sections"]:
+        resp = client.post(
+            f"/api/clients/{CLIENT}/drafts/{draft_id}/approve",
+            json={"section_id": section["section_id"], "status": "approved", "reviewer": "integration"},
+        )
+        assert resp.status_code == 200
+    detail = client.get(f"/api/clients/{CLIENT}/drafts/{draft_id}").json()
+    assert detail["status"] == "approved"
+    return detail
 
 
 # ── Template CRUD → clone → version inheritance ────────────────────────────────
@@ -100,7 +108,7 @@ class TestTemplateCloneWorkflow:
         ).json()
         assert clone["id"] != src["id"]
 
-    def test_new_version_on_clone_starts_at_version_2(self, client: TestClient) -> None:
+    def test_new_version_on_clone_starts_at_version_1(self, client: TestClient) -> None:
         src = _create_template(client, "Source C")
         clone = client.post(
             f"/api/templates/{src['id']}/clone",
@@ -111,8 +119,8 @@ class TestTemplateCloneWorkflow:
             json={"sections_json": [{"section_id": "s1", "heading": "Intro"}], "changelog_note": "v2"},
         )
         assert resp.status_code == 201
-        # Clone starts at version 1, so adding another gives version 2
-        assert resp.json()["version_number"] == 2
+        # Clone of versionless template starts at version 0, so first version gives 1
+        assert resp.json()["version_number"] == 1
 
     def test_version_numbering_increments_per_template(self, client: TestClient) -> None:
         tmpl = _create_template(client, "Version Check")
@@ -244,8 +252,10 @@ class TestApprovalWorkflowEndToEnd:
             f"/api/clients/{CLIENT}/drafts/{draft['id']}/exports",
             json={"format": "pdf", "locale": "en"},
         )
-        assert resp.status_code == 202
-        assert resp.json()["format"] == "pdf"
+        assert resp.status_code == 201
+        payload = resp.json()
+        assert payload["format"] == "pdf"
+        assert payload["status"] == "completed"
 
     def test_pdf_export_blocked_in_review_status(self, client: TestClient) -> None:
         draft = _create_draft(client)
@@ -275,7 +285,8 @@ class TestApprovalWorkflowEndToEnd:
             f"/api/clients/{CLIENT}/drafts/{draft['id']}/exports",
             json={"format": "pdf", "locale": "en"},
         )
-        assert resp.status_code == 202
+        assert resp.status_code == 201
+        assert resp.json()["status"] == "completed"
 
     def test_section_approvals_visible_after_approve(self, client: TestClient) -> None:
         draft = _create_draft(client)
@@ -291,29 +302,31 @@ class TestApprovalWorkflowEndToEnd:
 
     def test_multiple_section_approvals(self, client: TestClient) -> None:
         draft = _create_draft(client)
-        _compose(client, draft["id"])
-        for sec_id in ("s1", "s2", "s3"):
+        revision = _compose(client, draft["id"])
+        section_ids = [s["section_id"] for s in revision["sections"]]
+        for sec_id in section_ids[:3]:
             client.post(
                 f"/api/clients/{CLIENT}/drafts/{draft['id']}/approve",
                 json={"section_id": sec_id, "status": "approved", "reviewer": "carol"},
             )
         approvals = client.get(f"/api/clients/{CLIENT}/drafts/{draft['id']}/approvals").json()
-        assert len(approvals) == 3
+        assert len(approvals) == len(section_ids[:3])
         approved_ids = {a["section_id"] for a in approvals}
-        assert approved_ids == {"s1", "s2", "s3"}
+        assert approved_ids == set(section_ids[:3])
 
     def test_approval_upsert_does_not_duplicate(self, client: TestClient) -> None:
         draft = _create_draft(client)
-        _compose(client, draft["id"])
+        revision = _compose(client, draft["id"])
+        real_section_id = revision["sections"][0]["section_id"]
         for status in ("needs_revision", "approved"):
             client.post(
                 f"/api/clients/{CLIENT}/drafts/{draft['id']}/approve",
-                json={"section_id": "intro", "status": status, "reviewer": "dave"},
+                json={"section_id": real_section_id, "status": status, "reviewer": "dave"},
             )
         approvals = client.get(f"/api/clients/{CLIENT}/drafts/{draft['id']}/approvals").json()
-        intro = [a for a in approvals if a["section_id"] == "intro"]
-        assert len(intro) == 1
-        assert intro[0]["status"] == "approved"
+        matching = [a for a in approvals if a["section_id"] == real_section_id]
+        assert len(matching) == 1
+        assert matching[0]["status"] == "approved"
 
     def test_invalid_state_machine_transition_blocked(self, client: TestClient) -> None:
         draft = _create_draft(client)

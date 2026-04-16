@@ -130,6 +130,23 @@ def delete_template(template_id: int) -> dict:
         ).fetchone()
         if existing is None:
             raise HTTPException(404, f"Template {template_id} not found")
+        conn.execute(
+            """DELETE FROM client_template_overrides
+               WHERE template_version_id IN (
+                   SELECT id FROM template_versions WHERE template_id=?
+               )""",
+            (template_id,),
+        )
+        conn.execute(
+            """UPDATE report_drafts SET template_version_id=NULL
+               WHERE template_version_id IN (
+                   SELECT id FROM template_versions WHERE template_id=?
+               )""",
+            (template_id,),
+        )
+        conn.execute(
+            "DELETE FROM template_versions WHERE template_id=?", (template_id,)
+        )
         conn.execute("DELETE FROM report_templates WHERE id=?", (template_id,))
     return {"deleted": template_id}
 
@@ -313,15 +330,17 @@ def clone_template(template_id: int, body: TemplateCloneRequest) -> TemplateResp
             (template_id,),
         ).fetchone()
 
+        initial_version = 1 if latest_ver else 0
         cur = conn.execute(
             """INSERT INTO report_templates
                (name, description, industry_profile_id, base_locale, current_version)
-               VALUES (?, ?, ?, ?, 1)""",
+               VALUES (?, ?, ?, ?, ?)""",
             (
                 body.name,
                 body.description or source["description"],
                 source["industry_profile_id"],
                 source["base_locale"],
+                initial_version,
             ),
         )
         new_tmpl_id = cur.lastrowid
@@ -358,6 +377,15 @@ def get_override(
 ) -> dict:
     from db import get_db
     with get_db() as conn:
+        ver = conn.execute(
+            "SELECT id FROM template_versions WHERE id=? AND template_id=?",
+            (version_id, template_id),
+        ).fetchone()
+        if ver is None:
+            raise HTTPException(
+                404,
+                f"Version {version_id} not found for template {template_id}",
+            )
         row = conn.execute(
             """SELECT * FROM client_template_overrides
                WHERE client_id=? AND template_version_id=?""",
@@ -386,6 +414,15 @@ def set_override(
 ) -> dict:
     from db import get_db
     with get_db() as conn:
+        ver = conn.execute(
+            "SELECT id FROM template_versions WHERE id=? AND template_id=?",
+            (version_id, template_id),
+        ).fetchone()
+        if ver is None:
+            raise HTTPException(
+                404,
+                f"Version {version_id} not found for template {template_id}",
+            )
         existing = conn.execute(
             """SELECT id FROM client_template_overrides
                WHERE client_id=? AND template_version_id=?""",

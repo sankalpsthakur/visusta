@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect } from 'react'
+import { use, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -9,6 +9,7 @@ import {
   useSources, useUpdateSources, SourceConfig,
   useThresholds, useUpdateThresholds, Thresholds,
   usePreferences, useUpdatePreferences, ReportPreferences,
+  useLocales, useClientLocaleSettings, useUpdateClientLocaleSettings,
 } from '@/lib/api/hooks'
 import { Check, Plus, X, ChevronUp, ChevronDown } from 'lucide-react'
 
@@ -22,7 +23,6 @@ const FREQUENCIES = ['daily', 'weekly', 'monthly'] as const
 const TONES = ['executive', 'technical', 'boardroom'] as const
 const DEPTHS = ['brief', 'standard', 'deep'] as const
 const CHART_OPTIONS = ['severity_heatmap', 'enforcement_timeline', 'topic_distribution', 'change_velocity', 'jurisdiction_map']
-const SECTION_OPTIONS = ['executive_summary', 'critical_actions', 'topic_status', 'change_log', 'impact_summary', 'references']
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -117,17 +117,102 @@ function SkeletonSettingRow() {
   )
 }
 
+// ── Report Language section ───────────────────────────────────────────────────
+
+function ReportLanguageSection({ clientId }: { clientId: string }) {
+  const { data: locales } = useLocales()
+  const { data: settings, isLoading } = useClientLocaleSettings(clientId)
+  const updateSettings = useUpdateClientLocaleSettings(clientId)
+  const [saved, setSaved] = useState(false)
+
+  if (isLoading || !settings) {
+    return (
+      <div className="mb-8">
+        <SectionHeading>Report Language</SectionHeading>
+        <div className="rounded-lg overflow-hidden" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}>
+          <div className="px-5"><SkeletonSettingRow /></div>
+        </div>
+      </div>
+    )
+  }
+
+  const handleChange = async (locale: string) => {
+    await updateSettings.mutateAsync({ primary_locale: locale, enabled_locales: [locale, 'en'] })
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2000)
+  }
+
+  return (
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-3">
+        <SectionHeading>Report Language</SectionHeading>
+        <SavedBadge show={saved} />
+      </div>
+      <div className="rounded-lg overflow-hidden" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}>
+        <div className="px-5">
+          <SettingRow
+            label="Primary language"
+            description="This language will be used to generate reports for this client."
+            value={
+              <select
+                value={settings.primary_locale}
+                onChange={(e) => handleChange(e.target.value)}
+                className="text-sm rounded px-3 py-1.5"
+                style={{ background: 'var(--bg-elevated)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
+              >
+                {(locales ?? []).map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.name} ({l.native_name})
+                  </option>
+                ))}
+                {!locales?.length && <option value={settings.primary_locale}>{settings.primary_locale}</option>}
+              </select>
+            }
+          />
+          <SettingRow
+            label="Fallback language"
+            description="Used when content is not available in the primary language."
+            value={
+              <span className="text-sm px-3 py-1.5 rounded" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>
+                {settings.fallback_locale.toUpperCase()}
+              </span>
+            }
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Sources section ────────────────────────────────────────────────────────────
 
 function SourcesSection({ clientId }: { clientId: string }) {
   const { data: remoteSources, isLoading } = useSources(clientId)
-  const updateSources = useUpdateSources(clientId)
-  const [sources, setSources] = useState<SourceConfig[]>([])
-  const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    if (remoteSources) setSources(remoteSources)
-  }, [remoteSources])
+  if (isLoading || !remoteSources) {
+    return (
+      <div className="mb-8">
+        <SectionHeading>Monitored Sources</SectionHeading>
+        <div
+          className="rounded-lg overflow-hidden"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <div className="px-5">
+            <SkeletonSettingRow />
+            <SkeletonSettingRow />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return <SourcesSectionLoaded clientId={clientId} initialSources={remoteSources} />
+}
+
+function SourcesSectionLoaded({ clientId, initialSources }: { clientId: string; initialSources: SourceConfig[] }) {
+  const updateSources = useUpdateSources(clientId)
+  const [sources, setSources] = useState<SourceConfig[]>(initialSources)
+  const [saved, setSaved] = useState(false)
 
   const addSource = () => {
     setSources((prev) => [
@@ -161,12 +246,7 @@ function SourcesSection({ clientId }: { clientId: string }) {
         className="rounded-lg overflow-hidden"
         style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
       >
-        {isLoading ? (
-          <div className="px-5">
-            <SkeletonSettingRow />
-            <SkeletonSettingRow />
-          </div>
-        ) : sources.length === 0 ? (
+        {sources.length === 0 ? (
           <div className="px-5 py-6 text-sm text-center" style={{ color: 'var(--text-muted)' }}>
             No sources configured.
           </div>
@@ -250,17 +330,30 @@ function SourcesSection({ clientId }: { clientId: string }) {
 
 function ThresholdsSection({ clientId }: { clientId: string }) {
   const { data: remoteThresholds, isLoading } = useThresholds(clientId)
-  const updateThresholds = useUpdateThresholds(clientId)
-  const [thresholds, setThresholds] = useState<Thresholds>({
-    critical_enforcement_window_days: 90,
-    min_confidence: 0.6,
-    min_sources_per_entry: 2,
-  })
-  const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    if (remoteThresholds) setThresholds(remoteThresholds)
-  }, [remoteThresholds])
+  if (isLoading || !remoteThresholds) {
+    return (
+      <div className="mb-8">
+        <SectionHeading>Thresholds</SectionHeading>
+        <div
+          className="rounded-lg px-5"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <SkeletonSettingRow />
+          <SkeletonSettingRow />
+          <SkeletonSettingRow />
+        </div>
+      </div>
+    )
+  }
+
+  return <ThresholdsSectionLoaded clientId={clientId} initialThresholds={remoteThresholds} />
+}
+
+function ThresholdsSectionLoaded({ clientId, initialThresholds }: { clientId: string; initialThresholds: Thresholds }) {
+  const updateThresholds = useUpdateThresholds(clientId)
+  const [thresholds, setThresholds] = useState<Thresholds>(initialThresholds)
+  const [saved, setSaved] = useState(false)
 
   const handleSave = async () => {
     await updateThresholds.mutateAsync(thresholds)
@@ -313,53 +406,45 @@ function ThresholdsSection({ clientId }: { clientId: string }) {
         className="rounded-lg px-5"
         style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
       >
-        {isLoading ? (
-          <>
-            <SkeletonSettingRow />
-            <SkeletonSettingRow />
-            <SkeletonSettingRow />
-          </>
-        ) : (
-          sliders.map((slider, idx) => (
-            <div
-              key={slider.key}
-              className="flex items-start justify-between py-4"
-              style={{ borderBottom: idx < sliders.length - 1 ? '1px solid var(--border-color)' : undefined }}
-            >
-              <div className="flex-1 pr-8">
-                <div className="text-sm font-medium mb-0.5" style={{ color: 'var(--text-primary)' }}>
-                  {slider.label}
-                </div>
-                <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  {slider.description}
-                </div>
+        {sliders.map((slider, idx) => (
+          <div
+            key={slider.key}
+            className="flex items-start justify-between py-4"
+            style={{ borderBottom: idx < sliders.length - 1 ? '1px solid var(--border-color)' : undefined }}
+          >
+            <div className="flex-1 pr-8">
+              <div className="text-sm font-medium mb-0.5" style={{ color: 'var(--text-primary)' }}>
+                {slider.label}
               </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <span
-                  className="text-sm tabular-nums w-10 text-right"
-                  style={{ color: 'var(--brand-accent)', fontFamily: 'var(--font-mono)' }}
-                >
-                  {slider.format(thresholds[slider.key] as number)}
-                </span>
-                <input
-                  type="range"
-                  min={slider.min}
-                  max={slider.max}
-                  step={slider.step}
-                  value={thresholds[slider.key] as number}
-                  onChange={(e) =>
-                    setThresholds((prev) => ({
-                      ...prev,
-                      [slider.key]: parseFloat(e.target.value),
-                    }))
-                  }
-                  className="w-32"
-                  style={{ accentColor: 'var(--brand-accent)' }}
-                />
+              <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                {slider.description}
               </div>
             </div>
-          ))
-        )}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <span
+                className="text-sm tabular-nums w-10 text-right"
+                style={{ color: 'var(--brand-accent)', fontFamily: 'var(--font-mono)' }}
+              >
+                {slider.format(thresholds[slider.key] as number)}
+              </span>
+              <input
+                type="range"
+                min={slider.min}
+                max={slider.max}
+                step={slider.step}
+                value={thresholds[slider.key] as number}
+                onChange={(e) =>
+                  setThresholds((prev) => ({
+                    ...prev,
+                    [slider.key]: parseFloat(e.target.value),
+                  }))
+                }
+                className="w-32"
+                style={{ accentColor: 'var(--brand-accent)' }}
+              />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -369,18 +454,31 @@ function ThresholdsSection({ clientId }: { clientId: string }) {
 
 function PreferencesSection({ clientId }: { clientId: string }) {
   const { data: remotePrefs, isLoading } = usePreferences(clientId)
-  const updatePreferences = useUpdatePreferences(clientId)
-  const [prefs, setPrefs] = useState<ReportPreferences>({
-    tone: 'executive',
-    depth: 'standard',
-    chart_mix: ['severity_heatmap', 'enforcement_timeline', 'topic_distribution'],
-    section_order: ['executive_summary', 'critical_actions', 'topic_status', 'change_log', 'impact_summary', 'references'],
-  })
-  const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    if (remotePrefs) setPrefs(remotePrefs)
-  }, [remotePrefs])
+  if (isLoading || !remotePrefs) {
+    return (
+      <div className="mb-8">
+        <SectionHeading>Report Preferences</SectionHeading>
+        <div
+          className="rounded-lg px-5"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <SkeletonSettingRow />
+          <SkeletonSettingRow />
+          <SkeletonSettingRow />
+          <SkeletonSettingRow />
+        </div>
+      </div>
+    )
+  }
+
+  return <PreferencesSectionLoaded clientId={clientId} initialPrefs={remotePrefs} />
+}
+
+function PreferencesSectionLoaded({ clientId, initialPrefs }: { clientId: string; initialPrefs: ReportPreferences }) {
+  const updatePreferences = useUpdatePreferences(clientId)
+  const [prefs, setPrefs] = useState<ReportPreferences>(initialPrefs)
+  const [saved, setSaved] = useState(false)
 
   const handleSave = async () => {
     await updatePreferences.mutateAsync(prefs)
@@ -426,113 +524,102 @@ function PreferencesSection({ clientId }: { clientId: string }) {
         className="rounded-lg px-5"
         style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
       >
-        {isLoading ? (
-          <>
-            <SkeletonSettingRow />
-            <SkeletonSettingRow />
-            <SkeletonSettingRow />
-            <SkeletonSettingRow />
-          </>
-        ) : (
-          <>
-            <SettingRow
-              label="Tone"
-              description="Writing style for generated reports"
-              value={
-                <select
-                  value={prefs.tone}
-                  onChange={(e) => setPrefs((p) => ({ ...p, tone: e.target.value }))}
-                  className="text-sm px-2.5 py-1 rounded outline-none"
-                  style={selectStyle}
+        <SettingRow
+          label="Tone"
+          description="Writing style for generated reports"
+          value={
+            <select
+              value={prefs.tone}
+              onChange={(e) => setPrefs((p) => ({ ...p, tone: e.target.value }))}
+              className="text-sm px-2.5 py-1 rounded outline-none"
+              style={selectStyle}
+            >
+              {TONES.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          }
+        />
+        <SettingRow
+          label="Depth"
+          description="Level of detail in report sections"
+          value={
+            <select
+              value={prefs.depth}
+              onChange={(e) => setPrefs((p) => ({ ...p, depth: e.target.value }))}
+              className="text-sm px-2.5 py-1 rounded outline-none"
+              style={selectStyle}
+            >
+              {DEPTHS.map((d) => <option key={d} value={d}>{d}</option>)}
+            </select>
+          }
+        />
+        <div className="py-4" style={{ borderBottom: '1px solid var(--border-color)' }}>
+          <div className="text-sm font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
+            Chart mix
+          </div>
+          <div className="flex flex-col gap-2">
+            {CHART_OPTIONS.map((chart) => (
+              <label key={chart} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={prefs.chart_mix.includes(chart)}
+                  onChange={() => toggleChart(chart)}
+                  style={{ accentColor: 'var(--brand-accent)' }}
+                />
+                <span
+                  className="text-xs"
+                  style={{
+                    color: prefs.chart_mix.includes(chart) ? 'var(--text-primary)' : 'var(--text-muted)',
+                    fontFamily: 'var(--font-mono)',
+                  }}
                 >
-                  {TONES.map((t) => <option key={t} value={t}>{t}</option>)}
-                </select>
-              }
-            />
-            <SettingRow
-              label="Depth"
-              description="Level of detail in report sections"
-              value={
-                <select
-                  value={prefs.depth}
-                  onChange={(e) => setPrefs((p) => ({ ...p, depth: e.target.value }))}
-                  className="text-sm px-2.5 py-1 rounded outline-none"
-                  style={selectStyle}
+                  {chart}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="py-4">
+          <div className="text-sm font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
+            Section order
+          </div>
+          <div className="flex flex-col gap-1.5">
+            {prefs.section_order.map((section, idx) => (
+              <div
+                key={section}
+                className="flex items-center justify-between px-3 py-2 rounded"
+                style={{
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                }}
+              >
+                <span
+                  className="text-xs"
+                  style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}
                 >
-                  {DEPTHS.map((d) => <option key={d} value={d}>{d}</option>)}
-                </select>
-              }
-            />
-            <div className="py-4" style={{ borderBottom: '1px solid var(--border-color)' }}>
-              <div className="text-sm font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
-                Chart mix
-              </div>
-              <div className="flex flex-col gap-2">
-                {CHART_OPTIONS.map((chart) => (
-                  <label key={chart} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={prefs.chart_mix.includes(chart)}
-                      onChange={() => toggleChart(chart)}
-                      style={{ accentColor: 'var(--brand-accent)' }}
-                    />
-                    <span
-                      className="text-xs"
-                      style={{
-                        color: prefs.chart_mix.includes(chart) ? 'var(--text-primary)' : 'var(--text-muted)',
-                        fontFamily: 'var(--font-mono)',
-                      }}
-                    >
-                      {chart}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="py-4">
-              <div className="text-sm font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
-                Section order
-              </div>
-              <div className="flex flex-col gap-1.5">
-                {prefs.section_order.map((section, idx) => (
-                  <div
-                    key={section}
-                    className="flex items-center justify-between px-3 py-2 rounded"
-                    style={{
-                      background: 'var(--bg-elevated)',
-                      border: '1px solid var(--border-color)',
-                    }}
+                  {section}
+                </span>
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => moveSection(idx, -1)}
+                    disabled={idx === 0}
+                    className="p-0.5 rounded"
+                    style={{ opacity: idx === 0 ? 0.3 : 1 }}
                   >
-                    <span
-                      className="text-xs"
-                      style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}
-                    >
-                      {section}
-                    </span>
-                    <div className="flex gap-1">
-                      <button
-                        onClick={() => moveSection(idx, -1)}
-                        disabled={idx === 0}
-                        className="p-0.5 rounded"
-                        style={{ opacity: idx === 0 ? 0.3 : 1 }}
-                      >
-                        <ChevronUp className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
-                      </button>
-                      <button
-                        onClick={() => moveSection(idx, 1)}
-                        disabled={idx === prefs.section_order.length - 1}
-                        className="p-0.5 rounded"
-                        style={{ opacity: idx === prefs.section_order.length - 1 ? 0.3 : 1 }}
-                      >
-                        <ChevronDown className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                    <ChevronUp className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+                  </button>
+                  <button
+                    onClick={() => moveSection(idx, 1)}
+                    disabled={idx === prefs.section_order.length - 1}
+                    className="p-0.5 rounded"
+                    style={{ opacity: idx === prefs.section_order.length - 1 ? 0.3 : 1 }}
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+                  </button>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -543,26 +630,94 @@ function PreferencesSection({ clientId }: { clientId: string }) {
 export default function SettingsPage({ params }: SettingsPageProps) {
   const { clientId } = use(params)
   const { data: remoteClient, isLoading } = useClient(clientId)
+
+  if (!isLoading && !remoteClient) {
+    return (
+      <PageTransition className="p-8">
+        <div style={{ color: 'var(--text-muted)' }}>Client not found.</div>
+      </PageTransition>
+    )
+  }
+
+  return (
+    <PageTransition className="p-8">
+      <div className="max-w-2xl">
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
+            Settings
+          </h2>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+            Configuration for {remoteClient?.display_name ?? clientId}
+          </p>
+        </div>
+
+        {isLoading || !remoteClient ? (
+          <>
+            {/* Identity skeleton */}
+            <div className="mb-8">
+              <SectionHeading>Identity</SectionHeading>
+              <div
+                className="rounded-lg px-5"
+                style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+              >
+                <SkeletonSettingRow />
+                <SkeletonSettingRow />
+                <SkeletonSettingRow />
+              </div>
+            </div>
+            {/* Topics skeleton */}
+            <div className="mb-8">
+              <SectionHeading>Monitored Topics</SectionHeading>
+              <div
+                className="rounded-lg px-5 py-4"
+                style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+              >
+                <div className="flex flex-wrap gap-2">
+                  {[80, 64, 72, 56, 96].map((w) => (
+                    <Skeleton key={w} className="h-7 rounded" style={{ width: w, background: 'var(--bg-elevated)' }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <SettingsPageLoaded clientId={clientId} remoteClient={remoteClient} />
+        )}
+
+        {/* Report Language section */}
+        <ReportLanguageSection clientId={clientId} />
+
+        {/* Sources section */}
+        <SourcesSection clientId={clientId} />
+
+        {/* Thresholds section */}
+        <ThresholdsSection clientId={clientId} />
+
+        {/* Report Preferences section */}
+        <PreferencesSection clientId={clientId} />
+      </div>
+    </PageTransition>
+  )
+}
+
+function SettingsPageLoaded({
+  clientId,
+  remoteClient,
+}: {
+  clientId: string
+  remoteClient: NonNullable<ReturnType<typeof useClient>['data']>
+}) {
   const updateClient = useUpdateClient(clientId)
 
-  const [displayName, setDisplayName] = useState('')
-  const [facilities, setFacilities] = useState<FacilityConfig[]>([])
-  const [jurisdictions, setJurisdictions] = useState<string[]>([])
-  const [topics, setTopics] = useState<string[]>([])
+  const [displayName, setDisplayName] = useState(remoteClient.display_name ?? '')
+  const [facilities, setFacilities] = useState<FacilityConfig[]>(remoteClient.facilities ?? [])
+  const [jurisdictions, setJurisdictions] = useState<string[]>(remoteClient.allowed_countries ?? [])
+  const [topics, setTopics] = useState<string[]>(remoteClient.required_topics ?? [])
   const [newFacility, setNewFacility] = useState('')
   const [newTopic, setNewTopic] = useState('')
   const [saved, setSaved] = useState(false)
   const [screeningEnabled, setScreeningEnabled] = useState(true)
   const [alertsEnabled, setAlertsEnabled] = useState(true)
-
-  useEffect(() => {
-    if (remoteClient) {
-      setDisplayName(remoteClient.display_name)
-      setFacilities(remoteClient.facilities ?? [])
-      setJurisdictions(remoteClient.allowed_countries ?? [])
-      setTopics(remoteClient.required_topics ?? [])
-    }
-  }, [remoteClient])
 
   const handleSave = async () => {
     await updateClient.mutateAsync({
@@ -597,292 +752,244 @@ export default function SettingsPage({ params }: SettingsPageProps) {
     )
   }
 
-  if (!isLoading && !remoteClient) {
-    return (
-      <PageTransition className="p-8">
-        <div style={{ color: 'var(--text-muted)' }}>Client not found.</div>
-      </PageTransition>
-    )
-  }
-
   return (
-    <PageTransition className="p-8">
-      <div className="max-w-2xl">
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
-            Settings
-          </h2>
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Configuration for {remoteClient?.display_name ?? clientId}
-          </p>
-        </div>
-
-        {/* Identity section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-3">
-            <SectionHeading>Identity</SectionHeading>
-            <div className="flex items-center gap-3">
-              <SavedBadge show={saved} />
-              <SaveButton onClick={handleSave} isPending={updateClient.isPending} />
-            </div>
-          </div>
-          <div
-            className="rounded-lg px-5"
-            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
-          >
-            {isLoading ? (
-              <>
-                <SkeletonSettingRow />
-                <SkeletonSettingRow />
-                <SkeletonSettingRow />
-              </>
-            ) : (
-              <>
-                <SettingRow
-                  label="Client ID"
-                  value={
-                    <span
-                      className="text-xs px-2 py-1 rounded"
-                      style={{
-                        fontFamily: 'var(--font-mono)',
-                        background: 'var(--bg-elevated)',
-                        color: 'var(--text-muted)',
-                      }}
-                    >
-                      {clientId}
-                    </span>
-                  }
-                />
-                <SettingRow
-                  label="Display name"
-                  value={
-                    <input
-                      type="text"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                      className="text-sm px-2.5 py-1 rounded outline-none w-48"
-                      style={{
-                        background: 'var(--bg-elevated)',
-                        border: '1px solid var(--border-color)',
-                        color: 'var(--text-primary)',
-                      }}
-                    />
-                  }
-                />
-                <SettingRow
-                  label="Jurisdictions"
-                  value={
-                    <div className="flex gap-1.5 flex-wrap justify-end">
-                      {ALL_JURISDICTIONS.map((j) => (
-                        <button
-                          key={j}
-                          onClick={() => toggleJurisdiction(j)}
-                          className="text-xs px-2 py-0.5 rounded transition-all"
-                          style={{
-                            background: jurisdictions.includes(j) ? 'var(--brand)' : 'var(--bg-elevated)',
-                            color: jurisdictions.includes(j) ? 'var(--brand-contrast)' : 'var(--text-muted)',
-                            border: '1px solid var(--border-color)',
-                            fontFamily: 'var(--font-mono)',
-                          }}
-                        >
-                          {j}
-                        </button>
-                      ))}
-                    </div>
-                  }
-                />
-                <div className="flex items-start justify-between py-4">
-                  <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                    Facilities
-                  </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <div className="flex flex-wrap gap-1.5 justify-end">
-                      {facilities.map((f) => (
-                        <span
-                          key={f.name}
-                          className="flex items-center gap-1 text-xs px-2 py-0.5 rounded"
-                          style={{
-                            background: 'var(--bg-elevated)',
-                            color: 'var(--text-muted)',
-                            border: '1px solid var(--border-color)',
-                          }}
-                        >
-                          {f.name}
-                          <button onClick={() => removeFacility(f.name)}>
-                            <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex gap-1">
-                      <input
-                        type="text"
-                        value={newFacility}
-                        onChange={(e) => setNewFacility(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && addFacility()}
-                        placeholder="Add facility…"
-                        className="text-xs px-2 py-1 rounded outline-none w-32"
-                        style={{
-                          background: 'var(--bg-elevated)',
-                          border: '1px solid var(--border-color)',
-                          color: 'var(--text-primary)',
-                        }}
-                      />
-                      <button
-                        onClick={addFacility}
-                        className="p-1 rounded"
-                        style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)' }}
-                      >
-                        <Plus className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+    <>
+      {/* Identity section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <SectionHeading>Identity</SectionHeading>
+          <div className="flex items-center gap-3">
+            <SavedBadge show={saved} />
+            <SaveButton onClick={handleSave} isPending={updateClient.isPending} />
           </div>
         </div>
-
-        {/* Topics section */}
-        <div className="mb-8">
-          <SectionHeading>Monitored Topics</SectionHeading>
-          <div
-            className="rounded-lg px-5 py-4"
-            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
-          >
-            {isLoading ? (
-              <div className="flex flex-wrap gap-2">
-                {[80, 64, 72, 56, 96].map((w) => (
-                  <Skeleton key={w} className="h-7 rounded" style={{ width: w, background: 'var(--bg-elevated)' }} />
+        <div
+          className="rounded-lg px-5"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <SettingRow
+            label="Client ID"
+            value={
+              <span
+                className="text-xs px-2 py-1 rounded"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  background: 'var(--bg-elevated)',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                {clientId}
+              </span>
+            }
+          />
+          <SettingRow
+            label="Display name"
+            value={
+              <input
+                type="text"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                className="text-sm px-2.5 py-1 rounded outline-none w-48"
+                style={{
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                }}
+              />
+            }
+          />
+          <SettingRow
+            label="Jurisdictions"
+            value={
+              <div className="flex gap-1.5 flex-wrap justify-end">
+                {ALL_JURISDICTIONS.map((j) => (
+                  <button
+                    key={j}
+                    onClick={() => toggleJurisdiction(j)}
+                    className="text-xs px-2 py-0.5 rounded transition-all"
+                    style={{
+                      background: jurisdictions.includes(j) ? 'var(--brand)' : 'var(--bg-elevated)',
+                      color: jurisdictions.includes(j) ? 'var(--brand-contrast)' : 'var(--text-muted)',
+                      border: '1px solid var(--border-color)',
+                      fontFamily: 'var(--font-mono)',
+                    }}
+                  >
+                    {j}
+                  </button>
                 ))}
               </div>
-            ) : (
-              <>
-                <div className="flex flex-wrap gap-2">
-                  {Array.from(new Set([...ALL_TOPICS, ...topics])).map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => toggleTopic(t)}
-                      className="text-xs px-2.5 py-1 rounded transition-all flex items-center gap-1"
-                      style={{
-                        background: topics.includes(t) ? 'color-mix(in srgb, var(--brand-accent) 15%, var(--bg-elevated))' : 'var(--bg-elevated)',
-                        color: topics.includes(t) ? 'var(--brand-accent)' : 'var(--text-muted)',
-                        border: `1px solid ${topics.includes(t) ? 'var(--brand)' : 'var(--border-color)'}`,
-                        fontFamily: 'var(--font-mono)',
-                      }}
-                    >
-                      {t}
-                      {topics.includes(t) && !ALL_TOPICS.includes(t) && (
-                        <X size={10} />
-                      )}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 mt-3">
-                  <input
-                    value={newTopic}
-                    onChange={(e) => setNewTopic(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        const val = newTopic.trim().toLowerCase().replace(/\s+/g, '_')
-                        if (val && !topics.includes(val)) {
-                          setTopics((prev) => [...prev, val])
-                        }
-                        setNewTopic('')
-                      }
-                    }}
-                    placeholder="Add topic…"
-                    className="text-xs px-2.5 py-1 rounded flex-1"
+            }
+          />
+          <div className="flex items-start justify-between py-4">
+            <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+              Facilities
+            </div>
+            <div className="flex flex-col items-end gap-2">
+              <div className="flex flex-wrap gap-1.5 justify-end">
+                {facilities.map((f) => (
+                  <span
+                    key={f.name}
+                    className="flex items-center gap-1 text-xs px-2 py-0.5 rounded"
                     style={{
                       background: 'var(--bg-elevated)',
+                      color: 'var(--text-muted)',
                       border: '1px solid var(--border-color)',
-                      color: 'var(--text-primary)',
-                      fontFamily: 'var(--font-mono)',
-                      maxWidth: 180,
                     }}
-                  />
-                  <button
-                    onClick={() => {
-                      const val = newTopic.trim().toLowerCase().replace(/\s+/g, '_')
-                      if (val && !topics.includes(val)) {
-                        setTopics((prev) => [...prev, val])
-                      }
-                      setNewTopic('')
-                    }}
-                    className="p-1 rounded"
-                    style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
                   >
-                    <Plus size={14} />
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Sources section */}
-        <SourcesSection clientId={clientId} />
-
-        {/* Thresholds section */}
-        <ThresholdsSection clientId={clientId} />
-
-        {/* Report Preferences section */}
-        <PreferencesSection clientId={clientId} />
-
-        {/* Automation section */}
-        <div>
-          <SectionHeading>Automation</SectionHeading>
-          <div
-            className="rounded-lg px-5"
-            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
-          >
-            <SettingRow
-              label="Regulatory screening"
-              description="Automatically screen for new regulations each month"
-              value={
-                <button
-                  onClick={() => setScreeningEnabled((v) => !v)}
-                  className="relative w-10 h-5 rounded-full transition-colors"
+                    {f.name}
+                    <button onClick={() => removeFacility(f.name)}>
+                      <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-1">
+                <input
+                  type="text"
+                  value={newFacility}
+                  onChange={(e) => setNewFacility(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && addFacility()}
+                  placeholder="Add facility…"
+                  className="text-xs px-2 py-1 rounded outline-none w-32"
                   style={{
-                    background: screeningEnabled ? 'var(--brand)' : 'var(--bg-elevated)',
+                    background: 'var(--bg-elevated)',
                     border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)',
                   }}
-                >
-                  <span
-                    className="absolute top-0.5 w-4 h-4 rounded-full transition-all"
-                    style={{
-                      background: screeningEnabled ? 'var(--brand-contrast)' : 'var(--text-muted)',
-                      left: screeningEnabled ? '1.25rem' : '0.125rem',
-                    }}
-                  />
-                </button>
-              }
-            />
-            <SettingRow
-              label="Change alerts"
-              description="Notify when critical regulatory changes are detected"
-              value={
+                />
                 <button
-                  onClick={() => setAlertsEnabled((v) => !v)}
-                  className="relative w-10 h-5 rounded-full transition-colors"
-                  style={{
-                    background: alertsEnabled ? 'var(--brand)' : 'var(--bg-elevated)',
-                    border: '1px solid var(--border-color)',
-                  }}
+                  onClick={addFacility}
+                  className="p-1 rounded"
+                  style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)' }}
                 >
-                  <span
-                    className="absolute top-0.5 w-4 h-4 rounded-full transition-all"
-                    style={{
-                      background: alertsEnabled ? 'var(--brand-contrast)' : 'var(--text-muted)',
-                      left: alertsEnabled ? '1.25rem' : '0.125rem',
-                    }}
-                  />
+                  <Plus className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
                 </button>
-              }
-            />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </PageTransition>
+
+      {/* Topics section */}
+      <div className="mb-8">
+        <SectionHeading>Monitored Topics</SectionHeading>
+        <div
+          className="rounded-lg px-5 py-4"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <div className="flex flex-wrap gap-2">
+            {Array.from(new Set([...ALL_TOPICS, ...topics])).map((t) => (
+              <button
+                key={t}
+                onClick={() => toggleTopic(t)}
+                className="text-xs px-2.5 py-1 rounded transition-all flex items-center gap-1"
+                style={{
+                  background: topics.includes(t) ? 'color-mix(in srgb, var(--brand-accent) 15%, var(--bg-elevated))' : 'var(--bg-elevated)',
+                  color: topics.includes(t) ? 'var(--brand-accent)' : 'var(--text-muted)',
+                  border: `1px solid ${topics.includes(t) ? 'var(--brand)' : 'var(--border-color)'}`,
+                  fontFamily: 'var(--font-mono)',
+                }}
+              >
+                {t}
+                {topics.includes(t) && !ALL_TOPICS.includes(t) && (
+                  <X size={10} />
+                )}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 mt-3">
+            <input
+              value={newTopic}
+              onChange={(e) => setNewTopic(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const val = newTopic.trim().toLowerCase().replace(/\s+/g, '_')
+                  if (val && !topics.includes(val)) {
+                    setTopics((prev) => [...prev, val])
+                  }
+                  setNewTopic('')
+                }
+              }}
+              placeholder="Add topic…"
+              className="text-xs px-2.5 py-1 rounded flex-1"
+              style={{
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-mono)',
+                maxWidth: 180,
+              }}
+            />
+            <button
+              onClick={() => {
+                const val = newTopic.trim().toLowerCase().replace(/\s+/g, '_')
+                if (val && !topics.includes(val)) {
+                  setTopics((prev) => [...prev, val])
+                }
+                setNewTopic('')
+              }}
+              className="p-1 rounded"
+              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Automation section */}
+      <div>
+        <SectionHeading>Automation</SectionHeading>
+        <div
+          className="rounded-lg px-5"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <SettingRow
+            label="Regulatory screening"
+            description="Automatically screen for new regulations each month"
+            value={
+              <button
+                onClick={() => setScreeningEnabled((v) => !v)}
+                className="relative w-10 h-5 rounded-full transition-colors"
+                style={{
+                  background: screeningEnabled ? 'var(--brand)' : 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                }}
+              >
+                <span
+                  className="absolute top-0.5 w-4 h-4 rounded-full transition-all"
+                  style={{
+                    background: screeningEnabled ? 'var(--brand-contrast)' : 'var(--text-muted)',
+                    left: screeningEnabled ? '1.25rem' : '0.125rem',
+                  }}
+                />
+              </button>
+            }
+          />
+          <SettingRow
+            label="Change alerts"
+            description="Notify when critical regulatory changes are detected"
+            value={
+              <button
+                onClick={() => setAlertsEnabled((v) => !v)}
+                className="relative w-10 h-5 rounded-full transition-colors"
+                style={{
+                  background: alertsEnabled ? 'var(--brand)' : 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                }}
+              >
+                <span
+                  className="absolute top-0.5 w-4 h-4 rounded-full transition-all"
+                  style={{
+                    background: alertsEnabled ? 'var(--brand-contrast)' : 'var(--text-muted)',
+                    left: alertsEnabled ? '1.25rem' : '0.125rem',
+                  }}
+                />
+              </button>
+            }
+          />
+        </div>
+      </div>
+    </>
   )
 }

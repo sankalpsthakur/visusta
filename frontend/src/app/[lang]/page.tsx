@@ -6,7 +6,7 @@ import { PageTransition } from '@/components/shared/page-transition'
 import { AnimatedNumber } from '@/components/shared/animated-number'
 import { useActiveClient } from '@/lib/clients/context'
 import { useLocale } from '@/lib/i18n/dictionary-context'
-import { MapPin, AlertTriangle, Calendar, ArrowRight } from 'lucide-react'
+import { MapPin, Calendar, ArrowRight } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const container: Variants = {

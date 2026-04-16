@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Save, Plus, Trash2, Link2 } from 'lucide-react'
 import type { DraftSection, DraftBlock, SectionEditPayload } from '@/lib/api/draft-hooks'
@@ -11,16 +11,122 @@ interface SectionEditorProps {
   isSaving?: boolean
 }
 
+function parseJsonContent(content: string): unknown {
+  try {
+    return JSON.parse(content)
+  } catch {
+    return null
+  }
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === 'string')
+}
+
+function isStringMatrix(value: unknown): value is string[][] {
+  return Array.isArray(value) && value.every(isStringArray)
+}
+
+export function parseBlockContentForEditor(blockType: string, content: string): string {
+  if (blockType === 'bullet_list') {
+    const parsed = parseJsonContent(content)
+    if (isStringArray(parsed)) {
+      return parsed.join('\n')
+    }
+  }
+
+  if (blockType === 'table') {
+    const parsed = parseJsonContent(content)
+    if (isStringMatrix(parsed)) {
+      return parsed.map((row) => row.join('\t')).join('\n')
+    }
+  }
+
+  return content
+}
+
+function serializeBlockContentForSave(blockType: string, content: string): unknown {
+  if (blockType === 'bullet_list') {
+    return content
+      .split(/\r?\n/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+  }
+
+  if (blockType === 'table') {
+    return content
+      .split(/\r?\n/)
+      .map((line) => line.trimEnd())
+      .filter((line) => line.trim().length > 0)
+      .map((line) => line.split('\t').map((cell) => cell.trim()))
+  }
+
+  return content
+}
+
+export function serializeEditorBlockForSave<T extends Pick<DraftBlock, 'type' | 'content'> & Partial<DraftBlock>>(
+  block: T,
+): Omit<T, 'content'> & { content: unknown } {
+  return {
+    ...block,
+    content: serializeBlockContentForSave(block.type, block.content),
+  }
+}
+
+function getBlockLabel(blockType: string): string {
+  switch (blockType) {
+    case 'bullet_list':
+      return 'Bullet list'
+    case 'table':
+      return 'Table'
+    case 'heading':
+      return 'Heading'
+    default:
+      return 'Paragraph'
+  }
+}
+
+function getBlockHint(blockType: string): string | null {
+  switch (blockType) {
+    case 'bullet_list':
+      return 'Use one bullet item per line.'
+    case 'table':
+      return 'Use one row per line and separate columns with tab characters.'
+    default:
+      return null
+  }
+}
+
+function getBlockPlaceholder(blockType: string): string {
+  switch (blockType) {
+    case 'bullet_list':
+      return 'First bullet item\nSecond bullet item'
+    case 'table':
+      return 'Column A\tColumn B\nValue A\tValue B'
+    case 'heading':
+      return 'Subheading'
+    default:
+      return 'Write section content…'
+  }
+}
+
+function getBlockRows(blockType: string, content: string): number {
+  const lineCount = content.split(/\r?\n/).length
+
+  if (blockType === 'heading') return 2
+  if (blockType === 'table') return Math.max(4, lineCount)
+  return Math.max(4, lineCount)
+}
+
 export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps) {
-  const [blocks, setBlocks] = useState<DraftBlock[]>(section.blocks)
+  const [blocks, setBlocks] = useState<DraftBlock[]>(() =>
+    section.blocks.map((block) => ({
+      ...block,
+      content: parseBlockContentForEditor(block.type, block.content),
+    })),
+  )
   const [citations, setCitations] = useState<string[]>(section.citations)
   const [revisionNote, setRevisionNote] = useState('')
-
-  useEffect(() => {
-    setBlocks(section.blocks)
-    setCitations(section.citations)
-    setRevisionNote('')
-  }, [section.section_id])
 
   function updateBlock(index: number, content: string) {
     setBlocks((prev) => prev.map((b, i) => (i === index ? { ...b, content } : b)))
@@ -47,8 +153,10 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
   }
 
   function handleSave() {
+    const serializedBlocks = blocks.map((block) => serializeEditorBlockForSave(block)) as DraftBlock[]
+
     onSave(section.section_id, {
-      blocks,
+      blocks: serializedBlocks,
       citations: citations.filter(Boolean),
       revision_note: revisionNote.trim() || undefined,
     })
@@ -76,25 +184,50 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
         </label>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {blocks.map((block, i) => (
-            <div key={i} style={{ display: 'flex', gap: 8 }}>
-              <textarea
-                value={block.content}
-                onChange={(e) => updateBlock(i, e.target.value)}
-                rows={4}
-                style={{
-                  flex: 1,
-                  padding: '10px 12px',
-                  borderRadius: 8,
-                  border: '1px solid var(--border-subtle)',
-                  background: 'var(--bg-surface-raised)',
-                  color: 'var(--text-primary)',
-                  fontSize: 13,
-                  lineHeight: 1.6,
-                  resize: 'vertical',
-                  fontFamily: 'inherit',
-                  boxSizing: 'border-box',
-                }}
-              />
+            <div key={block.block_id ?? i} style={{ display: 'flex', gap: 8 }}>
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 500,
+                    color: 'var(--text-muted)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: 6,
+                  }}
+                >
+                  {getBlockLabel(block.type)}
+                </div>
+                <textarea
+                  aria-label={`${getBlockLabel(block.type)} ${i + 1}`}
+                  value={block.content}
+                  onChange={(e) => updateBlock(i, e.target.value)}
+                  rows={getBlockRows(block.type, block.content)}
+                  placeholder={getBlockPlaceholder(block.type)}
+                  spellCheck={block.type !== 'table'}
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px',
+                    borderRadius: 8,
+                    border: '1px solid var(--border-subtle)',
+                    background: 'var(--bg-surface-raised)',
+                    color: 'var(--text-primary)',
+                    fontSize: 13,
+                    lineHeight: 1.6,
+                    resize: 'vertical',
+                    fontFamily:
+                      block.type === 'table'
+                        ? 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace'
+                        : 'inherit',
+                    boxSizing: 'border-box',
+                  }}
+                />
+                {getBlockHint(block.type) && (
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 6 }}>
+                    {getBlockHint(block.type)}
+                  </div>
+                )}
+              </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

@@ -24,13 +24,47 @@ import copy
 import uuid
 
 from .base import Agent
-from .llm import LLMInterface, StubLLM
+from .llm import LLMInterface, StubLLM, get_llm
+
+
+FALLBACK_TRANSLATIONS: dict[str, dict[str, str]] = {
+    "de": {
+        "Executive Summary": "Zusammenfassung",
+        "Critical Actions": "Kritische Maßnahmen",
+        "Regulatory Changes": "Regulatorische Änderungen",
+        "References": "Quellen",
+        "Key Facts": "Kernfakten",
+        "Action required": "Maßnahme erforderlich",
+        "Deadline": "Frist",
+        "No critical actions identified.": "Derzeit wurden keine kritischen Maßnahmen identifiziert.",
+    },
+    "sv": {
+        "Executive Summary": "Sammanfattning",
+        "Critical Actions": "Kritiska åtgärder",
+        "Regulatory Changes": "Regulatoriska förändringar",
+        "References": "Källor",
+        "Key Facts": "Nyckelfakta",
+        "Action required": "Åtgärd krävs",
+        "Deadline": "Tidsfrist",
+        "No critical actions identified.": "Inga kritiska åtgärder har identifierats.",
+    },
+    "fr": {
+        "Executive Summary": "Résumé exécutif",
+        "Critical Actions": "Actions critiques",
+        "Regulatory Changes": "Évolutions réglementaires",
+        "References": "Références",
+        "Key Facts": "Points clés",
+        "Action required": "Action requise",
+        "Deadline": "Échéance",
+        "No critical actions identified.": "Aucune action critique n'a été identifiée.",
+    },
+}
 
 
 class TranslationAgent(Agent):
     def __init__(self, llm: LLMInterface | None = None):
         super().__init__("translation-agent")
-        self._llm = llm or StubLLM()
+        self._llm = llm if llm is not None else get_llm()
 
     def run(self, context: dict) -> dict:
         sections: list[dict] = context.get("sections", [])
@@ -74,13 +108,22 @@ class TranslationAgent(Agent):
     ) -> tuple[dict, int]:
         blocks = section.get("blocks", [])
         heading = section.get("heading", "")
+        translated_heading = heading
 
-        prompt = self._build_prompt(heading, blocks, target_locale, source_locale, glossary)
-        result = self._llm.generate_structured(prompt)
-
-        translated_blocks = result.get("translated_blocks", [])
-        confidence: float = result.get("confidence", 1.0)
-        low_conf_terms: list[str] = result.get("low_confidence_terms", [])
+        if isinstance(self._llm, StubLLM):
+            translated_blocks = [
+                self._translate_block_fallback(block, target_locale, glossary)
+                for block in copy.deepcopy(blocks)
+            ]
+            translated_heading = self._translate_text(heading, target_locale, glossary)
+            confidence = 0.55 if target_locale != source_locale else 1.0
+            low_conf_terms = [heading] if target_locale != source_locale else []
+        else:
+            prompt = self._build_prompt(heading, blocks, target_locale, source_locale, glossary)
+            result = self._llm.generate_structured(prompt)
+            translated_blocks = result.get("translated_blocks", [])
+            confidence = result.get("confidence", 1.0)
+            low_conf_terms = result.get("low_confidence_terms", [])
 
         # Fall back to original blocks if LLM returned nothing
         if not translated_blocks:
@@ -94,6 +137,7 @@ class TranslationAgent(Agent):
         new_section = {
             **section,
             "section_id": str(uuid.uuid4()),
+            "heading": translated_heading,
             "locale": target_locale,
             "blocks": translated_blocks,
             # facts/citations are language-neutral — preserve as-is
@@ -114,7 +158,9 @@ class TranslationAgent(Agent):
         glossary: dict,
     ) -> str:
         block_texts = "\n".join(
-            b.get("text", "") for b in blocks if b.get("text")
+            str(b.get("text", b.get("content", "")))
+            for b in blocks
+            if b.get("text") or b.get("content")
         )
         glossary_hint = (
             "Glossary: " + ", ".join(f"{k}={v}" for k, v in list(glossary.items())[:10])
@@ -127,3 +173,23 @@ class TranslationAgent(Agent):
             f"Content:\n{block_texts}\n"
             f"{glossary_hint}"
         )
+
+    def _translate_block_fallback(
+        self,
+        block: dict,
+        target_locale: str,
+        glossary: dict,
+    ) -> dict:
+        if "text" in block and isinstance(block.get("text"), str):
+            block["text"] = self._translate_text(block["text"], target_locale, glossary)
+        elif "content" in block and isinstance(block.get("content"), str):
+            block["content"] = self._translate_text(block["content"], target_locale, glossary)
+        return block
+
+    def _translate_text(self, text: str, target_locale: str, glossary: dict) -> str:
+        translated = str(text)
+        for source, replacement in FALLBACK_TRANSLATIONS.get(target_locale, {}).items():
+            translated = translated.replace(source, replacement)
+        for source, replacement in glossary.items():
+            translated = translated.replace(str(source), str(replacement))
+        return translated

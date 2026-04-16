@@ -10,7 +10,7 @@ export default function SettingsPage() {
           Settings
         </h1>
         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-          Platform configuration — coming in Wave 2
+          Report language, sources, and preferences are configured per client under Client Settings.
         </p>
       </div>
     </PageTransition>

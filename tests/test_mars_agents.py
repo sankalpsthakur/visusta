@@ -232,6 +232,39 @@ class TestDraftComposerAgent:
         call_args = mock_llm.generate_structured.call_args[0][0]
         assert "CSRD" in call_args or "Packaging" in call_args
 
+    def test_default_composer_uses_changelog_content_not_stub_placeholder(self, template_sections):
+        agent = DraftComposerAgent()
+        result = agent.run({
+            "changelog": [
+                {
+                    "executive_summary": "February 2026 introduces urgent packaging and CSRD actions.",
+                    "critical_actions": [
+                        {
+                            "summary": "Update the supplier PCR clause before October 2026.",
+                            "deadline": "2026-10-01",
+                        }
+                    ],
+                    "content_updates": [
+                        {
+                            "title": "PPWR recycled content requirements",
+                            "summary": "Rigid food-contact plastic packaging must reach 10% PCR by 2030.",
+                            "action_required": "Start the procurement workstream in Q3 2026.",
+                        }
+                    ],
+                }
+            ],
+            "template_sections": template_sections,
+            "locale": "en",
+        })
+        rendered = " ".join(
+            str(block.get("text", ""))
+            for section in result["sections"]
+            for block in section.get("blocks", [])
+        )
+        assert "Stub executive summary." not in rendered
+        assert "February 2026 introduces urgent packaging and CSRD actions." in rendered
+        assert "PCR clause" in rendered or "PPWR recycled content requirements" in rendered
+
 
 # ── TranslationAgent ───────────────────────────────────────────────────────────
 
@@ -325,6 +358,16 @@ class TestTranslationAgent:
         result = agent.run({"sections": sample_sections, "target_locale": "pl"})
         for orig, translated in zip(sample_sections, result["sections"]):
             assert translated["blocks"] == orig["blocks"]
+
+    def test_default_translation_does_not_return_placeholder_marker(self, sample_sections):
+        agent = TranslationAgent()
+        result = agent.run({"sections": sample_sections, "target_locale": "sv"})
+        rendered = " ".join(
+            str(block.get("text", ""))
+            for section in result["sections"]
+            for block in section.get("blocks", [])
+        )
+        assert "[translated content]" not in rendered
 
 
 # ── DraftChatAgent ─────────────────────────────────────────────────────────────
@@ -446,6 +489,29 @@ class TestDraftChatAgent:
         })
         edited = next(s for s in result["sections"] if s["section_id"] == result["edited_section_id"])
         assert edited["blocks"] == original_blocks
+
+    def test_default_chat_edit_preserves_section_specific_content(self, sample_sections):
+        target_id = sample_sections[1]["section_id"]
+        sample_sections[1]["blocks"] = [
+            {
+                "type": "paragraph",
+                "text": (
+                    "Action required: comply by Q3. "
+                    "Supplier evidence is overdue. "
+                    "The deadline is 2026-09-30."
+                ),
+            }
+        ]
+        agent = DraftChatAgent()
+        result = agent.run({
+            "sections": sample_sections,
+            "section_id": target_id,
+            "user_message": "Make this more concise and action oriented.",
+        })
+        edited = next(s for s in result["sections"] if s["section_id"] == result["edited_section_id"])
+        rendered = " ".join(str(block.get("text", "")) for block in edited["blocks"])
+        assert "Updated section content based on feedback." not in rendered
+        assert "2026-09-30" in rendered or "Supplier evidence" in rendered
 
 
 # ── SourceScoutAgent (extended) ────────────────────────────────────────────────

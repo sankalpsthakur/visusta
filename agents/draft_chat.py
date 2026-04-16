@@ -24,16 +24,17 @@ Output:
 from __future__ import annotations
 
 import copy
+import re
 import uuid
 
 from .base import Agent
-from .llm import LLMInterface, StubLLM
+from .llm import LLMInterface, StubLLM, get_llm
 
 
 class DraftChatAgent(Agent):
     def __init__(self, llm: LLMInterface | None = None):
         super().__init__("draft-chat")
-        self._llm = llm or StubLLM()
+        self._llm = llm if llm is not None else get_llm()
 
     def run(self, context: dict) -> dict:
         sections: list[dict] = context.get("sections", [])
@@ -53,20 +54,32 @@ class DraftChatAgent(Agent):
                 "log": self.log_entries,
             }
 
-        prompt = self._build_prompt(target, user_message, history)
-        result = self._llm.generate_structured(prompt)
-
-        updated_blocks = result.get("updated_blocks", [])
-        explanation: str = result.get("explanation", "")
+        if isinstance(self._llm, StubLLM):
+            updated_blocks, explanation = self._rewrite_without_llm(target, user_message)
+        else:
+            prompt = self._build_prompt(target, user_message, history)
+            result = self._llm.generate_structured(prompt)
+            updated_blocks = result.get("updated_blocks", [])
+            explanation = result.get("explanation", "")
 
         if not updated_blocks:
             updated_blocks = copy.deepcopy(target.get("blocks", []))
+
+        # Normalize LLM block format → DB block format
+        normalized = []
+        for i, blk in enumerate(updated_blocks):
+            normalized.append({
+                "block_id": blk.get("block_id", f"b{i + 1}"),
+                "block_type": blk.get("block_type", blk.get("type", "paragraph")),
+                "content": blk.get("content", blk.get("text", "")),
+                "metadata": blk.get("metadata", {}),
+            })
 
         new_section_id = str(uuid.uuid4())
         edited = {
             **target,
             "section_id": new_section_id,
-            "blocks": updated_blocks,
+            "blocks": normalized,
             # Editing a section resets its approval
             "approval_status": "pending",
         }
@@ -114,3 +127,73 @@ class DraftChatAgent(Agent):
             f"{'Conversation history:' + chr(10) + history_lines if history_lines else ''}\n"
             f"User: {user_message}"
         )
+
+    def _rewrite_without_llm(
+        self,
+        section: dict,
+        user_message: str,
+    ) -> tuple[list[dict], str]:
+        existing_blocks = copy.deepcopy(section.get("blocks", []))
+        current_text = self._extract_text(existing_blocks)
+        sentences = [
+            sentence.strip()
+            for sentence in re.split(r"(?<=[.!?])\s+", current_text)
+            if sentence.strip()
+        ]
+        lower = user_message.lower()
+
+        if "bullet" in lower or "list" in lower:
+            items = sentences or [current_text] if current_text else []
+            return (
+                [{"type": "bullet_list", "text": "\n".join(items[:6])}] if items else existing_blocks,
+                "Reframed the section as a short bullet list.",
+            )
+
+        if any(token in lower for token in ("concise", "short", "brief", "summary")):
+            chosen: list[str] = []
+            for sentence in sentences:
+                if not chosen:
+                    chosen.append(sentence)
+                    continue
+                if re.search(r"\b(\d{4}-\d{2}-\d{2}|deadline|due|required|action|risk)\b", sentence, re.I):
+                    chosen.append(sentence)
+                if len(chosen) >= 2:
+                    break
+            compact = " ".join(chosen or sentences[:2])
+            return (
+                [{"type": "paragraph", "text": compact or current_text}] if (compact or current_text) else existing_blocks,
+                "Condensed the section while keeping the key action and timing details.",
+            )
+
+        if any(token in lower for token in ("action", "deadline", "risk", "next step")):
+            items = [
+                sentence for sentence in sentences
+                if re.search(r"\b(deadline|due|required|action|risk|\d{4}-\d{2}-\d{2})\b", sentence, re.I)
+            ]
+            if not items:
+                items = sentences[:3]
+            return (
+                [{"type": "bullet_list", "text": "\n".join(items[:6])}] if items else existing_blocks,
+                "Highlighted the action-oriented points and timing dependencies.",
+            )
+
+        if any(token in lower for token in ("expand", "detail", "elaborate")):
+            additions = []
+            for fact in section.get("facts", [])[:3]:
+                additions.append(str(fact))
+            for citation in section.get("citations", [])[:2]:
+                additions.append(f"Reference: {citation}")
+            expanded_blocks = existing_blocks
+            if additions:
+                expanded_blocks = existing_blocks + [{"type": "bullet_list", "text": "\n".join(additions)}]
+            return expanded_blocks, "Expanded the section with the stored facts and supporting references."
+
+        return existing_blocks, "Kept the section content intact because the instruction did not require a structural rewrite."
+
+    def _extract_text(self, blocks: list[dict]) -> str:
+        parts = []
+        for block in blocks:
+            text = block.get("text", block.get("content", ""))
+            if isinstance(text, str) and text.strip():
+                parts.append(text.strip())
+        return " ".join(parts)

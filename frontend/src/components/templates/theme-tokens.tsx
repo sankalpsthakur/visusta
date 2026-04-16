@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Palette, Save, RotateCcw } from 'lucide-react'
 
@@ -21,20 +21,12 @@ interface ThemeTokensProps {
   readOnly?: boolean
 }
 
-function isColorToken(key: string): boolean {
-  return key.includes('color') || key.includes('bg') || key.includes('accent') || key.includes('primary') || key.includes('text')
-}
-
 function isHexColor(value: string): boolean {
   return /^#[0-9a-fA-F]{3,8}$/.test(value)
 }
 
 export function ThemeTokens({ tokens: initialTokens, onSave, isSaving, readOnly }: ThemeTokensProps) {
   const [tokens, setTokens] = useState<Record<string, string>>({ ...DEFAULT_TOKENS, ...initialTokens })
-
-  useEffect(() => {
-    setTokens({ ...DEFAULT_TOKENS, ...initialTokens })
-  }, [JSON.stringify(initialTokens)])
 
   function updateToken(key: string, value: string) {
     setTokens((prev) => ({ ...prev, [key]: value }))

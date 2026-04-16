@@ -69,7 +69,6 @@ export interface Template {
   created_at: string
   updated_at: string
   base_locale: string
-  is_system: boolean
   is_published: boolean
 }
 
@@ -212,7 +211,6 @@ function mapTemplate(raw: BackendTemplate, versions: BackendTemplateVersion[]): 
     created_at: raw.created_at,
     updated_at: raw.updated_at,
     base_locale: raw.base_locale,
-    is_system: false,
     is_published: raw.is_published,
   }
 }

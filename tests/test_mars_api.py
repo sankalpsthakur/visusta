@@ -518,6 +518,38 @@ class TestDraftsRouter:
         )
         assert resp.status_code == 422
 
+    def test_compose_downgrades_approved_draft_back_to_composing(self, client: TestClient) -> None:
+        draft = client.post(
+            "/api/clients/gerold-foods/drafts",
+            json={"title": "Needs Reapproval", "primary_locale": "en"},
+        ).json()
+        revision = client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose").json()
+        client.post(
+            f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
+            params={"target_status": "review"},
+        )
+        client.post(
+            f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
+            params={"target_status": "approval"},
+        )
+        for section in revision["sections"]:
+            client.post(
+                f"/api/clients/gerold-foods/drafts/{draft['id']}/approve",
+                json={
+                    "section_id": section["section_id"],
+                    "status": "approved",
+                    "reviewer": "alice",
+                },
+            )
+        detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
+        assert detail["status"] == "approved"
+
+        resp = client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
+        assert resp.status_code == 201
+        detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
+        assert detail["status"] == "composing"
+        assert client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}/approvals").json() == []
+
 
 # ── Chat ───────────────────────────────────────────────────────────────────────
 
@@ -629,22 +661,24 @@ class TestApprovalsRouter:
 
     def test_upsert_approval_updates_existing(self, client: TestClient) -> None:
         draft = self._setup_draft(client)
+        detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
+        real_section_id = detail["current_revision"]["sections"][0]["section_id"]
         client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/approve",
-            json={"section_id": "s1", "status": "needs_revision", "reviewer": "alice"},
+            json={"section_id": real_section_id, "status": "needs_revision", "reviewer": "alice"},
         )
         # Update to approved
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/approve",
-            json={"section_id": "s1", "status": "approved", "reviewer": "alice"},
+            json={"section_id": real_section_id, "status": "approved", "reviewer": "alice"},
         )
         assert resp.json()["status"] == "approved"
         # Still only one record
         all_approvals = client.get(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/approvals"
         ).json()
-        s1_approvals = [a for a in all_approvals if a["section_id"] == "s1"]
-        assert len(s1_approvals) == 1
+        matching = [a for a in all_approvals if a["section_id"] == real_section_id]
+        assert len(matching) == 1
 
     def test_all_sections_approved_rolls_draft_to_approved(self, client: TestClient) -> None:
         draft = self._setup_draft(client)
@@ -665,18 +699,8 @@ class TestApprovalsRouter:
         detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
         assert detail["status"] == "approved"
 
-
-# ── Exports ────────────────────────────────────────────────────────────────────
-
-class TestExportsRouter:
-    def _approved_draft(self, client: TestClient) -> dict:
-        """Create a draft, compose it, and force it to 'approved' status."""
-        draft = client.post(
-            "/api/clients/gerold-foods/drafts",
-            json={"title": "Export Draft", "primary_locale": "en"},
-        ).json()
-        client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
-        # Transition through: composing → review → approval → approved
+    def test_transition_to_approved_requires_section_approvals(self, client: TestClient) -> None:
+        draft = self._setup_draft(client)
         client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
             params={"target_status": "review"},
@@ -685,10 +709,42 @@ class TestExportsRouter:
             f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
             params={"target_status": "approval"},
         )
-        client.post(
+        resp = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
             params={"target_status": "approved"},
         )
+        assert resp.status_code == 422
+
+
+# ── Exports ────────────────────────────────────────────────────────────────────
+
+class TestExportsRouter:
+    def _approved_draft(self, client: TestClient) -> dict:
+        """Create a draft, compose it, and approve every section."""
+        draft = client.post(
+            "/api/clients/gerold-foods/drafts",
+            json={"title": "Export Draft", "primary_locale": "en"},
+        ).json()
+        revision = client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose").json()
+        client.post(
+            f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
+            params={"target_status": "review"},
+        )
+        client.post(
+            f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
+            params={"target_status": "approval"},
+        )
+        for section in revision["sections"]:
+            client.post(
+                f"/api/clients/gerold-foods/drafts/{draft['id']}/approve",
+                json={
+                    "section_id": section["section_id"],
+                    "status": "approved",
+                    "reviewer": "alice",
+                },
+            )
+        detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
+        assert detail["status"] == "approved"
         return draft
 
     def test_list_exports_empty(self, client: TestClient) -> None:
@@ -729,16 +785,16 @@ class TestExportsRouter:
         assert resp.status_code == 403
 
     def test_request_pdf_export_approved_draft(self, client: TestClient) -> None:
-        """PDF export is enqueued and eventually completes for approved draft."""
+        """PDF export completes immediately for approved draft."""
         draft = self._approved_draft(client)
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/exports",
             json={"format": "pdf", "locale": "en"},
         )
-        assert resp.status_code == 202
+        assert resp.status_code == 201
         job = resp.json()
         assert job["format"] == "pdf"
-        assert job["status"] in {"pending", "processing", "completed"}
+        assert job["status"] == "completed"
 
     def test_get_export_job(self, client: TestClient) -> None:
         draft = self._approved_draft(client)
@@ -753,24 +809,33 @@ class TestExportsRouter:
         assert resp.json()["id"] == job["id"]
 
     def test_download_not_ready_404(self, client: TestClient) -> None:
-        """PDF export becomes downloadable after processing."""
+        """PDF export becomes downloadable immediately after synchronous processing."""
         draft = self._approved_draft(client)
         job = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/exports",
             json={"format": "pdf"},
         ).json()
-        status = job
-        for _ in range(20):
-            status = client.get(
-                f"/api/clients/gerold-foods/drafts/{draft['id']}/exports/{job['id']}"
-            ).json()
-            if status["status"] == "completed":
-                break
+        status = client.get(
+            f"/api/clients/gerold-foods/drafts/{draft['id']}/exports/{job['id']}"
+        ).json()
         assert status["status"] == "completed"
         resp = client.get(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/exports/{job['id']}/download"
         )
         assert resp.status_code == 200
+
+    def test_export_rejects_revision_from_another_draft(self, client: TestClient) -> None:
+        approved = self._approved_draft(client)
+        other = client.post(
+            "/api/clients/gerold-foods/drafts",
+            json={"title": "Other Draft", "primary_locale": "en"},
+        ).json()
+        other_rev = client.post(f"/api/clients/gerold-foods/drafts/{other['id']}/compose").json()
+        resp = client.post(
+            f"/api/clients/gerold-foods/drafts/{approved['id']}/exports",
+            json={"format": "pdf", "revision_id": other_rev["id"]},
+        )
+        assert resp.status_code == 422
 
 
 # ── DOCX import ────────────────────────────────────────────────────────────────

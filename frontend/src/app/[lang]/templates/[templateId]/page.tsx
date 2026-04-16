@@ -10,7 +10,6 @@ import { ThemeTokens } from '@/components/templates/theme-tokens'
 import { IndustryOverlayPicker } from '@/components/templates/industry-overlay-picker'
 import { VersionControls } from '@/components/templates/version-controls'
 import { PageTransition } from '@/components/shared/page-transition'
-import { StatusBadge } from '@/components/approval/status-badge'
 import type { TemplateSection, TemplateVersion } from '@/lib/api/template-hooks'
 import { useLocalePath } from '@/lib/i18n/navigation'
 import { useRouter } from 'next/navigation'
@@ -39,7 +38,7 @@ export default function TemplateEditorPage({ params }: PageProps) {
 
   const liveSections = sections ?? template?.current_version.sections ?? []
   const selectedSection = liveSections.find((s) => s.section_id === selectedSectionId) ?? null
-  const readOnly = template?.is_system || pendingVersion !== null
+  const readOnly = pendingVersion !== null
 
   function handleSectionUpdate(updated: TemplateSection) {
     setSections((prev) => {
@@ -155,9 +154,28 @@ export default function TemplateEditorPage({ params }: PageProps) {
                 {template.report_type}
               </span>
               {pendingVersion && (
-                <span style={{ fontSize: 11, color: '#f59e0b', background: 'rgba(245,158,11,0.12)', padding: '2px 8px', borderRadius: 999 }}>
-                  Viewing v{pendingVersion.version_number}
-                </span>
+                <>
+                  <span style={{ fontSize: 11, color: '#f59e0b', background: 'rgba(245,158,11,0.12)', padding: '2px 8px', borderRadius: 999 }}>
+                    Viewing v{pendingVersion.version_number}
+                  </span>
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => { setPendingVersion(null); setSections(null); setSelectedSectionId(null); }}
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 500,
+                      color: 'var(--brand-accent)',
+                      background: 'rgba(var(--brand-accent-rgb),0.08)',
+                      padding: '2px 10px',
+                      borderRadius: 999,
+                      border: '1px solid rgba(var(--brand-accent-rgb),0.25)',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Return to current
+                  </motion.button>
+                </>
               )}
             </div>
             <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>{template.description}</p>
@@ -273,6 +291,7 @@ export default function TemplateEditorPage({ params }: PageProps) {
               >
                 {selectedSection ? (
                   <SectionEditor
+                    key={selectedSection.section_id}
                     section={selectedSection}
                     onSave={handleSectionUpdate}
                     readOnly={readOnly}
@@ -295,10 +314,11 @@ export default function TemplateEditorPage({ params }: PageProps) {
               style={{ padding: '20px 24px', borderRadius: 12, border: '1px solid var(--border-subtle)', background: 'var(--bg-surface)' }}
             >
               <ThemeTokens
-                tokens={template.theme_tokens}
+                key={JSON.stringify(pendingVersion?.theme_tokens ?? template.theme_tokens)}
+                tokens={pendingVersion?.theme_tokens ?? template.theme_tokens}
                 onSave={(tokens) => updateTheme.mutateAsync(tokens)}
                 isSaving={updateTheme.isPending}
-                readOnly={template.is_system}
+                readOnly={readOnly}
               />
             </motion.div>
           )}
@@ -311,11 +331,16 @@ export default function TemplateEditorPage({ params }: PageProps) {
               exit={{ opacity: 0 }}
               style={{ padding: '20px 24px', borderRadius: 12, border: '1px solid var(--border-subtle)', background: 'var(--bg-surface)' }}
             >
-              <IndustryOverlayPicker
-                selected={template.industry_tags}
-                onChange={() => {}}
-                readOnly={template.is_system}
-              />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ fontSize: 12, color: 'var(--text-muted)', background: 'var(--bg-surface-raised)', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--border-subtle)' }}>
+                  Industry tags are managed via industry profiles and cannot be edited directly.
+                </div>
+                <IndustryOverlayPicker
+                  selected={template.industry_tags}
+                  onChange={() => {}}
+                  readOnly={true}
+                />
+              </div>
             </motion.div>
           )}
 
@@ -331,6 +356,12 @@ export default function TemplateEditorPage({ params }: PageProps) {
                 versions={versions}
                 currentVersionNumber={template.current_version.version_number}
                 onSelectVersion={(v) => {
+                  if (v.version_number === template.current_version.version_number) {
+                    setPendingVersion(null)
+                    setSections(null)
+                    setActiveTab('sections')
+                    return
+                  }
                   setPendingVersion(v)
                   setSections(v.sections)
                   setActiveTab('sections')

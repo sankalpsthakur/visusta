@@ -46,41 +46,6 @@ clients:
       url: https://www.zsvr.de
       frequency: weekly
       source_type: registry
-    - id: pw_1776116804372
-      display_name: Playwright Source 1776116804372
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
-    - id: pw_1776116861552
-      display_name: Playwright Source 1776116861552
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
-    - id: pw_1776116900945
-      display_name: Playwright Source 1776116900945
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
-    - id: pw_1776116946444
-      display_name: Playwright Source 1776116946444
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
-    - id: pw_1776117093719
-      display_name: Playwright Source 1776117093719
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
-    - id: pw_1776325283305
-      display_name: Playwright Source 1776325283305
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
-    - id: pw_1776325669053
-      display_name: Playwright Source 1776325669053
-      url: https://eur-lex.europa.eu
-      frequency: weekly
-      source_type: gazette
     thresholds:
       critical_enforcement_window_days: 90
       min_confidence: 0.6

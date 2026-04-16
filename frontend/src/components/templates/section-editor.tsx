@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Save, BarChart2, X } from 'lucide-react'
 import type { TemplateSection } from '@/lib/api/template-hooks'
@@ -26,13 +26,6 @@ export function SectionEditor({ section, onSave, isSaving, readOnly }: SectionEd
   const [promptTemplate, setPromptTemplate] = useState(section.prompt_template)
   const [chartTypes, setChartTypes] = useState<string[]>(section.chart_types)
   const [maxTokens, setMaxTokens] = useState(section.max_tokens)
-
-  useEffect(() => {
-    setHeading(section.heading)
-    setPromptTemplate(section.prompt_template)
-    setChartTypes(section.chart_types)
-    setMaxTokens(section.max_tokens)
-  }, [section.section_id])
 
   const isDirty =
     heading !== section.heading ||

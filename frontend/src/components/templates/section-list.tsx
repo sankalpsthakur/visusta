@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { motion, AnimatePresence, Reorder } from 'framer-motion'
 import { GripVertical, ChevronDown, ChevronRight, AlertCircle, Plus, Trash2 } from 'lucide-react'
 import type { TemplateSection } from '@/lib/api/template-hooks'

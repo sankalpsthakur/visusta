@@ -190,6 +190,7 @@ export default function SourcesPage({ params }: SourcesPageProps) {
               <AnimatePresence>
                 {(showAddSource || editingSource) && (
                   <SourceForm
+                    key={editingSource?.id ?? 'new'}
                     initial={editingSource ?? undefined}
                     onSave={handleSaveSource}
                     onCancel={() => { setShowAddSource(false); setEditingSource(null) }}

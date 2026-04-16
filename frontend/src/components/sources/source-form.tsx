@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Save, X } from 'lucide-react'
 import type { SourceConfig } from '@/lib/api/hooks'
@@ -23,16 +23,6 @@ export function SourceForm({ initial, onSave, onCancel, isSaving }: SourceFormPr
     frequency: initial?.frequency ?? 'weekly',
     source_type: initial?.source_type ?? 'gazette',
   })
-
-  useEffect(() => {
-    setForm({
-      id: initial?.id ?? '',
-      display_name: initial?.display_name ?? '',
-      url: initial?.url ?? '',
-      frequency: initial?.frequency ?? 'weekly',
-      source_type: initial?.source_type ?? 'gazette',
-    })
-  }, [initial?.id])
 
   function update(key: keyof typeof form, value: string) {
     setForm((prev) => ({ ...prev, [key]: value }))

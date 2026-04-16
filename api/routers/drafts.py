@@ -5,6 +5,7 @@ Drafts router — CRUD, compose, translate, chat, section approve.
 from __future__ import annotations
 
 import json
+import uuid
 from typing import Any, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -128,9 +129,19 @@ def _load_template_sections(conn, template_version_id: int | None) -> list[dict[
 
 
 def _load_changelog_entries(client_id: str, period: str | None) -> list[dict[str, Any]]:
+    payload = _load_changelog_payload(client_id, period)
+    entries: list[dict[str, Any]] = []
+    if isinstance(payload, dict):
+        for value in payload.values():
+            if isinstance(value, list):
+                entries.extend(item for item in value if isinstance(item, dict))
+    return entries[:50]
+
+
+def _load_changelog_payload(client_id: str, period: str | None) -> dict[str, Any]:
     changelog_dir = REGULATORY_DATA_DIR / client_id / "changelogs"
     if not changelog_dir.exists():
-        return []
+        return {}
 
     candidate = None
     if period:
@@ -141,21 +152,16 @@ def _load_changelog_entries(client_id: str, period: str | None) -> list[dict[str
     if candidate is None:
         files = sorted(changelog_dir.glob("*.json"))
         if not files:
-            return []
+            return {}
         candidate = files[-1]
 
     try:
         with open(candidate, "r", encoding="utf-8") as fh:
             payload = json.load(fh)
     except (OSError, json.JSONDecodeError):
-        return []
+        return {}
 
-    entries: list[dict[str, Any]] = []
-    if isinstance(payload, dict):
-        for value in payload.values():
-            if isinstance(value, list):
-                entries.extend(item for item in value if isinstance(item, dict))
-    return entries[:50]
+    return payload if isinstance(payload, dict) else {}
 
 
 def _load_evidence(client_id: str) -> list[dict[str, Any]]:
@@ -248,6 +254,8 @@ def _insert_revision(
     sections: list[DraftSection],
     authored_by: str,
     note: str | None,
+    status: str = "composing",
+    primary_locale: str | None = None,
 ) -> Any:
     next_rev = _next_revision_number(conn, draft["id"])
     cur = conn.execute(
@@ -257,12 +265,22 @@ def _insert_revision(
         (draft["id"], next_rev, sections_to_json(sections), authored_by, note),
     )
     rev_id = cur.lastrowid
-    conn.execute(
-        """UPDATE report_drafts
-           SET current_revision_id=?, updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
-           WHERE id=?""",
-        (rev_id, draft["id"]),
-    )
+    if primary_locale:
+        conn.execute(
+            """UPDATE report_drafts
+               SET current_revision_id=?, status=?, primary_locale=?,
+                   updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
+               WHERE id=?""",
+            (rev_id, status, primary_locale, draft["id"]),
+        )
+    else:
+        conn.execute(
+            """UPDATE report_drafts
+               SET current_revision_id=?, status=?,
+                   updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
+               WHERE id=?""",
+            (rev_id, status, draft["id"]),
+        )
     return conn.execute(
         "SELECT * FROM draft_revisions WHERE id=?",
         (rev_id,),
@@ -444,6 +462,30 @@ def transition_draft(
                 f"Invalid transition: {row['status']} → {target_status}",
             )
 
+        if target_status == "approved":
+            if row["current_revision_id"] is None:
+                raise HTTPException(422, "Draft has no current revision to approve")
+
+            current = conn.execute(
+                "SELECT * FROM draft_revisions WHERE id=?",
+                (row["current_revision_id"],),
+            ).fetchone()
+            sections = sections_from_json(current["sections_json"]) if current else []
+            if not sections:
+                raise HTTPException(422, "Current revision has no sections to approve")
+
+            approvals = conn.execute(
+                """SELECT section_id, status FROM approval_states
+                   WHERE draft_id=? AND revision_id=?""",
+                (draft_id, row["current_revision_id"]),
+            ).fetchall()
+            approval_by_section = {approval["section_id"]: approval["status"] for approval in approvals}
+            if any(approval_by_section.get(section.section_id) != "approved" for section in sections):
+                raise HTTPException(
+                    422,
+                    "All sections must be approved before finalizing the draft.",
+                )
+
         conn.execute(
             """UPDATE report_drafts
                SET status=?, updated_at=strftime('%Y-%m-%dT%H:%M:%SZ', 'now')
@@ -527,6 +569,7 @@ def compose_draft(
         if draft is None:
             raise HTTPException(404, f"Draft {draft_id} not found")
         template_sections = _load_template_sections(conn, draft["template_version_id"])
+        changelog_payload = _load_changelog_payload(client_id, draft["period"])
         changelog = _load_changelog_entries(client_id, draft["period"])
         evidence = _load_evidence(client_id)
 
@@ -534,13 +577,27 @@ def compose_draft(
         result = agent.run(
             {
                 "changelog": changelog,
+                "changelog_payload": changelog_payload,
                 "evidence": evidence,
                 "template_sections": template_sections,
                 "locale": draft["primary_locale"],
             }
         )
+        raw_sections = result.get("sections", [])
+        if not raw_sections:
+            locale = draft["primary_locale"]
+            raw_sections = [{
+                "section_id": str(uuid.uuid4()),
+                "heading": "Report Draft",
+                "locale": locale,
+                "blocks": [{"block_id": "b1", "block_type": "paragraph", "content": "No content generated. Add sections to the template or provide changelog data."}],
+                "facts": [],
+                "citations": [],
+                "translation_status": "original",
+                "approval_status": "pending",
+            }]
         sections = _normalize_sections(
-            result.get("sections", []),
+            raw_sections,
             locale=draft["primary_locale"],
             fallback_sections=template_sections,
         )
@@ -560,6 +617,7 @@ def compose_draft(
             sections=sections,
             authored_by="draft-composer",
             note=note or "Composed from template and source material",
+            status="composing",
         )
 
     return _revision_detail_row(row)
@@ -626,6 +684,8 @@ def translate_draft(
             sections=translated,
             authored_by="translation-agent",
             note=f"Translation to {target_locale}",
+            status="composing",
+            primary_locale=target_locale,
         )
 
     return _revision_detail_row(row)
@@ -688,6 +748,7 @@ def update_section(
             sections=updated_sections,
             authored_by="editor",
             note=body.revision_note or f"Edited section {section_id}",
+            status="composing",
         )
 
     return updated_section
@@ -838,6 +899,7 @@ def send_chat(
             sections=updated_sections,
             authored_by="draft-chat",
             note=result.get("explanation") or "Chat-assisted edit",
+            status="composing",
         )
         assistant_insert = conn.execute(
             """INSERT INTO draft_chat_messages
@@ -923,6 +985,17 @@ def approve_section(
         ).fetchone()
         if draft is None:
             raise HTTPException(404, f"Draft {draft_id} not found")
+
+        # Validate section exists in current revision
+        revision = conn.execute(
+            "SELECT sections_json FROM draft_revisions WHERE id=?",
+            (draft["current_revision_id"],),
+        ).fetchone()
+        if revision:
+            current_sections = json.loads(revision["sections_json"])
+            valid_ids = {s.get("section_id") for s in current_sections}
+            if body.section_id not in valid_ids:
+                raise HTTPException(404, f"Section '{body.section_id}' not found in current revision")
 
         existing = conn.execute(
             "SELECT id FROM approval_states WHERE draft_id=? AND section_id=?",

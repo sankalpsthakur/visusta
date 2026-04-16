@@ -1,10 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, CheckSquare, GitBranch, Download, Archive, MoreHorizontal } from 'lucide-react'
+import { ArrowLeft, CheckSquare, GitBranch, Download, Archive } from 'lucide-react'
 import { useState } from 'react'
 import { StatusBadge } from '@/components/approval/status-badge'
-import type { Draft, DraftStatus } from '@/lib/api/draft-hooks'
+import { getDraftStatusTransitions, type Draft, type DraftStatus } from '@/lib/api/draft-hooks'
 
 interface DraftToolbarProps {
   draft: Draft
@@ -19,26 +19,15 @@ interface DraftToolbarProps {
   isUpdating?: boolean
 }
 
-const STATUS_TRANSITIONS: Record<DraftStatus, DraftStatus[]> = {
-  composing: ['review'],
-  review: ['composing', 'approval', 'revision'],
-  revision: ['composing', 'review'],
-  translating: ['review'],
-  approval: ['revision', 'approved'],
-  approved: ['exported'],
-  exported: ['archived'],
-  archived: [],
-}
-
 const TRANSITION_LABELS: Record<DraftStatus, string> = {
   composing: 'Set to Composing',
   review: 'Submit for Review',
   revision: 'Request Revision',
   translating: 'Start Translation',
   approval: 'Submit for Approval',
-  approved: 'Finalize Draft',
-  exported: 'Complete Delivery',
-  archived: 'Archive',
+  approved: 'Approve Draft',
+  exported: 'Mark as Exported',
+  archived: 'Archive Draft',
 }
 
 export function DraftToolbar({
@@ -53,11 +42,10 @@ export function DraftToolbar({
   isTranslating,
   isUpdating,
 }: DraftToolbarProps) {
-  const [showMenu, setShowMenu] = useState(false)
   const [targetLocale, setTargetLocale] = useState(
     availableLocales.find((locale) => locale.code !== draft.locale)?.code ?? draft.locale,
   )
-  const nextStatuses = STATUS_TRANSITIONS[draft.status] ?? []
+  const nextStatuses = getDraftStatusTransitions(draft.status)
   const translationOptions = availableLocales.filter((locale) => locale.code !== draft.locale)
 
   return (
@@ -199,8 +187,16 @@ export function DraftToolbar({
               padding: '7px 14px',
               borderRadius: 8,
               border: status === 'approved' ? 'none' : '1px solid var(--border-subtle)',
-              background: status === 'approved' ? '#22c55e' : 'var(--bg-surface-raised)',
-              color: status === 'approved' ? '#fff' : 'var(--text-secondary)',
+              background: status === 'approved'
+                ? '#22c55e'
+                : status === 'archived'
+                  ? 'var(--bg-surface)'
+                  : 'var(--bg-surface-raised)',
+              color: status === 'approved'
+                ? '#fff'
+                : status === 'archived'
+                  ? 'var(--text-muted)'
+                  : 'var(--text-secondary)',
               fontSize: 12,
               fontWeight: status === 'approved' ? 500 : 400,
               cursor: isUpdating ? 'not-allowed' : 'pointer',
@@ -209,6 +205,7 @@ export function DraftToolbar({
           >
             {status === 'approved' && <CheckSquare size={12} />}
             {status === 'revision' && <GitBranch size={12} />}
+            {status === 'archived' && <Archive size={12} />}
             {TRANSITION_LABELS[status]}
           </motion.button>
         ))}
@@ -234,63 +231,6 @@ export function DraftToolbar({
           Export
         </motion.button>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setShowMenu(!showMenu)}
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 8,
-            border: '1px solid var(--border-subtle)',
-            background: 'var(--bg-surface-raised)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: 'var(--text-secondary)',
-            position: 'relative',
-          }}
-        >
-          <MoreHorizontal size={14} />
-          {showMenu && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 38,
-                right: 0,
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 10,
-                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                zIndex: 100,
-                minWidth: 160,
-                overflow: 'hidden',
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => { onStatusChange('archived'); setShowMenu(false) }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  width: '100%',
-                  padding: '10px 14px',
-                  border: 'none',
-                  background: 'transparent',
-                  color: 'var(--text-secondary)',
-                  fontSize: 13,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                }}
-              >
-                <Archive size={13} />
-                Archive draft
-              </button>
-            </div>
-          )}
-        </motion.button>
       </div>
     </div>
   )

@@ -385,3 +385,48 @@ export function useUpdatePreferences(clientId: string) {
     },
   })
 }
+
+// ── Locale settings ──────────────────────────────────────────────────────────
+
+export interface LocaleOption {
+  code: string
+  name: string
+  native_name: string
+  is_active: boolean
+}
+
+export interface ClientLocaleSettings {
+  client_id: string
+  primary_locale: string
+  enabled_locales: string[]
+  fallback_locale: string
+  updated_at?: string
+}
+
+export function useLocales() {
+  return useQuery<LocaleOption[]>({
+    queryKey: ['locales'],
+    queryFn: () => apiGet<LocaleOption[]>('/api/locales'),
+    retry: false,
+  })
+}
+
+export function useClientLocaleSettings(clientId: string) {
+  return useQuery<ClientLocaleSettings>({
+    queryKey: ['locale-settings', clientId],
+    queryFn: () => apiGet<ClientLocaleSettings>(`/api/clients/${clientId}/locale-settings`),
+    enabled: !!clientId,
+    retry: false,
+  })
+}
+
+export function useUpdateClientLocaleSettings(clientId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (settings: Partial<ClientLocaleSettings>) =>
+      apiPut<ClientLocaleSettings>(`/api/clients/${clientId}/locale-settings`, settings),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['locale-settings', clientId] })
+    },
+  })
+}

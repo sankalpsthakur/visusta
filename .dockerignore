@@ -1,0 +1,55 @@
+# Version control and editor config
+.git
+.gitignore
+.claude
+.env
+.env.*
+.context/
+.idea/
+.vscode/
+.DS_Store
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+.coverage.*
+venv/
+.venv/
+
+# Node
+node_modules/
+frontend/node_modules
+frontend/.env*
+frontend/.next
+frontend/.pytest_cache
+frontend/artifacts
+frontend/playwright-report
+frontend/test-results
+frontend/tsconfig.tsbuildinfo
+
+# Runtime-generated data (will be created at runtime or on volume)
+data/*.db
+output/
+charts/
+tmp/
+
+# Tests
+tests/
+frontend/e2e/
+frontend/playwright.config.ts
+
+# Docs
+*.md
+docs/
+proposal/
+esg_regulatory_tracker/
+Visusta_*.pdf
+
+# Build artifacts that should not be baked in
+*.log

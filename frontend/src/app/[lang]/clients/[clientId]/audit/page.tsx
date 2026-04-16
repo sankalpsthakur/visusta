@@ -1,6 +1,6 @@
 'use client'
 
-import { use } from 'react'
+import { use, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -10,6 +10,8 @@ import { useAudit } from '@/lib/api/hooks'
 import { AlertTriangle, CheckCircle, Circle, ShieldCheck } from 'lucide-react'
 
 type GapStatus = 'compliant' | 'gap' | 'partial' | 'not_assessed'
+type GapType = 'regulatory' | 'data_quality' | 'code_health'
+type ActiveTab = 'regulatory' | 'code_health'
 
 interface GapItem {
   topic: string
@@ -17,6 +19,7 @@ interface GapItem {
   status: GapStatus
   finding?: string
   priority: 'critical' | 'high' | 'medium' | 'low'
+  gap_type: GapType
 }
 
 const STATUS_CONFIG: Record<GapStatus, { label: string; color: string; icon: React.ReactNode }> = {
@@ -67,20 +70,27 @@ interface AuditPageProps {
 export default function AuditPage({ params }: AuditPageProps) {
   const { clientId } = use(params)
   const { data: auditData, isLoading, isError } = useAudit(clientId)
+  const [activeTab, setActiveTab] = useState<ActiveTab>('regulatory')
 
-  const gaps: GapItem[] = auditData
+  const allGaps: GapItem[] = auditData
     ? auditData.findings.map((f) => ({
         topic: f.category,
         area: f.location,
-        status: (f.severity === 'low' ? 'compliant' : 'gap') as GapStatus,
+        // severity comes as uppercase from API; lowercase for comparison
+        status: (f.severity.toLowerCase() === 'low' ? 'compliant' : 'gap') as GapStatus,
         finding: f.message,
-        priority: f.severity as GapItem['priority'],
+        priority: f.severity.toLowerCase() as GapItem['priority'],
+        gap_type: (f.gap_type ?? 'regulatory') as GapType,
       }))
     : []
 
-  const criticalCount = gaps.filter((g) => g.status === 'gap' && g.priority === 'critical').length
-  const gapCount = gaps.filter((g) => g.status === 'gap').length
-  const compliantCount = gaps.filter((g) => g.status === 'compliant').length
+  const regulatoryGaps = allGaps.filter((g) => g.gap_type !== 'code_health')
+  const codeHealthGaps = allGaps.filter((g) => g.gap_type === 'code_health')
+  const gaps = activeTab === 'code_health' ? codeHealthGaps : regulatoryGaps
+
+  const criticalCount = regulatoryGaps.filter((g) => g.status === 'gap' && g.priority === 'critical').length
+  const gapCount = regulatoryGaps.filter((g) => g.status === 'gap').length
+  const compliantCount = regulatoryGaps.filter((g) => g.status === 'compliant').length
 
   return (
     <PageTransition className="p-8">
@@ -94,7 +104,7 @@ export default function AuditPage({ params }: AuditPageProps) {
           </p>
         </div>
 
-        {/* Summary cards */}
+        {/* Summary cards — always counts regulatory gaps only */}
         <ErrorBoundary>
           <div className="grid grid-cols-3 gap-4 mb-8">
             {isLoading
@@ -116,6 +126,33 @@ export default function AuditPage({ params }: AuditPageProps) {
                 ))}
           </div>
         </ErrorBoundary>
+
+        {/* Tab toggle */}
+        <div className="flex gap-1 mb-4 p-1 rounded-lg w-fit" style={{ background: 'var(--bg-elevated)' }}>
+          {([['regulatory', 'Regulatory Gaps'], ['code_health', 'System Health']] as [ActiveTab, string][]).map(([tab, label]) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="text-xs px-3 py-1.5 rounded-md transition-colors"
+              style={{
+                background: activeTab === tab ? 'var(--bg-surface)' : 'transparent',
+                color: activeTab === tab ? 'var(--text-primary)' : 'var(--text-muted)',
+                border: activeTab === tab ? '1px solid var(--border-color)' : '1px solid transparent',
+                cursor: 'pointer',
+              }}
+            >
+              {label}
+              {!isLoading && (
+                <span
+                  className="ml-1.5 tabular-nums"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  {tab === 'code_health' ? codeHealthGaps.length : regulatoryGaps.length}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
 
         {/* Gap table */}
         <ErrorBoundary>
@@ -147,13 +184,13 @@ export default function AuditPage({ params }: AuditPageProps) {
                 <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-5 py-10" style={{ background: 'var(--bg-surface)' }}>
                   <EmptyState
                     icon={ShieldCheck}
-                    title="No audit findings"
-                    description="This client has no compliance gaps on record."
+                    title={activeTab === 'code_health' ? 'No system health issues' : 'No compliance gaps'}
+                    description={activeTab === 'code_health' ? 'No code or build issues detected.' : 'This client has no compliance gaps on record.'}
                   />
                 </motion.div>
               ) : (
                 <motion.div
-                  key="findings"
+                  key={`findings-${activeTab}`}
                   initial="hidden"
                   animate="show"
                   variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}

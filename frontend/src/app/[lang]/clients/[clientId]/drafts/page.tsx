@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Search, FileText } from 'lucide-react'
 import { useDrafts, useCreateDraft } from '@/lib/api/draft-hooks'
 import { useTemplates } from '@/lib/api/template-hooks'
+import { useClientLocaleSettings } from '@/lib/api/hooks'
 import { DraftCard } from '@/components/drafts/draft-card'
 import { StatusBadge } from '@/components/approval/status-badge'
 import { PageTransition } from '@/components/shared/page-transition'
@@ -26,6 +27,7 @@ export default function DraftsPage({ params }: DraftsPageProps) {
 
   const { data: drafts = [], isLoading, error } = useDrafts(clientId)
   const { data: templates = [] } = useTemplates()
+  const { data: localeSettings } = useClientLocaleSettings(clientId)
   const createDraft = useCreateDraft(clientId)
 
   const [search, setSearch] = useState('')
@@ -66,7 +68,10 @@ export default function DraftsPage({ params }: DraftsPageProps) {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setShowCreateModal(true)}
+            onClick={() => {
+              setNewDraft({ locale: localeSettings?.primary_locale ?? 'en', period: new Date().toISOString().slice(0, 7) })
+              setShowCreateModal(true)
+            }}
             style={{
               display: 'flex',
               alignItems: 'center',

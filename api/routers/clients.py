@@ -228,6 +228,7 @@ def run_audit_endpoint(client_id: str = Depends(validate_client)) -> AuditRespon
             location=f.location,
             message=f.message,
             evidence=f.evidence,
+            gap_type=f.gap_type,
         )
         for f in report.findings
     ]

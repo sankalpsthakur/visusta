@@ -111,10 +111,12 @@ export function useLatestChangelog(clientId: string) {
 // Audit
 
 export interface AuditFinding {
-  severity: 'critical' | 'high' | 'medium' | 'low'
+  severity: string  // uppercase from API: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
   category: string
   location: string
   message: string
+  evidence?: string
+  gap_type?: string  // "regulatory" | "data_quality" | "code_health"
 }
 
 export interface AuditResponse {
@@ -348,7 +350,7 @@ export function useUploadEvidence(clientId: string) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (formData: FormData) => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/clients/${clientId}/evidence/upload`, {
+      const res = await fetch(`/api/clients/${clientId}/evidence/upload`, {
         method: 'POST',
         body: formData,
       })
@@ -359,6 +361,19 @@ export function useUploadEvidence(clientId: string) {
       return res.json() as Promise<EvidenceRecord>
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['evidence', clientId] }),
+  })
+}
+
+// Screening
+
+export function useRunScreening(clientId: string) {
+  const queryClient = useQueryClient()
+  return useMutation<{ period: string; status: string }, Error, { period: string }>({
+    mutationFn: ({ period }) =>
+      apiPost<{ period: string; status: string }>(`/api/clients/${clientId}/screening/run`, { period }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['changelogs', clientId] })
+    },
   })
 }
 

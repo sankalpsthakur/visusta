@@ -134,6 +134,7 @@ class FindingSchema(BaseModel):
     location: str
     message: str
     evidence: Optional[str] = None
+    gap_type: str = "regulatory"  # "regulatory" | "data_quality" | "code_health"
 
 
 class AuditResponse(BaseModel):

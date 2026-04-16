@@ -5,12 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorBoundary } from '@/components/shared/error-boundary'
-import { FileText, Download, Play, Clock } from 'lucide-react'
+import { FileText, Download, Play, Clock, RefreshCw } from 'lucide-react'
 import {
   useGenerateMonthlyReport,
   useGenerateQuarterlyReport,
   useChangelogs,
   usePreferences,
+  useRunScreening,
 } from '@/lib/api/hooks'
 
 const REPORT_TYPE_META = [
@@ -61,6 +62,7 @@ export default function ReportsPage({ params }: ReportsPageProps) {
   const quarterlyMutation = useGenerateQuarterlyReport(clientId)
   const { data: changelogsData, isLoading: changelogsLoading } = useChangelogs(clientId)
   const { data: prefs } = usePreferences(clientId)
+  const screeningMutation = useRunScreening(clientId)
 
   const monthlyPeriods = changelogsData?.periods ?? []
   const quarterlyPeriods = deriveQuarterlyPeriods(monthlyPeriods)
@@ -72,6 +74,7 @@ export default function ReportsPage({ params }: ReportsPageProps) {
   })
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
   const [pdfFilename, setPdfFilename] = useState<string>('')
+  const [screeningPeriod, setScreeningPeriod] = useState('')
 
   const getSelectedPeriod = (id: string) => {
     if (id === 'monthly') return selectedPeriods.monthly || monthlyPeriods[monthlyPeriods.length - 1] || ''
@@ -147,54 +150,41 @@ export default function ReportsPage({ params }: ReportsPageProps) {
                     <div className="flex flex-wrap gap-1.5 items-center">
                       {changelogsLoading ? (
                         <PeriodSkeleton />
+                      ) : isNewClient || periods.length === 0 ? (
+                        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                          No screening data available for this client yet.
+                          Run the regulatory screening pipeline to generate report data.
+                        </p>
                       ) : (
-                        <>
-                          {periods.map((period) => (
-                            <button
-                              key={period}
-                              onClick={() =>
-                                setSelectedPeriods((prev) => ({ ...prev, [report.id]: period }))
-                              }
-                              className="text-xs px-2.5 py-1 rounded transition-all"
-                              style={{
-                                background: selected === period ? 'var(--brand)' : 'var(--bg-elevated)',
-                                color: selected === period ? 'var(--brand-contrast)' : 'var(--text-muted)',
-                                border: '1px solid var(--border-color)',
-                                fontFamily: 'var(--font-mono)',
-                              }}
-                            >
-                              {period}
-                            </button>
-                          ))}
-                          <input
-                            type="text"
-                            placeholder={report.id === 'monthly' ? '2026-04' : 'Q2 2026'}
-                            value={!periods.includes(selected) ? selected : ''}
-                            onChange={(e) =>
-                              setSelectedPeriods((prev) => ({ ...prev, [report.id]: e.target.value }))
+                        periods.map((period) => (
+                          <button
+                            key={period}
+                            onClick={() =>
+                              setSelectedPeriods((prev) => ({ ...prev, [report.id]: period }))
                             }
-                            className="text-xs px-2.5 py-1 rounded"
+                            className="text-xs px-2.5 py-1 rounded transition-all"
                             style={{
-                              width: 80,
-                              background: 'var(--bg-elevated)',
-                              color: 'var(--text-primary)',
+                              background: selected === period ? 'var(--brand)' : 'var(--bg-elevated)',
+                              color: selected === period ? 'var(--brand-contrast)' : 'var(--text-muted)',
                               border: '1px solid var(--border-color)',
                               fontFamily: 'var(--font-mono)',
                             }}
-                          />
-                        </>
+                          >
+                            {period}
+                          </button>
+                        ))
                       )}
                     </div>
                   </div>
 
                   <motion.button
                     onClick={() => handleGenerate(report.id)}
-                    disabled={isGenerating(report.id) || !selected}
+                    disabled={isGenerating(report.id) || !periods.includes(selected)}
                     className="w-full flex items-center justify-center gap-2 py-2 rounded text-sm font-medium"
                     style={{
                       background: isGenerating(report.id) ? 'var(--bg-elevated)' : 'var(--brand)',
                       color: 'var(--brand-contrast)',
-                      opacity: (isGenerating(report.id) || !selected) ? 0.7 : 1,
+                      opacity: (isGenerating(report.id) || !periods.includes(selected)) ? 0.7 : 1,
                     }}
                     whileHover={{ opacity: 0.9 }}
                     whileTap={{ scale: 0.98 }}
@@ -223,6 +213,80 @@ export default function ReportsPage({ params }: ReportsPageProps) {
             })}
           </motion.div>
         </ErrorBoundary>
+
+        {/* Run Screening — shown when no changelog data exists yet */}
+        {isNewClient && (
+          <div
+            className="rounded-lg p-5 mb-8"
+            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <RefreshCw className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--brand)' }} />
+              <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                Run Screening
+              </span>
+            </div>
+            <p className="text-xs mb-4 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              Run your first screening to generate report data. Enter the period in YYYY-MM format.
+            </p>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="2026-04"
+                value={screeningPeriod}
+                onChange={(e) => setScreeningPeriod(e.target.value)}
+                className="text-xs px-2.5 py-1.5 rounded"
+                style={{
+                  width: 100,
+                  background: 'var(--bg-elevated)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  fontFamily: 'var(--font-mono)',
+                }}
+              />
+              <motion.button
+                onClick={() => screeningMutation.mutate({ period: screeningPeriod })}
+                disabled={screeningMutation.isPending || !/^\d{4}-\d{2}$/.test(screeningPeriod)}
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded font-medium"
+                style={{
+                  background: 'var(--brand)',
+                  color: 'var(--brand-contrast)',
+                  opacity: (screeningMutation.isPending || !/^\d{4}-\d{2}$/.test(screeningPeriod)) ? 0.7 : 1,
+                }}
+                whileHover={{ opacity: 0.9 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {screeningMutation.isPending ? (
+                  <><Clock className="w-3.5 h-3.5 animate-spin" />Running...</>
+                ) : (
+                  <><Play className="w-3.5 h-3.5" />Run Screening</>
+                )}
+              </motion.button>
+            </div>
+            {screeningMutation.isError && (
+              <div
+                className="mt-2 text-xs px-2 py-1.5 rounded"
+                style={{
+                  background: 'color-mix(in srgb, var(--severity-critical) 10%, transparent)',
+                  color: 'var(--severity-critical)',
+                }}
+              >
+                {screeningMutation.error?.message ?? 'Screening failed'}
+              </div>
+            )}
+            {screeningMutation.isSuccess && (
+              <div
+                className="mt-2 text-xs px-2 py-1.5 rounded"
+                style={{
+                  background: 'color-mix(in srgb, var(--brand) 10%, transparent)',
+                  color: 'var(--brand)',
+                }}
+              >
+                Screening complete. Select a period above to generate reports.
+              </div>
+            )}
+          </div>
+        )}
 
         {/* PDF preview */}
         <AnimatePresence>

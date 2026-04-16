@@ -43,6 +43,32 @@ class Finding:
     location: str
     message: str
     evidence: Optional[str] = None
+    gap_type: str = "regulatory"  # "regulatory" | "data_quality" | "code_health"
+
+
+# Categories that are code / build-health issues, not compliance gaps.
+_CODE_HEALTH_CATEGORIES = frozenset({
+    "Reference Parsing",
+    "Missing File",
+    "Non Data-driven Report",
+    "Non-actionable Reference",
+    "Primary Sources Missing",
+})
+
+# Categories that indicate a data-quality gap (missing/incomplete records).
+_DATA_QUALITY_CATEGORIES = frozenset({
+    "Missing Applicability",
+    "Missing Topic Coverage",
+    "Missing Data",
+})
+
+
+def _classify_gap_type(category: str) -> str:
+    if category in _CODE_HEALTH_CATEGORIES:
+        return "code_health"
+    if category in _DATA_QUALITY_CATEGORIES:
+        return "data_quality"
+    return "regulatory"
 
 
 @dataclass
@@ -64,6 +90,7 @@ class AuditReport:
                 location=location,
                 message=message,
                 evidence=evidence,
+                gap_type=_classify_gap_type(category),
             )
         )
 

@@ -152,7 +152,7 @@ function ReportLanguageSection({ clientId }: { clientId: string }) {
         <div className="px-5">
           <SettingRow
             label="Primary language"
-            description="This language will be used to generate reports for this client."
+            description="Default language for new drafts. Compose and translate actions in the draft studio can override this per-draft."
             value={
               <select
                 value={settings.primary_locale}
@@ -579,8 +579,13 @@ function PreferencesSectionLoaded({ clientId, initialPrefs }: { clientId: string
           </div>
         </div>
         <div className="py-4">
-          <div className="text-sm font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
-            Section order
+          <div className="flex items-baseline gap-2 mb-3">
+            <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+              Section order
+            </div>
+            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              Applied to monthly reports. Quarterly brief uses a fixed structure.
+            </div>
           </div>
           <div className="flex flex-col gap-1.5">
             {prefs.section_order.map((section, idx) => (

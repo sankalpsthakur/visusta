@@ -8,6 +8,7 @@ All tests skip gracefully under the system Python (no fastapi).
 """
 from __future__ import annotations
 
+import time
 from pathlib import Path
 
 import pytest
@@ -59,9 +60,59 @@ def _create_draft(
 
 
 def _compose(client: TestClient, draft_id: int) -> dict:
+    """Kick off the async compose job and poll until the revision is materialized."""
     resp = client.post(f"/api/clients/{CLIENT}/drafts/{draft_id}/compose")
-    assert resp.status_code == 201
-    return resp.json()
+    assert resp.status_code == 202, resp.text
+    body = resp.json()
+    assert "job_id" in body
+    job_id = body["job_id"]
+    # Poll the status endpoint. BackgroundTask runs in the TestClient's threadpool
+    # with the stub LLM, so "done" lands within a handful of iterations.
+    for _ in range(50):
+        status = client.get(
+            f"/api/clients/{CLIENT}/drafts/{draft_id}/compose/{job_id}"
+        )
+        assert status.status_code == 200, status.text
+        data = status.json()
+        if data["status"] == "done":
+            assert data["revision"] is not None, "compose job finished without revision"
+            return data["revision"]
+        if data["status"] == "failed":
+            raise AssertionError(f"Compose job failed: {data.get('error')}")
+        time.sleep(0.05)
+    raise AssertionError(f"Compose job {job_id} did not complete in time")
+
+
+def _send_chat(
+    client: TestClient,
+    draft_id: int,
+    *,
+    content: str,
+    section_id: str,
+    role: str = "user",
+) -> dict:
+    """Fire a section-scoped chat (202) and poll for the assistant message."""
+    resp = client.post(
+        f"/api/clients/{CLIENT}/drafts/{draft_id}/chat",
+        json={"role": role, "content": content, "section_id": section_id},
+    )
+    assert resp.status_code == 202, resp.text
+    body = resp.json()
+    assert "job_id" in body
+    job_id = body["job_id"]
+    for _ in range(50):
+        status = client.get(
+            f"/api/clients/{CLIENT}/drafts/{draft_id}/chat/{job_id}"
+        )
+        assert status.status_code == 200, status.text
+        data = status.json()
+        if data["status"] == "done":
+            assert data["message"] is not None, "chat job finished without message"
+            return data["message"]
+        if data["status"] == "failed":
+            raise AssertionError(f"Chat job failed: {data.get('error')}")
+        time.sleep(0.05)
+    raise AssertionError(f"Chat job {job_id} did not complete in time")
 
 
 def _transition(client: TestClient, draft_id: int, target: str) -> dict:
@@ -191,10 +242,12 @@ class TestDraftRevisionHistoryWorkflow:
     def test_chat_message_linked_to_current_revision(self, client: TestClient) -> None:
         draft = _create_draft(client)
         _compose(client, draft["id"])
-        msg = client.post(
-            f"/api/clients/{CLIENT}/drafts/{draft['id']}/chat",
-            json={"role": "user", "content": "Please expand this section.", "section_id": "exec"},
-        ).json()
+        msg = _send_chat(
+            client,
+            draft["id"],
+            content="Please expand this section.",
+            section_id="exec",
+        )
         current = client.get(f"/api/clients/{CLIENT}/drafts/{draft['id']}").json()
         assert msg["revision_id"] == current["current_revision_id"]
 
@@ -586,11 +639,12 @@ class TestLocaleWorkflow:
         assert resp.status_code == 422
 
     def test_all_24_locales_available(self, client: TestClient) -> None:
+        # 24 EU + 2 Norwegian (nb, nn) seeded by migration 003
         locales = client.get("/api/locales").json()
         codes = {lc["code"] for lc in locales}
-        assert len(codes) == 24
-        # Spot-check key EU languages
-        for code in ("en", "de", "fr", "es", "it", "nl", "pl", "sv"):
+        assert len(codes) == 26
+        # Spot-check key EU languages plus Norwegian variants
+        for code in ("en", "de", "fr", "es", "it", "nl", "pl", "sv", "nb", "nn"):
             assert code in codes
 
 

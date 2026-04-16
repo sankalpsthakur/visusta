@@ -8,6 +8,7 @@ Migration runs during app startup (triggered by TestClient lifespan).
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 
 import pytest
@@ -18,6 +19,69 @@ from fastapi.testclient import TestClient  # noqa: E402
 from freezegun import freeze_time  # noqa: E402
 
 import db.connection as db_connection_module  # noqa: E402
+
+
+def _poll_compose(client: TestClient, client_id: str, draft_id: int, job_id: str) -> dict:
+    """Poll the compose job endpoint until the revision is available or it fails."""
+    for _ in range(50):
+        status = client.get(
+            f"/api/clients/{client_id}/drafts/{draft_id}/compose/{job_id}"
+        )
+        assert status.status_code == 200, status.text
+        data = status.json()
+        if data["status"] == "done":
+            assert data["revision"] is not None, "compose job finished without revision"
+            return data["revision"]
+        if data["status"] == "failed":
+            raise AssertionError(f"Compose job failed: {data.get('error')}")
+        time.sleep(0.05)
+    raise AssertionError(f"Compose job {job_id} did not complete in time")
+
+
+def _compose_and_wait(client: TestClient, client_id: str, draft_id: int) -> dict:
+    """Fire a compose request (202) and poll until the revision is materialized."""
+    resp = client.post(f"/api/clients/{client_id}/drafts/{draft_id}/compose")
+    assert resp.status_code == 202, resp.text
+    body = resp.json()
+    assert "job_id" in body
+    return _poll_compose(client, client_id, draft_id, body["job_id"])
+
+
+def _poll_chat(client: TestClient, client_id: str, draft_id: int, job_id: str) -> dict:
+    """Poll the chat job endpoint until the assistant message is available or it fails."""
+    for _ in range(50):
+        status = client.get(
+            f"/api/clients/{client_id}/drafts/{draft_id}/chat/{job_id}"
+        )
+        assert status.status_code == 200, status.text
+        data = status.json()
+        if data["status"] == "done":
+            assert data["message"] is not None, "chat job finished without message"
+            return data["message"]
+        if data["status"] == "failed":
+            raise AssertionError(f"Chat job failed: {data.get('error')}")
+        time.sleep(0.05)
+    raise AssertionError(f"Chat job {job_id} did not complete in time")
+
+
+def _send_chat_and_wait(
+    client: TestClient,
+    client_id: str,
+    draft_id: int,
+    *,
+    content: str,
+    section_id: str,
+    role: str = "user",
+) -> dict:
+    """Fire a section-scoped chat (202) and poll until the assistant message is materialized."""
+    resp = client.post(
+        f"/api/clients/{client_id}/drafts/{draft_id}/chat",
+        json={"role": role, "content": content, "section_id": section_id},
+    )
+    assert resp.status_code == 202, resp.text
+    body = resp.json()
+    assert "job_id" in body
+    return _poll_chat(client, client_id, draft_id, body["job_id"])
 
 
 @pytest.fixture()
@@ -42,10 +106,11 @@ def client(test_db_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
 
 class TestLocalesRouter:
     def test_list_locales_returns_24(self, client: TestClient) -> None:
+        # 24 EU + 2 Norwegian (nb, nn) seeded by migration 003
         resp = client.get("/api/locales")
         assert resp.status_code == 200
         data = resp.json()
-        assert len(data) == 24
+        assert len(data) == 26
 
     def test_locale_has_required_fields(self, client: TestClient) -> None:
         resp = client.get("/api/locales")
@@ -259,9 +324,17 @@ class TestSourcesRouter:
 
 class TestTemplatesRouter:
     def test_list_templates_empty(self, client: TestClient) -> None:
+        # GET /api/templates auto-seeds default templates when the table is
+        # empty (commit c9e4b02). The original "empty list" contract was
+        # replaced with "router always returns at least the seeded defaults."
+        # Verify the seeded defaults show up and have the expected shape.
         resp = client.get("/api/templates")
         assert resp.status_code == 200
-        assert resp.json() == []
+        data = resp.json()
+        assert isinstance(data, list)
+        assert len(data) >= 1
+        names = {t["name"] for t in data}
+        assert {"Monthly Impact Report", "Quarterly Strategic Brief"}.issubset(names)
 
     def test_create_template(self, client: TestClient) -> None:
         resp = client.post(
@@ -429,24 +502,21 @@ class TestDraftsRouter:
 
     def test_compose_creates_revision(self, client: TestClient) -> None:
         created = self._create_draft(client)
-        resp = client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
-        assert resp.status_code == 201
-        rev = resp.json()
+        rev = _compose_and_wait(client, "gerold-foods", created["id"])
         assert rev["revision_number"] == 1
         assert "sections" in rev
         assert len(rev["sections"]) > 0
 
     def test_compose_increments_revision(self, client: TestClient) -> None:
         created = self._create_draft(client)
-        client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
-        resp = client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
-        assert resp.status_code == 201
-        assert resp.json()["revision_number"] == 2
+        _compose_and_wait(client, "gerold-foods", created["id"])
+        rev2 = _compose_and_wait(client, "gerold-foods", created["id"])
+        assert rev2["revision_number"] == 2
 
     def test_list_revisions(self, client: TestClient) -> None:
         created = self._create_draft(client)
-        client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
-        client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", created["id"])
+        _compose_and_wait(client, "gerold-foods", created["id"])
         resp = client.get(f"/api/clients/gerold-foods/drafts/{created['id']}/revisions")
         assert resp.status_code == 200
         assert len(resp.json()) == 2
@@ -481,7 +551,7 @@ class TestDraftsRouter:
 
     def test_translate_creates_revision(self, client: TestClient) -> None:
         created = self._create_draft(client)
-        client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", created["id"])
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{created['id']}/translate",
             params={"target_locale": "de"},
@@ -495,7 +565,7 @@ class TestDraftsRouter:
 
     def test_update_section_creates_new_revision(self, client: TestClient) -> None:
         created = self._create_draft(client)
-        rev = client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose").json()
+        rev = _compose_and_wait(client, "gerold-foods", created["id"])
         section_id = rev["sections"][0]["section_id"]
         resp = client.put(
             f"/api/clients/gerold-foods/drafts/{created['id']}/sections/{section_id}",
@@ -511,7 +581,7 @@ class TestDraftsRouter:
 
     def test_translate_invalid_locale_422(self, client: TestClient) -> None:
         created = self._create_draft(client)
-        client.post(f"/api/clients/gerold-foods/drafts/{created['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", created["id"])
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{created['id']}/translate",
             params={"target_locale": "xx"},
@@ -523,7 +593,7 @@ class TestDraftsRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "Needs Reapproval", "primary_locale": "en"},
         ).json()
-        revision = client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose").json()
+        revision = _compose_and_wait(client, "gerold-foods", draft["id"])
         client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
             params={"target_status": "review"},
@@ -544,8 +614,7 @@ class TestDraftsRouter:
         detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
         assert detail["status"] == "approved"
 
-        resp = client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
-        assert resp.status_code == 201
+        _compose_and_wait(client, "gerold-foods", draft["id"])
         detail = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
         assert detail["status"] == "composing"
         assert client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}/approvals").json() == []
@@ -559,7 +628,7 @@ class TestChatRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "Chat Test Draft", "primary_locale": "en"},
         ).json()
-        client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", draft["id"])
         return draft
 
     def test_list_chat_empty(self, client: TestClient) -> None:
@@ -570,23 +639,26 @@ class TestChatRouter:
 
     def test_send_chat_message(self, client: TestClient) -> None:
         draft = self._setup_draft(client)
-        resp = client.post(
-            f"/api/clients/gerold-foods/drafts/{draft['id']}/chat",
-            json={"role": "user", "content": "Please expand section 1.", "section_id": "executive_summary"},
+        msg = _send_chat_and_wait(
+            client,
+            "gerold-foods",
+            draft["id"],
+            content="Please expand section 1.",
+            section_id="executive_summary",
         )
-        assert resp.status_code == 201
-        msg = resp.json()
         assert msg["role"] == "assistant"
         assert msg["section_id"] == "executive_summary"
 
     def test_send_chat_message_creates_revision_and_assistant_reply(self, client: TestClient) -> None:
         draft = self._setup_draft(client)
         before = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
-        resp = client.post(
-            f"/api/clients/gerold-foods/drafts/{draft['id']}/chat",
-            json={"role": "user", "content": "Please expand section 1.", "section_id": "executive_summary"},
+        _send_chat_and_wait(
+            client,
+            "gerold-foods",
+            draft["id"],
+            content="Please expand section 1.",
+            section_id="executive_summary",
         )
-        assert resp.status_code == 201
         after = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}").json()
         assert after["current_revision_id"] != before["current_revision_id"]
         messages = client.get(f"/api/clients/gerold-foods/drafts/{draft['id']}/chat").json()
@@ -595,14 +667,19 @@ class TestChatRouter:
 
     def test_filter_chat_by_section(self, client: TestClient) -> None:
         draft = self._setup_draft(client)
-        client.post(
-            f"/api/clients/gerold-foods/drafts/{draft['id']}/chat",
-            json={"role": "user", "content": "Expand intro.", "section_id": "executive_summary"},
+        _send_chat_and_wait(
+            client,
+            "gerold-foods",
+            draft["id"],
+            content="Expand intro.",
+            section_id="executive_summary",
         )
-        client.post(
+        # No-section chats remain synchronous (201 + canned reply, no LLM).
+        resp = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/chat",
             json={"role": "user", "content": "Draft-level question."},
         )
+        assert resp.status_code == 201
         resp = client.get(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/chat",
             params={"section_id": "executive_summary"},
@@ -620,7 +697,7 @@ class TestApprovalsRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "Approval Draft", "primary_locale": "en"},
         ).json()
-        client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", draft["id"])
         return draft
 
     def test_list_approvals_empty(self, client: TestClient) -> None:
@@ -725,7 +802,7 @@ class TestExportsRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "Export Draft", "primary_locale": "en"},
         ).json()
-        revision = client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose").json()
+        revision = _compose_and_wait(client, "gerold-foods", draft["id"])
         client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/transition",
             params={"target_status": "review"},
@@ -762,7 +839,7 @@ class TestExportsRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "DOCX Draft", "primary_locale": "en"},
         ).json()
-        client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", draft["id"])
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/exports",
             json={"format": "docx", "locale": "en"},
@@ -777,7 +854,7 @@ class TestExportsRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "PDF Blocked", "primary_locale": "en"},
         ).json()
-        client.post(f"/api/clients/gerold-foods/drafts/{draft['id']}/compose")
+        _compose_and_wait(client, "gerold-foods", draft["id"])
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{draft['id']}/exports",
             json={"format": "pdf", "locale": "en"},
@@ -830,7 +907,7 @@ class TestExportsRouter:
             "/api/clients/gerold-foods/drafts",
             json={"title": "Other Draft", "primary_locale": "en"},
         ).json()
-        other_rev = client.post(f"/api/clients/gerold-foods/drafts/{other['id']}/compose").json()
+        other_rev = _compose_and_wait(client, "gerold-foods", other["id"])
         resp = client.post(
             f"/api/clients/gerold-foods/drafts/{approved['id']}/exports",
             json={"format": "pdf", "revision_id": other_rev["id"]},

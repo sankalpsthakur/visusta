@@ -49,6 +49,7 @@ class Finding:
 # Categories that are code / build-health issues, not compliance gaps.
 _CODE_HEALTH_CATEGORIES = frozenset({
     "Reference Parsing",
+    "References",
     "Missing File",
     "Non Data-driven Report",
     "Non-actionable Reference",

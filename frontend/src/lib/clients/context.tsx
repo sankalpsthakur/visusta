@@ -1,6 +1,7 @@
 'use client'
 
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useMemo, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import { useClients } from '@/lib/api/hooks'
 
 export interface ClientWorkspace {
@@ -37,6 +38,8 @@ function toWorkspace(raw: Record<string, unknown>): ClientWorkspace {
 
 export function ActiveClientProvider({ children }: { children: React.ReactNode }) {
   const { data, isLoading } = useClients()
+  const pathname = usePathname()
+  const router = useRouter()
   const [activeId, setActiveId] = useState<string | null>(null)
 
   const rawClients = Array.isArray(data) ? data : []
@@ -44,12 +47,28 @@ export function ActiveClientProvider({ children }: { children: React.ReactNode }
     toWorkspace(c as Record<string, unknown>)
   )
 
-  const activeClient =
-    clients.find((c) => c.id === activeId) ?? clients[0] ?? null
+  const slugFromPath = useMemo(() => {
+    const m = /\/clients\/([^/?#]+)/.exec(pathname ?? '')
+    return m ? m[1] : null
+  }, [pathname])
+
+  const effectiveId = slugFromPath ?? activeId
+  const activeClient = effectiveId
+    ? clients.find((c) => c.id === effectiveId) ?? null
+    : null
+
+  const switchClient = (id: string) => {
+    setActiveId(id)
+    const current = pathname ?? ''
+    const rewritten = /\/clients\/[^/?#]+/.test(current)
+      ? current.replace(/\/clients\/[^/?#]+/, `/clients/${id}`)
+      : null
+    router.push(rewritten ?? `/clients/${id}`)
+  }
 
   return (
     <ClientContext.Provider
-      value={{ activeClient, clients, switchClient: setActiveId, isLoading }}
+      value={{ activeClient, clients, switchClient, isLoading }}
     >
       {children}
     </ClientContext.Provider>

@@ -3,7 +3,18 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Save, Plus, Trash2, Link2 } from 'lucide-react'
-import type { DraftSection, DraftBlock, SectionEditPayload } from '@/lib/api/draft-hooks'
+import type { Citation, DraftSection, DraftBlock, SectionEditPayload } from '@/lib/api/draft-hooks'
+
+// Accept both the legacy string citation shape (from older revisions persisted
+// before schema 115f865/8644d8f) and the current Citation dict shape. Older
+// revisions surface through TanStack cache during transitions, so we normalize
+// at the editor boundary rather than at the type boundary.
+type CitationInput = Citation | string
+
+function toCitation(value: CitationInput): Citation {
+  if (typeof value === 'string') return { label: value, url: null }
+  return { label: value.label ?? '', url: value.url ?? null }
+}
 
 interface SectionEditorProps {
   section: DraftSection
@@ -125,7 +136,9 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
       content: parseBlockContentForEditor(block.type, block.content),
     })),
   )
-  const [citations, setCitations] = useState<string[]>(section.citations)
+  const [citations, setCitations] = useState<Citation[]>(() =>
+    (section.citations as unknown as CitationInput[]).map(toCitation),
+  )
   const [revisionNote, setRevisionNote] = useState('')
 
   function updateBlock(index: number, content: string) {
@@ -141,11 +154,17 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
   }
 
   function addCitation() {
-    setCitations((prev) => [...prev, ''])
+    setCitations((prev) => [...prev, { label: '', url: null }])
   }
 
-  function updateCitation(index: number, value: string) {
-    setCitations((prev) => prev.map((c, i) => (i === index ? value : c)))
+  function updateCitationLabel(index: number, label: string) {
+    setCitations((prev) => prev.map((c, i) => (i === index ? { ...c, label } : c)))
+  }
+
+  function updateCitationUrl(index: number, rawUrl: string) {
+    const trimmed = rawUrl.trim()
+    const url = trimmed.length > 0 ? trimmed : null
+    setCitations((prev) => prev.map((c, i) => (i === index ? { ...c, url } : c)))
   }
 
   function removeCitation(index: number) {
@@ -157,7 +176,14 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
 
     onSave(section.section_id, {
       blocks: serializedBlocks,
-      citations: citations.filter(Boolean),
+      // Drop rows with an empty label — url on its own has no caption and
+      // shouldn't round-trip through the revision store as a bare link.
+      citations: citations
+        .map((citation) => ({
+          label: citation.label.trim(),
+          url: citation.url && citation.url.trim().length > 0 ? citation.url.trim() : null,
+        }))
+        .filter((citation) => citation.label.length > 0),
       revision_note: revisionNote.trim() || undefined,
     })
   }
@@ -285,9 +311,26 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
             <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               <Link2 size={12} color="var(--text-muted)" style={{ flexShrink: 0 }} />
               <input
-                value={citation}
-                onChange={(e) => updateCitation(i, e.target.value)}
-                placeholder="Regulation ID or URL"
+                aria-label={`Citation label ${i + 1}`}
+                value={citation.label}
+                onChange={(e) => updateCitationLabel(i, e.target.value)}
+                placeholder="Regulation ID or caption"
+                style={{
+                  flex: 1,
+                  padding: '6px 10px',
+                  borderRadius: 7,
+                  border: '1px solid var(--border-subtle)',
+                  background: 'var(--bg-surface-raised)',
+                  color: 'var(--text-primary)',
+                  fontSize: 12,
+                  fontFamily: 'monospace',
+                }}
+              />
+              <input
+                aria-label={`Citation URL ${i + 1}`}
+                value={citation.url ?? ''}
+                onChange={(e) => updateCitationUrl(i, e.target.value)}
+                placeholder="https://… (optional)"
                 style={{
                   flex: 1,
                   padding: '6px 10px',
@@ -300,6 +343,7 @@ export function SectionEditor({ section, onSave, isSaving }: SectionEditorProps)
                 }}
               />
               <button
+                aria-label={`Remove citation ${i + 1}`}
                 onClick={() => removeCitation(i)}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}
               >

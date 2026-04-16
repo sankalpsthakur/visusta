@@ -11,7 +11,7 @@ from typing import Any, List, Optional
 import threading
 import time
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Response
 from pydantic import BaseModel
 
 from api.deps import REGULATORY_DATA_DIR, validate_client
@@ -201,6 +201,165 @@ def _run_compose_job(job_id: str, draft_id: int, client_id: str, note: Optional[
         _update_compose_job(job_id, status="done", revision=revision.model_dump(mode="json"))
     except Exception as exc:  # noqa: BLE001 — surface any agent/DB error to the poller
         _update_compose_job(job_id, status="failed", error=str(exc) or exc.__class__.__name__)
+
+
+# ---------------------------------------------------------------------------
+# Chat job registry
+#
+# Chat-with-section invokes the DraftChatAgent LLM which, like compose, can
+# take 15–30s and exceed Render's proxy timeout when done synchronously.
+# Mirror the compose async pattern: accept the POST, persist the user message
+# in a short Tx1 (so audit survives any downstream failure), kick off a
+# background job for the LLM call + revision write, and expose a polling
+# endpoint. No-section chats remain synchronous (canned reply, no LLM).
+# ---------------------------------------------------------------------------
+
+_chat_jobs: dict[str, dict[str, Any]] = {}
+_chat_jobs_lock = threading.Lock()
+_CHAT_JOB_TTL_SECONDS = 60 * 60  # same TTL as compose jobs
+
+
+def _register_chat_job(job_id: str, draft_id: int, client_id: str) -> None:
+    with _chat_jobs_lock:
+        cutoff = time.time() - _CHAT_JOB_TTL_SECONDS
+        stale = [jid for jid, entry in _chat_jobs.items() if entry["updated_at"] < cutoff]
+        for jid in stale:
+            _chat_jobs.pop(jid, None)
+        _chat_jobs[job_id] = {
+            "job_id": job_id,
+            "draft_id": draft_id,
+            "client_id": client_id,
+            "status": "pending",
+            "error": None,
+            "message": None,
+            "updated_at": time.time(),
+        }
+
+
+def _update_chat_job(job_id: str, **fields: Any) -> None:
+    with _chat_jobs_lock:
+        entry = _chat_jobs.get(job_id)
+        if entry is None:
+            return
+        entry.update(fields)
+        entry["updated_at"] = time.time()
+
+
+def _get_chat_job(job_id: str) -> Optional[dict[str, Any]]:
+    with _chat_jobs_lock:
+        entry = _chat_jobs.get(job_id)
+        return dict(entry) if entry else None
+
+
+def _run_chat_job(
+    job_id: str,
+    draft_id: int,
+    client_id: str,
+    section_id: str,
+    user_content: str,
+) -> None:
+    """Background worker: runs the chat agent, writes a new revision, stores the assistant message."""
+    from db import get_db
+
+    _update_chat_job(job_id, status="running")
+    try:
+        # Tx-A: read-only snapshot of everything the agent needs. The Tx1 in
+        # send_chat already wrote the user message, so the history fetched
+        # here includes it — the agent receives the full conversation.
+        with get_db() as conn:
+            draft = conn.execute(
+                "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+                (draft_id, client_id),
+            ).fetchone()
+            if draft is None:
+                raise RuntimeError(f"Draft {draft_id} not found")
+            if draft["current_revision_id"] is None:
+                raise RuntimeError(f"Draft {draft_id} has no current revision")
+            revision = conn.execute(
+                "SELECT * FROM draft_revisions WHERE id=?",
+                (draft["current_revision_id"],),
+            ).fetchone()
+            if revision is None:
+                raise RuntimeError(
+                    f"Current revision {draft['current_revision_id']} missing for draft {draft_id}"
+                )
+            source_sections = sections_from_json(revision["sections_json"])
+            history_rows = conn.execute(
+                """SELECT role, content FROM draft_chat_messages
+                   WHERE draft_id=? ORDER BY id""",
+                (draft_id,),
+            ).fetchall()
+            history = [{"role": row["role"], "content": row["content"]} for row in history_rows]
+            draft_locale = draft["primary_locale"]
+
+        # LLM call: NO `with get_db()` block held. Preserves the c61ffdf
+        # two-tx split so other writers aren't blocked during the 15–30s agent call.
+        agent = DraftChatAgent()
+        result = agent.run(
+            {
+                "sections": [section.model_dump() for section in source_sections],
+                "section_id": section_id,
+                "user_message": user_content,
+                "conversation_history": history,
+            }
+        )
+        updated_sections = _normalize_sections(
+            result.get("sections", []),
+            locale=draft_locale,
+            fallback_sections=[section.model_dump() for section in source_sections],
+        )
+        updated_sections = [
+            section.model_copy(update={"section_id": source_sections[index].section_id})
+            for index, section in enumerate(updated_sections)
+        ]
+
+        # Tx-B: fresh short-lived tx — re-read draft, clear approvals, write
+        # revision, write assistant message. Mirrors the post-LLM block in the
+        # previous synchronous send_chat verbatim.
+        with get_db() as conn:
+            draft_now = conn.execute(
+                "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+                (draft_id, client_id),
+            ).fetchone()
+            if draft_now is None:
+                raise RuntimeError(f"Draft {draft_id} disappeared during chat")
+            _clear_approvals(conn, draft_id)
+            new_revision = _insert_revision(
+                conn,
+                draft=draft_now,
+                sections=updated_sections,
+                authored_by="draft-chat",
+                note=result.get("explanation") or "Chat-assisted edit",
+                status="composing",
+            )
+            assistant_insert = conn.execute(
+                """INSERT INTO draft_chat_messages
+                   (draft_id, section_id, role, content, revision_id)
+                   VALUES (?, ?, 'assistant', ?, ?)""",
+                (
+                    draft_id,
+                    section_id,
+                    result.get("explanation") or "Applied requested draft changes.",
+                    new_revision["id"],
+                ),
+            )
+            row = conn.execute(
+                "SELECT * FROM draft_chat_messages WHERE id=?",
+                (assistant_insert.lastrowid,),
+            ).fetchone()
+
+        message = ChatMessageResponse(
+            id=row["id"],
+            draft_id=row["draft_id"],
+            section_id=row["section_id"],
+            role=row["role"],
+            content=row["content"],
+            revision_id=row["revision_id"],
+            created_at=row["created_at"],
+        )
+        _update_chat_job(job_id, status="done", message=message.model_dump(mode="json"))
+    except Exception as exc:  # noqa: BLE001 — surface any agent/DB error to the poller
+        _update_chat_job(job_id, status="failed", error=str(exc) or exc.__class__.__name__)
 
 
 def _default_template_sections() -> list[dict[str, Any]]:
@@ -689,6 +848,22 @@ class ComposeJobStatus(BaseModel):
     revision: Optional[RevisionDetailResponse] = None
 
 
+class ChatJobAccepted(BaseModel):
+    """Response body when a chat-with-section call is accepted for async processing."""
+
+    job_id: str
+    status: str = "pending"
+
+
+class ChatJobStatus(BaseModel):
+    """Poll response for a chat job."""
+
+    job_id: str
+    status: str  # "pending" | "running" | "done" | "failed"
+    error: Optional[str] = None
+    message: Optional[ChatMessageResponse] = None
+
+
 @drafts_router.post(
     "/{draft_id}/compose",
     response_model=ComposeJobAccepted,
@@ -940,19 +1115,31 @@ def list_chat(
 
 @drafts_router.post(
     "/{draft_id}/chat",
-    response_model=ChatMessageResponse,
     status_code=201,
-    summary="Send chat message",
+    responses={
+        201: {"model": ChatMessageResponse},
+        202: {"model": ChatJobAccepted},
+    },
+    summary="Send chat message (section-scoped calls return 202 + poll URL)",
 )
 def send_chat(
     draft_id: int,
     body: ChatMessageCreate,
+    response: Response,
+    background_tasks: BackgroundTasks,
     client_id: str = Depends(validate_client),
-) -> ChatMessageResponse:
+) -> ChatMessageResponse | ChatJobAccepted:
+    """
+    Send a chat message. No-section messages reply synchronously with a canned
+    response. Section-scoped messages invoke the LLM, which can take 15–30s and
+    exceeds Render's proxy timeout — we accept the request (Tx1 persists the
+    user message), schedule the LLM call + revision write as a background task,
+    and return 202 with a job id for the client to poll.
+    """
     from db import get_db
 
-    # Tx 1: write the user message, snapshot what the agent needs, then COMMIT
-    # and release the writer lock before doing any LLM work.
+    # Tx 1: always persist the user message. This preserves audit even when the
+    # downstream LLM call later fails or times out in the background worker.
     with get_db() as conn:
         draft = conn.execute(
             "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
@@ -975,23 +1162,11 @@ def send_chat(
                 draft["current_revision_id"],
             ),
         )
-        revision = conn.execute(
-            "SELECT * FROM draft_revisions WHERE id=?",
-            (draft["current_revision_id"],),
-        ).fetchone()
-        source_sections = sections_from_json(revision["sections_json"])
-        history_rows = conn.execute(
-            """SELECT role, content FROM draft_chat_messages
-               WHERE draft_id=? ORDER BY id""",
-            (draft_id,),
-        ).fetchall()
-        history = [{"role": row["role"], "content": row["content"]} for row in history_rows]
 
     target_section_id = body.section_id
-    draft_locale = draft["primary_locale"]
     current_revision_id = draft["current_revision_id"]
 
-    # No section context — short-circuit with a canned reply, no LLM, no Tx 2 race.
+    # No section context — short-circuit with a canned reply (no LLM, stays 201 sync).
     if target_section_id is None:
         with get_db() as conn:
             assistant_insert = conn.execute(
@@ -1018,69 +1193,46 @@ def send_chat(
             created_at=row["created_at"],
         )
 
-    # LLM call happens with NO connection held, so other writers can proceed.
-    agent = DraftChatAgent()
-    result = agent.run(
-        {
-            "sections": [section.model_dump() for section in source_sections],
-            "section_id": target_section_id,
-            "user_message": body.content,
-            "conversation_history": history,
-        }
+    # Section-scoped chat — kick the LLM + revision write off as a background job.
+    job_id = str(uuid.uuid4())
+    _register_chat_job(job_id, draft_id=draft_id, client_id=client_id)
+    background_tasks.add_task(
+        _run_chat_job,
+        job_id,
+        draft_id,
+        client_id,
+        target_section_id,
+        body.content,
     )
-    updated_sections = _normalize_sections(
-        result.get("sections", []),
-        locale=draft_locale,
-        fallback_sections=[section.model_dump() for section in source_sections],
-    )
-    # Preserve existing section identity across revisions for the UI.
-    updated_sections = [
-        section.model_copy(update={"section_id": source_sections[index].section_id})
-        for index, section in enumerate(updated_sections)
-    ]
+    response.status_code = 202
+    return ChatJobAccepted(job_id=job_id, status="pending")
 
-    # Tx 2: persist the new revision and assistant message in a fresh, short-lived tx.
-    with get_db() as conn:
-        # Re-read the draft inside this tx to keep the FK current.
-        draft_now = conn.execute(
-            "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
-            (draft_id, client_id),
-        ).fetchone()
-        if draft_now is None:
-            raise HTTPException(404, f"Draft {draft_id} not found")
-        _clear_approvals(conn, draft_id)
-        new_revision = _insert_revision(
-            conn,
-            draft=draft_now,
-            sections=updated_sections,
-            authored_by="draft-chat",
-            note=result.get("explanation") or "Chat-assisted edit",
-            status="composing",
-        )
-        assistant_insert = conn.execute(
-            """INSERT INTO draft_chat_messages
-               (draft_id, section_id, role, content, revision_id)
-               VALUES (?, ?, 'assistant', ?, ?)""",
-            (
-                draft_id,
-                target_section_id,
-                result.get("explanation") or "Applied requested draft changes.",
-                new_revision["id"],
-            ),
-        )
-        row = conn.execute(
-            "SELECT * FROM draft_chat_messages WHERE id=?",
-            (assistant_insert.lastrowid,),
-        ).fetchone()
 
-    return ChatMessageResponse(
-        id=row["id"],
-        draft_id=row["draft_id"],
-        section_id=row["section_id"],
-        role=row["role"],
-        content=row["content"],
-        revision_id=row["revision_id"],
-        created_at=row["created_at"],
+@drafts_router.get(
+    "/{draft_id}/chat/{job_id}",
+    response_model=ChatJobStatus,
+    summary="Poll the status of a chat job",
+)
+def get_chat_job(
+    draft_id: int,
+    job_id: str,
+    client_id: str = Depends(validate_client),
+) -> ChatJobStatus:
+    """Return the current status of a section-scoped chat job."""
+    entry = _get_chat_job(job_id)
+    if entry is None:
+        raise HTTPException(404, f"Chat job {job_id} not found or expired")
+    if entry["client_id"] != client_id or entry["draft_id"] != draft_id:
+        # Don't leak job existence across clients/drafts.
+        raise HTTPException(404, f"Chat job {job_id} not found")
+    message = None
+    if entry["message"] is not None:
+        message = ChatMessageResponse.model_validate(entry["message"])
+    return ChatJobStatus(
+        job_id=entry["job_id"],
+        status=entry["status"],
+        error=entry["error"],
+        message=message,
     )
 
 

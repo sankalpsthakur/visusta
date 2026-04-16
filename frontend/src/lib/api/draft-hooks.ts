@@ -11,6 +11,11 @@ import { apiDelete, apiGet, apiGetFile, apiPost, apiPut } from './client'
 const COMPOSE_POLL_INTERVAL_MS = 2_000
 const COMPOSE_POLL_MAX_ATTEMPTS = 120 // ~4 minutes of safety margin
 
+// Chat job polling — mirrors the compose pattern for section-scoped chats
+// that invoke the LLM (no-section chats still reply synchronously).
+const CHAT_POLL_INTERVAL_MS = 2_000
+const CHAT_POLL_MAX_ATTEMPTS = 120
+
 interface ComposeJobAccepted {
   job_id: string
   status: string
@@ -21,6 +26,18 @@ interface ComposeJobStatus {
   status: 'pending' | 'running' | 'done' | 'failed'
   error?: string | null
   revision?: BackendRevisionDetail | null
+}
+
+interface ChatJobAccepted {
+  job_id: string
+  status: string
+}
+
+interface ChatJobStatus {
+  job_id: string
+  status: 'pending' | 'running' | 'done' | 'failed'
+  error?: string | null
+  message?: BackendChatMessage | null
 }
 
 type BackendDraftStatus =
@@ -50,13 +67,18 @@ interface BackendBlock {
   metadata?: Record<string, unknown>
 }
 
+export interface Citation {
+  label: string
+  url: string | null
+}
+
 interface BackendSection {
   section_id: string
   heading: string
   locale: string
   blocks: BackendBlock[]
   facts: string[]
-  citations: string[]
+  citations: Citation[]
   translation_status?: string | null
   approval_status?: string | null
 }
@@ -160,7 +182,7 @@ export interface DraftSection {
   locale: string
   blocks: DraftBlock[]
   facts: string[]
-  citations: string[]
+  citations: Citation[]
   translation_status: TranslationStatus
   approval_status: ApprovalStatus
 }
@@ -233,7 +255,7 @@ export interface CreateDraftPayload {
 export interface SectionEditPayload {
   blocks?: DraftBlock[]
   facts?: string[]
-  citations?: string[]
+  citations?: Citation[]
   revision_note?: string
 }
 
@@ -598,18 +620,48 @@ export function useSendChatMessage(clientId: string, draftId: string) {
 
   return useMutation({
     mutationFn: async (payload: ChatMessagePayload) => {
-      const response = await apiPost<BackendChatMessage>(`/api/clients/${clientId}/drafts/${draftId}/chat`, {
-        role: 'user',
-        content: payload.content,
-        section_id: payload.section_id,
-      })
+      // Section-scoped chats return 202 + { job_id } — the LLM call is
+      // backgrounded and the client polls. No-section chats reply synchronously.
+      const response = await apiPost<BackendChatMessage | ChatJobAccepted>(
+        `/api/clients/${clientId}/drafts/${draftId}/chat`,
+        {
+          role: 'user',
+          content: payload.content,
+          section_id: payload.section_id,
+        },
+      )
+
+      let message: BackendChatMessage
+      if ('job_id' in response) {
+        let resolved: BackendChatMessage | null = null
+        for (let attempt = 0; attempt < CHAT_POLL_MAX_ATTEMPTS; attempt += 1) {
+          await sleep(CHAT_POLL_INTERVAL_MS)
+          const status = await apiGet<ChatJobStatus>(
+            `/api/clients/${clientId}/drafts/${draftId}/chat/${response.job_id}`,
+          )
+          if (status.status === 'done' && status.message) {
+            resolved = status.message
+            break
+          }
+          if (status.status === 'failed') {
+            throw new Error(status.error || 'Chat failed')
+          }
+        }
+        if (!resolved) {
+          throw new Error('Chat timed out after 4 minutes')
+        }
+        message = resolved
+      } else {
+        message = response
+      }
+
       return {
-        message_id: response.id,
-        draft_id: response.draft_id,
-        role: response.role,
-        content: response.content,
-        section_id: response.section_id ?? undefined,
-        created_at: response.created_at,
+        message_id: message.id,
+        draft_id: message.draft_id,
+        role: message.role,
+        content: message.content,
+        section_id: message.section_id ?? undefined,
+        created_at: message.created_at,
       } satisfies ChatMessage
     },
     onSuccess: () => {

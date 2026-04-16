@@ -1,7 +1,7 @@
 # Render Blueprint — https://render.com/docs/blueprint-spec
-# Declares a persistent disk at /app/data so SQLite, drafts, chat history,
-# and evidence survive deploys + container restarts. Without this, Render's
-# ephemeral filesystem wipes data/ on every push.
+# Declares a persistent disk at /app/data and points every mutable runtime path
+# at that disk so SQLite, drafts, chat history, evidence, exports, and client
+# registry edits survive deploys + container restarts.
 #
 # IMPORTANT: the service name `visusta` MUST match the existing Render
 # service. If the dashboard shows a different name, edit it here BEFORE
@@ -15,6 +15,17 @@ services:
     plan: starter
     dockerfilePath: ./Dockerfile
     dockerContext: .
+    envVars:
+      - key: VISUSTA_DATA_ROOT
+        value: /app/data
+      - key: VISUSTA_REGULATORY_DATA_DIR
+        value: /app/data/regulatory_data
+      - key: VISUSTA_OUTPUT_DIR
+        value: /app/data/output
+      - key: VISUSTA_CHARTS_DIR
+        value: /app/data/charts
+      - key: VISUSTA_CLIENTS_YAML
+        value: /app/data/config/clients.yaml
     disk:
       name: visusta-data
       mountPath: /app/data

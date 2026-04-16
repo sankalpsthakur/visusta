@@ -5,6 +5,7 @@ Shared dependencies, helpers, and constants for all API routers.
 from __future__ import annotations
 
 import json
+import os
 import sys
 from datetime import date, datetime
 from enum import Enum
@@ -28,10 +29,14 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # ── Directory constants ────────────────────────────────────────────────────────
 
-REGULATORY_DATA_DIR = PROJECT_ROOT / "regulatory_data"
-OUTPUT_DIR = PROJECT_ROOT / "output"
-CHARTS_DIR = PROJECT_ROOT / "charts"
+DATA_ROOT = Path(os.environ.get("VISUSTA_DATA_ROOT", str(PROJECT_ROOT)))
+REGULATORY_DATA_DIR = Path(
+    os.environ.get("VISUSTA_REGULATORY_DATA_DIR", str(DATA_ROOT / "regulatory_data"))
+)
+OUTPUT_DIR = Path(os.environ.get("VISUSTA_OUTPUT_DIR", str(DATA_ROOT / "output")))
+CHARTS_DIR = Path(os.environ.get("VISUSTA_CHARTS_DIR", str(DATA_ROOT / "charts")))
 
+REGULATORY_DATA_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 

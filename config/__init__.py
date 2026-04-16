@@ -19,6 +19,7 @@ different YAML file (useful for staging / testing environments).
 from __future__ import annotations
 
 import os
+import shutil
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -117,8 +118,22 @@ def get_config(config_path: Optional[str] = None) -> VisustaConfig:
 # ── Client registry ───────────────────────────────────────────────────────────
 
 def _clients_yaml_path() -> Path:
-    """Return the path to ``clients.yaml`` next to this package."""
-    return Path(__file__).parent / "clients.yaml"
+    """Return the path to ``clients.yaml``.
+
+    ``VISUSTA_CLIENTS_YAML`` can point at a writable path on a persistent disk.
+    On first use, bootstrap that location from the bundled registry so the
+    seeded clients remain available after the override is enabled.
+    """
+    bundled_path = Path(__file__).parent / "clients.yaml"
+    override = os.environ.get("VISUSTA_CLIENTS_YAML")
+    if not override:
+        return bundled_path
+
+    path = Path(override)
+    if not path.exists() and bundled_path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(bundled_path, path)
+    return path
 
 
 def _load_clients_raw() -> Dict[str, Any]:
@@ -203,5 +218,6 @@ def save_client_registry(registry: Dict[str, Any]) -> None:
         The ``clients`` sub-dict mapping client_id -> client data.
     """
     path = _clients_yaml_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         yaml.safe_dump({"clients": registry}, fh, allow_unicode=True, sort_keys=False)

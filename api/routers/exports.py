@@ -163,6 +163,8 @@ def request_export(
     """
     from db import get_db
     with get_db() as conn:
+        from api.routers.locales import _require_known_locale
+
         draft = conn.execute(
             "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
             (draft_id, client_id),
@@ -190,7 +192,10 @@ def request_export(
             raise HTTPException(422, "Revision does not belong to this draft")
 
         sections = sections_from_json(revision["sections_json"])
-        resolved_locale = body.locale or (sections[0].locale if sections else draft["primary_locale"])
+        if body.locale is not None:
+            resolved_locale = _require_known_locale(conn, body.locale, field="locale")
+        else:
+            resolved_locale = sections[0].locale if sections else draft["primary_locale"]
 
         cur = conn.execute(
             """INSERT INTO export_jobs

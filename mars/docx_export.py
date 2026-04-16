@@ -66,6 +66,26 @@ def _add_numbered(doc: Document, text: str) -> None:
     p.add_run(str(text))
 
 
+def _citation_text(citation: object) -> str:
+    """Render citations readably across legacy and dict-shaped revisions."""
+    if isinstance(citation, str):
+        return citation
+    label = getattr(citation, "label", None)
+    url = getattr(citation, "url", None)
+    if label and url:
+        return f"{label} - {url}"
+    if label:
+        return str(label)
+    if isinstance(citation, dict):
+        dict_label = citation.get("label")
+        dict_url = citation.get("url")
+        if dict_label and dict_url:
+            return f"{dict_label} - {dict_url}"
+        if dict_label:
+            return str(dict_label)
+    return str(citation)
+
+
 def _add_table(doc: Document, rows: list) -> None:
     """Render a list-of-lists as a Word table with bold header row."""
     if not rows:
@@ -148,7 +168,7 @@ def export_sections_to_docx(
             if primary_color:
                 _apply_heading_color(sub, primary_color)
             for citation in section.citations:
-                _add_numbered(doc, citation)
+                _add_numbered(doc, _citation_text(citation))
 
     doc.save(str(output_path))
     return output_path

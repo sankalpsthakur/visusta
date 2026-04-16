@@ -74,8 +74,8 @@ COPY regulatory_screening.py ./regulatory_screening.py
 COPY report_engine.py ./report_engine.py
 COPY templates/ ./templates/
 
-# Single port — Next.js proxies /api/* to the backend internally
-EXPOSE 3000
+# Render assigns $PORT (typically 10000); EXPOSE must match
+EXPOSE 10000
 
 # Startup script runs migrations then starts both servers
 COPY docker-entrypoint.sh /docker-entrypoint.sh

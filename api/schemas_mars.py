@@ -282,8 +282,26 @@ class DraftBlockInput(BaseModel):
 class SectionEditRequest(BaseModel):
     blocks: Optional[List[DraftBlockInput]] = None
     facts: Optional[List[str]] = None
-    citations: Optional[List[str]] = None
+    citations: Optional[List[Citation]] = None
     revision_note: Optional[str] = None
+
+    @field_validator("citations", mode="before")
+    @classmethod
+    def _coerce_citations(cls, value: Any) -> Any:
+        """Accept legacy List[str] alongside the new List[Citation] dict shape."""
+        if value is None or not isinstance(value, list):
+            return value
+        coerced: List[Any] = []
+        for item in value:
+            if isinstance(item, str):
+                coerced.append({"label": item, "url": None})
+            elif isinstance(item, dict):
+                coerced.append(item)
+            elif item is None:
+                continue
+            else:
+                coerced.append({"label": str(item), "url": None})
+        return coerced
 
 
 class ChatMessageResponse(BaseModel):

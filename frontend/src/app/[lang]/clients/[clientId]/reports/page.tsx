@@ -214,21 +214,20 @@ export default function ReportsPage({ params }: ReportsPageProps) {
           </motion.div>
         </ErrorBoundary>
 
-        {/* Run Screening — shown when no changelog data exists yet */}
-        {isNewClient && (
-          <div
-            className="rounded-lg p-5 mb-8"
-            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <RefreshCw className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--brand)' }} />
-              <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                Run Screening
-              </span>
-            </div>
-            <p className="text-xs mb-4 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Run your first screening to generate report data. Enter the period in YYYY-MM format.
-            </p>
+        {/* Run Screening — always available so any client can screen a new period */}
+        <div
+          className="rounded-lg p-5 mb-8"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <RefreshCw className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--brand)' }} />
+            <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+              Run Screening
+            </span>
+          </div>
+          <p className="text-xs mb-4 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            Run regulatory screening for a new period. The period will appear in the report builders above once complete.
+          </p>
             <div className="flex items-center gap-2">
               <input
                 type="text"
@@ -286,7 +285,6 @@ export default function ReportsPage({ params }: ReportsPageProps) {
               </div>
             )}
           </div>
-        )}
 
         {/* PDF preview */}
         <AnimatePresence>

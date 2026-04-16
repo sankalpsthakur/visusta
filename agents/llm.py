@@ -20,11 +20,19 @@ class LLMInterface(ABC):
         """Return a plain-text completion for *prompt*."""
 
     @abstractmethod
-    def generate_structured(self, prompt: str, **kwargs: Any) -> dict:
+    def generate_structured(
+        self,
+        prompt: str,
+        *,
+        required_keys: list[str] | None = None,
+        **kwargs: Any,
+    ) -> dict:
         """Return a JSON-deserialized dict for *prompt*.
 
-        Implementations must guarantee the return value is a dict.
-        Callers handle KeyError / missing keys themselves.
+        If *required_keys* is provided, implementations must raise
+        :class:`ValueError` when any listed key is missing from the parsed
+        response. This is the contract callers use to prevent silent no-op
+        fallbacks when the model ignores the requested schema.
         """
 
 
@@ -43,16 +51,89 @@ class GeminiLLM(LLMInterface):
         )
         return response.text
 
-    def generate_structured(self, prompt: str, **kwargs: Any) -> dict:
-        response = self._client.models.generate_content(
-            model=self._model,
-            contents=f"{prompt}\n\nRespond with valid JSON only. No markdown, no explanation — just the JSON object.",
+    def generate_structured(
+        self,
+        prompt: str,
+        *,
+        required_keys: list[str] | None = None,
+        **kwargs: Any,
+    ) -> dict:
+        """Call Gemini with response_mime_type=application/json.
+
+        The SDK guarantees the response parses as JSON when this MIME type
+        is set. We still run a defensive extraction step (strip markdown
+        fences, trim preamble/postamble around the outermost braces) in
+        case the model or SDK surface prose around the JSON payload.
+
+        If *required_keys* is set, raises ValueError when any are missing
+        so the caller's BackgroundTask worker can surface a real failure
+        instead of silently falling back to a canned reply.
+        """
+        from google.genai import types  # local import — SDK only on GeminiLLM path
+
+        config = types.GenerateContentConfig(response_mime_type="application/json")
+        full_prompt = (
+            f"{prompt}\n\n"
+            "Respond with valid JSON only. No markdown fences, no preamble, no "
+            "explanation outside the JSON object."
         )
-        text = response.text.strip()
-        # Handle potential markdown code blocks
-        if text.startswith("```"):
-            text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
-        return json.loads(text)
+
+        last_error: Exception | None = None
+        for attempt in range(2):
+            response = self._client.models.generate_content(
+                model=self._model,
+                contents=full_prompt,
+                config=config,
+            )
+            text = (response.text or "").strip()
+            # Strip markdown fences if the model ignored instructions and emitted them.
+            if text.startswith("```"):
+                text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
+            # Trim any preamble/postamble to the outermost JSON object.
+            first_brace = text.find("{")
+            last_brace = text.rfind("}")
+            if first_brace != -1 and last_brace > first_brace:
+                text = text[first_brace : last_brace + 1]
+
+            try:
+                parsed = json.loads(text)
+            except json.JSONDecodeError as exc:
+                last_error = exc
+                # Retry once with a stricter reminder.
+                full_prompt = (
+                    "CRITICAL: your previous response was not valid JSON. Return "
+                    "ONE JSON object only — no prose, no markdown, no keys outside "
+                    "the object. Restart:\n\n" + prompt
+                )
+                continue
+
+            if not isinstance(parsed, dict):
+                last_error = ValueError(f"Expected JSON object, got {type(parsed).__name__}")
+                full_prompt = (
+                    "CRITICAL: return a JSON OBJECT (not an array or scalar). "
+                    "Restart:\n\n" + prompt
+                )
+                continue
+
+            if required_keys:
+                missing = [k for k in required_keys if k not in parsed]
+                if missing:
+                    last_error = ValueError(
+                        f"Response missing required keys: {missing}"
+                    )
+                    full_prompt = (
+                        f"CRITICAL: your JSON must include these keys: "
+                        f"{required_keys}. Restart:\n\n" + prompt
+                    )
+                    continue
+
+            return parsed
+
+        # Both attempts failed — surface the error so the background job
+        # records status='failed' instead of silently succeeding with stub data.
+        raise RuntimeError(
+            f"LLM failed to return well-formed JSON after 2 attempts: {last_error}"
+        )
 
 
 def get_llm(model: str = "gemma-4-26b-a4b-it") -> LLMInterface:
@@ -76,7 +157,13 @@ class StubLLM(LLMInterface):
             return "Updated section content based on feedback."
         return "Generated content."
 
-    def generate_structured(self, prompt: str, **kwargs: Any) -> dict:
+    def generate_structured(
+        self,
+        prompt: str,
+        *,
+        required_keys: list[str] | None = None,
+        **kwargs: Any,
+    ) -> dict:
         # ── draft-composer ─────────────────────────────────────────────────
         if "compose" in prompt.lower() or "changelog" in prompt.lower():
             return {

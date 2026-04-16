@@ -59,7 +59,12 @@ class DraftChatAgent(Agent):
             updated_blocks, explanation = self._rewrite_without_llm(target, user_message)
         else:
             prompt = self._build_prompt(target, user_message, history)
-            result = self._llm.generate_structured(prompt)
+            # required_keys=["updated_blocks"] forces generate_structured to
+            # retry and then raise if the model doesn't honour the schema.
+            # Raising is desirable here: the background worker records
+            # status='failed' instead of silently returning the original
+            # blocks and the canned "Applied requested draft changes." reply.
+            result = self._llm.generate_structured(prompt, required_keys=["updated_blocks"])
             updated_blocks = result.get("updated_blocks", [])
             explanation = result.get("explanation", "")
 

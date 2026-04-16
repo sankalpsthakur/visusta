@@ -260,7 +260,8 @@ export default function DraftsPage({ params }: DraftsPageProps) {
                     <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-muted)', display: 'block', marginBottom: 5 }}>Period</label>
                     <input
                       aria-label="Draft period"
-                      type="month"
+                      type="text"
+                      placeholder="e.g. 2026-04 or Q2-2026"
                       value={newDraft.period ?? ''}
                       onChange={(e) => setNewDraft((p) => ({ ...p, period: e.target.value }))}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', fontSize: 13, boxSizing: 'border-box' }}

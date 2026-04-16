@@ -144,43 +144,57 @@ export default function ReportsPage({ params }: ReportsPageProps) {
 
                   <div className="mb-4">
                     <div className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>Period</div>
-                    {changelogsLoading ? (
-                      <PeriodSkeleton />
-                    ) : isNewClient ? (
-                      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>No data available yet.</p>
-                    ) : periods.length === 0 ? (
-                      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>No periods available.</p>
-                    ) : (
-                      <div className="flex flex-wrap gap-1.5">
-                        {periods.map((period) => (
-                          <button
-                            key={period}
-                            onClick={() =>
-                              setSelectedPeriods((prev) => ({ ...prev, [report.id]: period }))
+                    <div className="flex flex-wrap gap-1.5 items-center">
+                      {changelogsLoading ? (
+                        <PeriodSkeleton />
+                      ) : (
+                        <>
+                          {periods.map((period) => (
+                            <button
+                              key={period}
+                              onClick={() =>
+                                setSelectedPeriods((prev) => ({ ...prev, [report.id]: period }))
+                              }
+                              className="text-xs px-2.5 py-1 rounded transition-all"
+                              style={{
+                                background: selected === period ? 'var(--brand)' : 'var(--bg-elevated)',
+                                color: selected === period ? 'var(--brand-contrast)' : 'var(--text-muted)',
+                                border: '1px solid var(--border-color)',
+                                fontFamily: 'var(--font-mono)',
+                              }}
+                            >
+                              {period}
+                            </button>
+                          ))}
+                          <input
+                            type="text"
+                            placeholder={report.id === 'monthly' ? '2026-04' : 'Q2 2026'}
+                            value={!periods.includes(selected) ? selected : ''}
+                            onChange={(e) =>
+                              setSelectedPeriods((prev) => ({ ...prev, [report.id]: e.target.value }))
                             }
-                            className="text-xs px-2.5 py-1 rounded transition-all"
+                            className="text-xs px-2.5 py-1 rounded"
                             style={{
-                              background: selected === period ? 'var(--brand)' : 'var(--bg-elevated)',
-                              color: selected === period ? 'var(--brand-contrast)' : 'var(--text-muted)',
+                              width: 80,
+                              background: 'var(--bg-elevated)',
+                              color: 'var(--text-primary)',
                               border: '1px solid var(--border-color)',
                               fontFamily: 'var(--font-mono)',
                             }}
-                          >
-                            {period}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                          />
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   <motion.button
                     onClick={() => handleGenerate(report.id)}
-                    disabled={isGenerating(report.id) || isNewClient || periods.length === 0}
+                    disabled={isGenerating(report.id) || !selected}
                     className="w-full flex items-center justify-center gap-2 py-2 rounded text-sm font-medium"
                     style={{
                       background: isGenerating(report.id) ? 'var(--bg-elevated)' : 'var(--brand)',
                       color: 'var(--brand-contrast)',
-                      opacity: (isGenerating(report.id) || isNewClient || periods.length === 0) ? 0.7 : 1,
+                      opacity: (isGenerating(report.id) || !selected) ? 0.7 : 1,
                     }}
                     whileHover={{ opacity: 0.9 }}
                     whileTap={{ scale: 0.98 }}

@@ -16,6 +16,11 @@ const COMPOSE_POLL_MAX_ATTEMPTS = 120 // ~4 minutes of safety margin
 const CHAT_POLL_INTERVAL_MS = 2_000
 const CHAT_POLL_MAX_ATTEMPTS = 120
 
+// Translate job polling — mirrors the compose pattern for translation, which
+// invokes the LLM and can take 15–30s (past Render's proxy timeout).
+const TRANSLATE_POLL_INTERVAL_MS = 2_000
+const TRANSLATE_POLL_MAX_ATTEMPTS = 120
+
 interface ComposeJobAccepted {
   job_id: string
   status: string
@@ -38,6 +43,18 @@ interface ChatJobStatus {
   status: 'pending' | 'running' | 'done' | 'failed'
   error?: string | null
   message?: BackendChatMessage | null
+}
+
+interface TranslateJobAccepted {
+  job_id: string
+  status: string
+}
+
+interface TranslateJobStatus {
+  job_id: string
+  status: 'pending' | 'running' | 'done' | 'failed'
+  error?: string | null
+  revision?: BackendRevisionDetail | null
 }
 
 type BackendDraftStatus =
@@ -589,10 +606,26 @@ export function useTranslateDraft(clientId: string, draftId: string) {
   const qc = useQueryClient()
 
   return useMutation({
-    mutationFn: (locale: string) =>
-      apiPost<BackendRevisionDetail>(
+    mutationFn: async (locale: string): Promise<BackendRevisionDetail> => {
+      // Translate returns 202 + { job_id } — the TranslationAgent LLM call can
+      // take 15–30s and exceeds Render's proxy timeout. Poll until done.
+      const accepted = await apiPost<TranslateJobAccepted>(
         `/api/clients/${clientId}/drafts/${draftId}/translate?target_locale=${encodeURIComponent(locale)}`,
-      ),
+      )
+      for (let attempt = 0; attempt < TRANSLATE_POLL_MAX_ATTEMPTS; attempt += 1) {
+        await sleep(TRANSLATE_POLL_INTERVAL_MS)
+        const status = await apiGet<TranslateJobStatus>(
+          `/api/clients/${clientId}/drafts/${draftId}/translate/${accepted.job_id}`,
+        )
+        if (status.status === 'done' && status.revision) {
+          return status.revision
+        }
+        if (status.status === 'failed') {
+          throw new Error(status.error || 'Translate failed')
+        }
+      }
+      throw new Error('Translate timed out after 4 minutes')
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['draft', clientId, draftId] })
       qc.invalidateQueries({ queryKey: ['drafts', clientId] })
@@ -664,7 +697,7 @@ export function useSendChatMessage(clientId: string, draftId: string) {
         created_at: message.created_at,
       } satisfies ChatMessage
     },
-    onSuccess: () => {
+    onSettled: () => {
       qc.invalidateQueries({ queryKey: ['draft-chat', clientId, draftId] })
       qc.invalidateQueries({ queryKey: ['draft', clientId, draftId] })
       qc.invalidateQueries({ queryKey: ['draft-revisions', clientId, draftId] })

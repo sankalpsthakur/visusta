@@ -47,6 +47,35 @@ def _compose_and_wait(client: TestClient, client_id: str, draft_id: int) -> dict
     return _poll_compose(client, client_id, draft_id, body["job_id"])
 
 
+def _translate_and_wait(
+    client: TestClient,
+    client_id: str,
+    draft_id: int,
+    target_locale: str,
+) -> dict:
+    """Fire an async translate (202) and poll until the revision is materialized."""
+    resp = client.post(
+        f"/api/clients/{client_id}/drafts/{draft_id}/translate",
+        params={"target_locale": target_locale},
+    )
+    assert resp.status_code == 202, resp.text
+    body = resp.json()
+    assert "job_id" in body
+    for _ in range(50):
+        status = client.get(
+            f"/api/clients/{client_id}/drafts/{draft_id}/translate/{body['job_id']}"
+        )
+        assert status.status_code == 200, status.text
+        data = status.json()
+        if data["status"] == "done":
+            assert data["revision"] is not None, "translate job finished without revision"
+            return data["revision"]
+        if data["status"] == "failed":
+            raise AssertionError(f"Translate job failed: {data.get('error')}")
+        time.sleep(0.05)
+    raise AssertionError(f"Translate job {body['job_id']} did not complete in time")
+
+
 def _poll_chat(client: TestClient, client_id: str, draft_id: int, job_id: str) -> dict:
     """Poll the chat job endpoint until the assistant message is available or it fails."""
     for _ in range(50):
@@ -494,6 +523,29 @@ class TestDraftsRouter:
         assert data["status"] == "composing"
         assert data["primary_locale"] == "en"
 
+    @pytest.mark.parametrize(
+        ("raw_locale", "normalized"),
+        [
+            ("no", "nb"),
+            ("NO", "nb"),
+            ("no-NO", "nb"),
+            ("nob", "nb"),
+            ("nno", "nn"),
+        ],
+    )
+    def test_create_draft_normalizes_locale_aliases(
+        self,
+        client: TestClient,
+        raw_locale: str,
+        normalized: str,
+    ) -> None:
+        resp = client.post(
+            "/api/clients/gerold-foods/drafts",
+            json={"title": f"Locale {raw_locale}", "primary_locale": raw_locale},
+        )
+        assert resp.status_code == 201, resp.text
+        assert resp.json()["primary_locale"] == normalized
+
     def test_get_draft_detail(self, client: TestClient) -> None:
         created = self._create_draft(client)
         resp = client.get(f"/api/clients/gerold-foods/drafts/{created['id']}")
@@ -552,12 +604,7 @@ class TestDraftsRouter:
     def test_translate_creates_revision(self, client: TestClient) -> None:
         created = self._create_draft(client)
         _compose_and_wait(client, "gerold-foods", created["id"])
-        resp = client.post(
-            f"/api/clients/gerold-foods/drafts/{created['id']}/translate",
-            params={"target_locale": "de"},
-        )
-        assert resp.status_code == 201
-        rev = resp.json()
+        rev = _translate_and_wait(client, "gerold-foods", created["id"], "de")
         assert rev["revision_number"] == 2
         for section in rev["sections"]:
             assert section["locale"] == "de"
@@ -795,6 +842,7 @@ class TestApprovalsRouter:
 
 # ── Exports ────────────────────────────────────────────────────────────────────
 
+@pytest.mark.usefixtures("stub_pdf_export")
 class TestExportsRouter:
     def _approved_draft(self, client: TestClient) -> dict:
         """Create a draft, compose it, and approve every section."""
@@ -847,6 +895,19 @@ class TestExportsRouter:
         assert resp.status_code == 201
         assert resp.json()["format"] == "docx"
         assert resp.json()["status"] == "completed"
+
+    def test_docx_export_normalizes_locale_alias(self, client: TestClient) -> None:
+        draft = client.post(
+            "/api/clients/gerold-foods/drafts",
+            json={"title": "Norwegian Export Draft", "primary_locale": "en"},
+        ).json()
+        _compose_and_wait(client, "gerold-foods", draft["id"])
+        resp = client.post(
+            f"/api/clients/gerold-foods/drafts/{draft['id']}/exports",
+            json={"format": "docx", "locale": "no"},
+        )
+        assert resp.status_code == 201, resp.text
+        assert resp.json()["locale"] == "nb"
 
     def test_request_pdf_export_requires_approval(self, client: TestClient) -> None:
         """PDF export on a composing draft returns 403."""

@@ -83,6 +83,31 @@ def _compose(client: TestClient, draft_id: int) -> dict:
     raise AssertionError(f"Compose job {job_id} did not complete in time")
 
 
+def _translate(client: TestClient, draft_id: int, target_locale: str) -> dict:
+    """Kick off the async translate job and poll until the revision is materialized."""
+    resp = client.post(
+        f"/api/clients/{CLIENT}/drafts/{draft_id}/translate",
+        params={"target_locale": target_locale},
+    )
+    assert resp.status_code == 202, resp.text
+    body = resp.json()
+    assert "job_id" in body
+    job_id = body["job_id"]
+    for _ in range(50):
+        status = client.get(
+            f"/api/clients/{CLIENT}/drafts/{draft_id}/translate/{job_id}"
+        )
+        assert status.status_code == 200, status.text
+        data = status.json()
+        if data["status"] == "done":
+            assert data["revision"] is not None, "translate job finished without revision"
+            return data["revision"]
+        if data["status"] == "failed":
+            raise AssertionError(f"Translate job failed: {data.get('error')}")
+        time.sleep(0.05)
+    raise AssertionError(f"Translate job {job_id} did not complete in time")
+
+
 def _send_chat(
     client: TestClient,
     draft_id: int,
@@ -292,6 +317,7 @@ class TestDraftRevisionHistoryWorkflow:
 
 # ── Approval workflow end-to-end ───────────────────────────────────────────────
 
+@pytest.mark.usefixtures("stub_pdf_export")
 class TestApprovalWorkflowEndToEnd:
     def test_full_state_machine_composing_to_approved(self, client: TestClient) -> None:
         draft = _create_draft(client)
@@ -603,23 +629,15 @@ class TestLocaleWorkflow:
     def test_translate_creates_new_revision_with_target_locale(self, client: TestClient) -> None:
         draft = _create_draft(client, locale="en")
         _compose(client, draft["id"])
-        resp = client.post(
-            f"/api/clients/{CLIENT}/drafts/{draft['id']}/translate",
-            params={"target_locale": "fr"},
-        )
-        assert resp.status_code == 201
-        rev = resp.json()
+        rev = _translate(client, draft["id"], "fr")
         for sec in rev["sections"]:
             assert sec["locale"] == "fr"
 
     def test_translate_increments_revision_number(self, client: TestClient) -> None:
         draft = _create_draft(client, locale="en")
         _compose(client, draft["id"])
-        resp = client.post(
-            f"/api/clients/{CLIENT}/drafts/{draft['id']}/translate",
-            params={"target_locale": "de"},
-        )
-        assert resp.json()["revision_number"] == 2
+        rev = _translate(client, draft["id"], "de")
+        assert rev["revision_number"] == 2
 
     def test_locale_settings_roundtrip(self, client: TestClient) -> None:
         payload = {"primary_locale": "es", "enabled_locales": ["en", "de", "es", "fr"]}

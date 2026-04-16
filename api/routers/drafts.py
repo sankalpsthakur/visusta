@@ -362,6 +362,130 @@ def _run_chat_job(
         _update_chat_job(job_id, status="failed", error=str(exc) or exc.__class__.__name__)
 
 
+# ---------------------------------------------------------------------------
+# Translate job registry
+#
+# Translate invokes the TranslationAgent LLM which, like compose and
+# chat-with-section, can take 15–30s and exceeds Render's proxy timeout when
+# done synchronously. Mirror the async pattern: accept the POST, run the LLM
+# call + revision write in a background task, and expose a polling endpoint.
+# ---------------------------------------------------------------------------
+
+_translate_jobs: dict[str, dict[str, Any]] = {}
+_translate_jobs_lock = threading.Lock()
+_TRANSLATE_JOB_TTL_SECONDS = 60 * 60  # same TTL as compose/chat jobs
+
+
+def _register_translate_job(job_id: str, draft_id: int, client_id: str) -> None:
+    with _translate_jobs_lock:
+        cutoff = time.time() - _TRANSLATE_JOB_TTL_SECONDS
+        stale = [jid for jid, entry in _translate_jobs.items() if entry["updated_at"] < cutoff]
+        for jid in stale:
+            _translate_jobs.pop(jid, None)
+        _translate_jobs[job_id] = {
+            "job_id": job_id,
+            "draft_id": draft_id,
+            "client_id": client_id,
+            "status": "pending",
+            "error": None,
+            "revision": None,
+            "updated_at": time.time(),
+        }
+
+
+def _update_translate_job(job_id: str, **fields: Any) -> None:
+    with _translate_jobs_lock:
+        entry = _translate_jobs.get(job_id)
+        if entry is None:
+            return
+        entry.update(fields)
+        entry["updated_at"] = time.time()
+
+
+def _get_translate_job(job_id: str) -> Optional[dict[str, Any]]:
+    with _translate_jobs_lock:
+        entry = _translate_jobs.get(job_id)
+        return dict(entry) if entry else None
+
+
+def _run_translate_job(
+    job_id: str,
+    draft_id: int,
+    client_id: str,
+    target_locale: str,
+) -> None:
+    """Background worker: runs the translation agent and writes a new revision."""
+    from db import get_db
+
+    _update_translate_job(job_id, status="running")
+    try:
+        # Tx-A: read-only snapshot of the draft + source revision.
+        with get_db() as conn:
+            draft = conn.execute(
+                "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+                (draft_id, client_id),
+            ).fetchone()
+            if draft is None:
+                raise RuntimeError(f"Draft {draft_id} not found")
+            if draft["current_revision_id"] is None:
+                raise RuntimeError(f"Draft {draft_id} has no current revision to translate")
+            src_rev = conn.execute(
+                "SELECT * FROM draft_revisions WHERE id=?",
+                (draft["current_revision_id"],),
+            ).fetchone()
+            if src_rev is None:
+                raise RuntimeError(
+                    f"Current revision {draft['current_revision_id']} missing for draft {draft_id}"
+                )
+            source_sections = sections_from_json(src_rev["sections_json"])
+            source_locale = draft["primary_locale"]
+
+        # LLM call: NO DB connection held. Keeps the 15–30s agent call off any
+        # writer/reader lock, matching the compose/chat two-tx split.
+        agent = TranslationAgent()
+        result = agent.run(
+            {
+                "sections": [section.model_dump() for section in source_sections],
+                "target_locale": target_locale,
+                "source_locale": source_locale,
+            }
+        )
+        translated = _normalize_sections(
+            result.get("sections", []),
+            locale=target_locale,
+            fallback_sections=[section.model_dump() for section in source_sections],
+        )
+        # Preserve section identity across revisions for approvals and diffs.
+        translated = [
+            section.model_copy(update={"section_id": source_sections[index].section_id})
+            for index, section in enumerate(translated)
+        ]
+
+        # Tx-B: fresh short-lived tx — re-read draft, clear approvals, write revision.
+        with get_db() as conn:
+            draft_now = conn.execute(
+                "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+                (draft_id, client_id),
+            ).fetchone()
+            if draft_now is None:
+                raise RuntimeError(f"Draft {draft_id} disappeared during translate")
+            _clear_approvals(conn, draft_id)
+            row = _insert_revision(
+                conn,
+                draft=draft_now,
+                sections=translated,
+                authored_by="translation-agent",
+                note=f"Translation to {target_locale}",
+                status="composing",
+                primary_locale=target_locale,
+            )
+
+        revision = _revision_detail_row(row)
+        _update_translate_job(job_id, status="done", revision=revision.model_dump(mode="json"))
+    except Exception as exc:  # noqa: BLE001 — surface any agent/DB error to the poller
+        _update_translate_job(job_id, status="failed", error=str(exc) or exc.__class__.__name__)
+
+
 def _default_template_sections() -> list[dict[str, Any]]:
     return [
         {
@@ -653,6 +777,13 @@ def create_draft(
 ) -> DraftResponse:
     from db import get_db
     with get_db() as conn:
+        from api.routers.locales import _require_known_locale
+
+        primary_locale = _require_known_locale(
+            conn,
+            body.primary_locale,
+            field="primary_locale",
+        )
         cur = conn.execute(
             """INSERT INTO report_drafts
                (client_id, title, template_version_id, period, primary_locale, created_by)
@@ -662,7 +793,7 @@ def create_draft(
                 body.title,
                 body.template_version_id,
                 body.period,
-                body.primary_locale,
+                primary_locale,
                 body.created_by,
             ),
         )
@@ -864,6 +995,22 @@ class ChatJobStatus(BaseModel):
     message: Optional[ChatMessageResponse] = None
 
 
+class TranslateJobAccepted(BaseModel):
+    """Response body when a translate request is accepted for async processing."""
+
+    job_id: str
+    status: str = "pending"
+
+
+class TranslateJobStatus(BaseModel):
+    """Poll response for a translate job."""
+
+    job_id: str
+    status: str  # "pending" | "running" | "done" | "failed"
+    error: Optional[str] = None
+    revision: Optional[RevisionDetailResponse] = None
+
+
 @drafts_router.post(
     "/{draft_id}/compose",
     response_model=ComposeJobAccepted,
@@ -930,16 +1077,26 @@ def get_compose_job(
 
 @drafts_router.post(
     "/{draft_id}/translate",
-    response_model=RevisionDetailResponse,
-    status_code=201,
-    summary="Translate current revision to target locale",
+    response_model=TranslateJobAccepted,
+    status_code=202,
+    responses={202: {"model": TranslateJobAccepted}},
+    summary="Kick off a translate job; poll /translate/{job_id} for the revision",
 )
 def translate_draft(
     draft_id: int,
     target_locale: str,
+    background_tasks: BackgroundTasks,
     client_id: str = Depends(validate_client),
-) -> RevisionDetailResponse:
-    """Create a new translated revision using the translation agent."""
+) -> TranslateJobAccepted:
+    """
+    Accept a translation request and run the agent asynchronously.
+
+    Translate can take 15–30s which exceeds Render's proxy timeout. Validate
+    the draft + normalize the locale at the API boundary (so aliases like
+    "no"/"nor"/"no-NO" resolve to canonical codes), register a job, and
+    schedule the LLM call as a FastAPI BackgroundTask. The client polls
+    `GET /translate/{job_id}` until `status == "done"` (or `"failed"`).
+    """
     from db import get_db
 
     with get_db() as conn:
@@ -966,41 +1123,38 @@ def translate_draft(
             )
         target_locale = normalized_locale
 
-        src_rev = conn.execute(
-            "SELECT * FROM draft_revisions WHERE id=?",
-            (draft["current_revision_id"],),
-        ).fetchone()
-        source_sections = sections_from_json(src_rev["sections_json"])
-        agent = TranslationAgent()
-        result = agent.run(
-            {
-                "sections": [section.model_dump() for section in source_sections],
-                "target_locale": target_locale,
-                "source_locale": draft["primary_locale"],
-            }
-        )
-        translated = _normalize_sections(
-            result.get("sections", []),
-            locale=target_locale,
-            fallback_sections=[section.model_dump() for section in source_sections],
-        )
-        # Preserve section identity across revisions for approvals and diffs.
-        translated = [
-            section.model_copy(update={"section_id": source_sections[index].section_id})
-            for index, section in enumerate(translated)
-        ]
-        _clear_approvals(conn, draft_id)
-        row = _insert_revision(
-            conn,
-            draft=draft,
-            sections=translated,
-            authored_by="translation-agent",
-            note=f"Translation to {target_locale}",
-            status="composing",
-            primary_locale=target_locale,
-        )
+    job_id = str(uuid.uuid4())
+    _register_translate_job(job_id, draft_id=draft_id, client_id=client_id)
+    background_tasks.add_task(_run_translate_job, job_id, draft_id, client_id, target_locale)
+    return TranslateJobAccepted(job_id=job_id, status="pending")
 
-    return _revision_detail_row(row)
+
+@drafts_router.get(
+    "/{draft_id}/translate/{job_id}",
+    response_model=TranslateJobStatus,
+    summary="Poll the status of a translate job",
+)
+def get_translate_job(
+    draft_id: int,
+    job_id: str,
+    client_id: str = Depends(validate_client),
+) -> TranslateJobStatus:
+    """Return the current status of a translate job."""
+    entry = _get_translate_job(job_id)
+    if entry is None:
+        raise HTTPException(404, f"Translate job {job_id} not found or expired")
+    if entry["client_id"] != client_id or entry["draft_id"] != draft_id:
+        # Don't leak job existence across clients/drafts.
+        raise HTTPException(404, f"Translate job {job_id} not found")
+    revision = None
+    if entry["revision"] is not None:
+        revision = RevisionDetailResponse.model_validate(entry["revision"])
+    return TranslateJobStatus(
+        job_id=entry["job_id"],
+        status=entry["status"],
+        error=entry["error"],
+        revision=revision,
+    )
 
 
 @drafts_router.put(
@@ -1115,7 +1269,7 @@ def list_chat(
 
 @drafts_router.post(
     "/{draft_id}/chat",
-    status_code=201,
+    status_code=202,
     responses={
         201: {"model": ChatMessageResponse},
         202: {"model": ChatJobAccepted},
@@ -1183,6 +1337,7 @@ def send_chat(
                 "SELECT * FROM draft_chat_messages WHERE id=?",
                 (assistant_insert.lastrowid,),
             ).fetchone()
+        response.status_code = 201
         return ChatMessageResponse(
             id=row["id"],
             draft_id=row["draft_id"],

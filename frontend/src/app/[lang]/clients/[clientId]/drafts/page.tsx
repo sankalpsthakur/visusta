@@ -247,17 +247,46 @@ export default function DraftsPage({ params }: DraftsPageProps) {
 
                 <div>
                   <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-muted)', display: 'block', marginBottom: 5 }}>Template</label>
-                  <select
-                    aria-label="Draft template"
-                    value={newDraft.template_id ?? ''}
-                    onChange={(e) => setNewDraft((p) => ({ ...p, template_id: e.target.value }))}
-                    style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', fontSize: 13, boxSizing: 'border-box' }}
-                  >
-                    <option value="">Select template…</option>
-                    {templates.map((t) => (
-                      <option key={t.template_id} value={t.template_id}>{t.display_name}</option>
-                    ))}
-                  </select>
+                  {templates.length === 0 ? (
+                    <div
+                      role="note"
+                      aria-label="No templates available"
+                      style={{
+                        width: '100%',
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: '1px solid var(--border-subtle)',
+                        background: 'var(--bg-surface-raised)',
+                        color: 'var(--text-secondary)',
+                        fontSize: 13,
+                        boxSizing: 'border-box',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 10,
+                      }}
+                    >
+                      <span>No templates available yet.</span>
+                      <a
+                        href={localePath('/templates')}
+                        style={{ color: 'var(--brand-accent)', fontSize: 13, fontWeight: 500, textDecoration: 'none' }}
+                      >
+                        Create one →
+                      </a>
+                    </div>
+                  ) : (
+                    <select
+                      aria-label="Draft template"
+                      value={newDraft.template_id ?? ''}
+                      onChange={(e) => setNewDraft((p) => ({ ...p, template_id: e.target.value }))}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', fontSize: 13, boxSizing: 'border-box' }}
+                    >
+                      <option value="">Select template…</option>
+                      {templates.map((t) => (
+                        <option key={t.template_id} value={t.template_id}>{t.display_name}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>

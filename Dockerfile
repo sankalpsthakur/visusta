@@ -64,6 +64,7 @@ COPY mars/ ./mars/
 COPY config/ ./config/
 COPY db/ ./db/
 COPY regulatory_data/ ./regulatory_data/
+COPY scripts/ ./scripts/
 COPY build_monthly_report.py ./build_monthly_report.py
 COPY build_quarterly_brief.py ./build_quarterly_brief.py
 COPY gap_analysis.py ./gap_analysis.py

@@ -212,6 +212,28 @@ class DraftComposerAgent(Agent):
 
         return hydrated
 
+    @staticmethod
+    def _normalize_citation_label(label: str) -> str:
+        """Return a normalized match key for citation labels.
+
+        - Strips surrounding whitespace
+        - Strips a single pair of outer ``[...]`` brackets (the LLM's
+          markdown-citation pattern, e.g. ``"[Lovdata]"`` → ``"Lovdata"``)
+        - Collapses interior whitespace to single spaces
+        - Lowercases (for matching only; the displayed label is untouched)
+
+        The original label is preserved at call sites — this is only a key.
+        """
+        if label is None:
+            return ""
+        text = str(label).strip()
+        # Strip a single outer pair of square brackets if present.
+        if len(text) >= 2 and text.startswith("[") and text.endswith("]"):
+            text = text[1:-1].strip()
+        # Collapse internal whitespace.
+        text = re.sub(r"\s+", " ", text)
+        return text.lower()
+
     def _merge_citations(
         self,
         llm_citations: list[dict[str, Any]],
@@ -219,48 +241,63 @@ class DraftComposerAgent(Agent):
     ) -> list[dict[str, Any]]:
         """Combine LLM-returned citations with server-collected ones.
 
-        Dedup key is ``(label, url)``. When the LLM emitted a bare label
-        (url=None) and source data has the same label with a URL, the
-        dict-with-URL wins (the bare version is dropped in favour of the
-        URL-bearing one). Otherwise preserve order: LLM first, then any
-        additional source citations.
+        Dedup key is ``(normalized_label, url)``. Label normalization handles
+        the LLM's markdown-citation pattern (``"[Lovdata]"``) so it matches
+        source entries whose label is the bare token (``"Lovdata"``).
+
+        When both a bracketed LLM entry and a source entry exist for the same
+        normalized label, the source entry wins (it has the clean label and
+        the real URL). The bracketed version is dropped entirely.
         """
-        by_label_with_url: dict[str, str] = {}
+        # Build an index of source citations by normalized label. Prefer the
+        # first entry that carries a URL for a given key so the "upgrade" path
+        # finds the URL reliably even when sources emit the same label twice.
+        source_by_key: dict[str, dict[str, Any]] = {}
         for citation in source_citations:
             label = citation.get("label")
-            url = citation.get("url")
-            if label and url and label not in by_label_with_url:
-                by_label_with_url[label] = url
+            if not label:
+                continue
+            key = self._normalize_citation_label(label)
+            if not key:
+                continue
+            existing = source_by_key.get(key)
+            if existing is None or (not existing.get("url") and citation.get("url")):
+                source_by_key[key] = citation
 
         merged: list[dict[str, Any]] = []
-        seen: set[tuple[str, str | None]] = set()
+        seen_keys: set[tuple[str, str | None]] = set()
+
+        def _emit(label: str, url: str | None) -> None:
+            key = (self._normalize_citation_label(label), url)
+            if key in seen_keys:
+                return
+            seen_keys.add(key)
+            merged.append({"label": label, "url": url})
+
         for citation in llm_citations:
             label = citation.get("label")
             if not label:
                 continue
             url = citation.get("url")
-            # If LLM gave a bare label but we have a URL for it, upgrade.
-            if url is None and label in by_label_with_url:
-                url = by_label_with_url[label]
-            key = (label, url)
-            if key in seen:
+            norm_key = self._normalize_citation_label(label)
+            source_hit = source_by_key.get(norm_key) if norm_key else None
+            if source_hit is not None:
+                # Replace the LLM entry entirely with the source entry:
+                # cleaner label + real URL. Dropping the bracketed version.
+                _emit(
+                    str(source_hit.get("label")),
+                    str(source_hit["url"]) if source_hit.get("url") else None,
+                )
                 continue
-            seen.add(key)
-            merged.append({"label": label, "url": url})
+            _emit(str(label), str(url) if url else None)
+
         for citation in source_citations:
             label = citation.get("label")
             if not label:
                 continue
             url = citation.get("url")
-            key = (label, url)
-            if key in seen:
-                continue
-            # Also skip if we already emitted this label with a URL (avoid
-            # duplicate rows where the bare version was upgraded above).
-            if url is None and (label, by_label_with_url.get(label)) in seen:
-                continue
-            seen.add(key)
-            merged.append({"label": label, "url": url})
+            _emit(str(label), str(url) if url else None)
+
         return merged[:6]
 
     def _compose_without_llm(

@@ -26,6 +26,7 @@ from __future__ import annotations
 import copy
 import re
 import uuid
+from typing import Any
 
 from .base import Agent
 from .llm import LLMInterface, StubLLM, get_llm
@@ -115,21 +116,41 @@ class DraftChatAgent(Agent):
         # Stored blocks normalize text under "content"; LLM/composer sometimes
         # emits "text". Read both so the model sees the actual section body.
         block_texts = "\n".join(
-            (b.get("content") or b.get("text") or "")
+            rendered
             for b in section.get("blocks", [])
-            if (b.get("content") or b.get("text"))
-        )
+            if (rendered := self._render_block_content(b))
+        ) or "(section is currently empty)"
         history_lines = "\n".join(
             f"{m['role'].upper()}: {m['content']}"
             for m in history[-6:]  # last 3 turns
             if isinstance(m, dict) and "role" in m and "content" in m
         )
+        history_block = (
+            f"CONVERSATION HISTORY (most recent last):\n{history_lines}\n\n"
+            if history_lines
+            else ""
+        )
         return (
-            f"Edit section based on user request\n"
-            f"Section heading: {heading}\n"
-            f"Current content:\n{block_texts}\n"
-            f"{'Conversation history:' + chr(10) + history_lines if history_lines else ''}\n"
-            f"User: {user_message}"
+            f"You are a regulatory intelligence analyst editing ONE section of a draft "
+            f"report in response to a user instruction.\n\n"
+            f"SECTION HEADING: {heading}\n\n"
+            f"CURRENT SECTION CONTENT:\n{block_texts}\n\n"
+            f"{history_block}"
+            f"USER INSTRUCTION: {user_message}\n\n"
+            f"Apply the user's instruction to the section. Rewrite the section content "
+            f"so it reflects the requested change. Do NOT return the original content "
+            f"unchanged unless the instruction is empty or impossible to honour.\n\n"
+            f"Return EXACTLY this JSON structure:\n"
+            f'{{"updated_blocks": [{{"type": "paragraph", "text": "..."}}], '
+            f'"explanation": "One sentence describing what changed."}}\n\n'
+            f"Rules:\n"
+            f"- Return JSON only. No prose, no markdown fences.\n"
+            f'- Each block must have "type" (either "paragraph" or "bullet_list") and '
+            f'"text" (the string content; for bullet_list use newline-separated items).\n'
+            f'- updated_blocks MUST contain the NEW content that implements the user\'s '
+            f'instruction — it is the full replacement for the section body.\n'
+            f'- explanation MUST be a single sentence describing what changed, not a '
+            f'generic acknowledgement.'
         )
 
     def _rewrite_without_llm(
@@ -198,7 +219,25 @@ class DraftChatAgent(Agent):
     def _extract_text(self, blocks: list[dict]) -> str:
         parts = []
         for block in blocks:
-            text = block.get("text", block.get("content", ""))
-            if isinstance(text, str) and text.strip():
-                parts.append(text.strip())
+            rendered = self._render_block_content(block)
+            if rendered:
+                parts.append(rendered)
         return " ".join(parts)
+
+    def _render_block_content(self, block: dict[str, Any]) -> str:
+        content = block.get("content", block.get("text", ""))
+        if isinstance(content, str):
+            return content.strip()
+        if isinstance(content, list):
+            rendered_rows = []
+            for item in content:
+                if isinstance(item, list):
+                    row = " | ".join(str(cell) for cell in item if cell not in (None, ""))
+                    if row:
+                        rendered_rows.append(row)
+                elif item not in (None, ""):
+                    rendered_rows.append(str(item))
+            return "\n".join(rendered_rows).strip()
+        if content in (None, ""):
+            return ""
+        return str(content).strip()

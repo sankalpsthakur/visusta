@@ -813,6 +813,9 @@ def send_chat(
     client_id: str = Depends(validate_client),
 ) -> ChatMessageResponse:
     from db import get_db
+
+    # Tx 1: write the user message, snapshot what the agent needs, then COMMIT
+    # and release the writer lock before doing any LLM work.
     with get_db() as conn:
         draft = conn.execute(
             "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
@@ -840,32 +843,6 @@ def send_chat(
             (draft["current_revision_id"],),
         ).fetchone()
         source_sections = sections_from_json(revision["sections_json"])
-        target_section_id = body.section_id
-        if target_section_id is None:
-            assistant_insert = conn.execute(
-                """INSERT INTO draft_chat_messages
-                   (draft_id, section_id, role, content, revision_id)
-                   VALUES (?, NULL, 'assistant', ?, ?)""",
-                (
-                    draft_id,
-                    "I can help refine the draft. Select a section for targeted edits.",
-                    draft["current_revision_id"],
-                ),
-            )
-            row = conn.execute(
-                "SELECT * FROM draft_chat_messages WHERE id=?",
-                (assistant_insert.lastrowid,),
-            ).fetchone()
-            return ChatMessageResponse(
-                id=row["id"],
-                draft_id=row["draft_id"],
-                section_id=row["section_id"],
-                role=row["role"],
-                content=row["content"],
-                revision_id=row["revision_id"],
-                created_at=row["created_at"],
-            )
-
         history_rows = conn.execute(
             """SELECT role, content FROM draft_chat_messages
                WHERE draft_id=? ORDER BY id""",
@@ -873,29 +850,71 @@ def send_chat(
         ).fetchall()
         history = [{"role": row["role"], "content": row["content"]} for row in history_rows]
 
-        agent = DraftChatAgent()
-        result = agent.run(
-            {
-                "sections": [section.model_dump() for section in source_sections],
-                "section_id": target_section_id,
-                "user_message": body.content,
-                "conversation_history": history,
-            }
+    target_section_id = body.section_id
+    draft_locale = draft["primary_locale"]
+    current_revision_id = draft["current_revision_id"]
+
+    # No section context — short-circuit with a canned reply, no LLM, no Tx 2 race.
+    if target_section_id is None:
+        with get_db() as conn:
+            assistant_insert = conn.execute(
+                """INSERT INTO draft_chat_messages
+                   (draft_id, section_id, role, content, revision_id)
+                   VALUES (?, NULL, 'assistant', ?, ?)""",
+                (
+                    draft_id,
+                    "I can help refine the draft. Select a section for targeted edits.",
+                    current_revision_id,
+                ),
+            )
+            row = conn.execute(
+                "SELECT * FROM draft_chat_messages WHERE id=?",
+                (assistant_insert.lastrowid,),
+            ).fetchone()
+        return ChatMessageResponse(
+            id=row["id"],
+            draft_id=row["draft_id"],
+            section_id=row["section_id"],
+            role=row["role"],
+            content=row["content"],
+            revision_id=row["revision_id"],
+            created_at=row["created_at"],
         )
-        updated_sections = _normalize_sections(
-            result.get("sections", []),
-            locale=draft["primary_locale"],
-            fallback_sections=[section.model_dump() for section in source_sections],
-        )
-        # Preserve existing section identity across revisions for the UI.
-        updated_sections = [
-            section.model_copy(update={"section_id": source_sections[index].section_id})
-            for index, section in enumerate(updated_sections)
-        ]
+
+    # LLM call happens with NO connection held, so other writers can proceed.
+    agent = DraftChatAgent()
+    result = agent.run(
+        {
+            "sections": [section.model_dump() for section in source_sections],
+            "section_id": target_section_id,
+            "user_message": body.content,
+            "conversation_history": history,
+        }
+    )
+    updated_sections = _normalize_sections(
+        result.get("sections", []),
+        locale=draft_locale,
+        fallback_sections=[section.model_dump() for section in source_sections],
+    )
+    # Preserve existing section identity across revisions for the UI.
+    updated_sections = [
+        section.model_copy(update={"section_id": source_sections[index].section_id})
+        for index, section in enumerate(updated_sections)
+    ]
+
+    # Tx 2: persist the new revision and assistant message in a fresh, short-lived tx.
+    with get_db() as conn:
+        # Re-read the draft inside this tx to keep the FK current.
+        draft_now = conn.execute(
+            "SELECT * FROM report_drafts WHERE id=? AND client_id=?",
+            (draft_id, client_id),
+        ).fetchone()
+        if draft_now is None:
+            raise HTTPException(404, f"Draft {draft_id} not found")
         _clear_approvals(conn, draft_id)
         new_revision = _insert_revision(
             conn,
-            draft=draft,
+            draft=draft_now,
             sections=updated_sections,
             authored_by="draft-chat",
             note=result.get("explanation") or "Chat-assisted edit",

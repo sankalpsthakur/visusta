@@ -17,9 +17,12 @@ DB_PATH: Path = Path(__file__).parent.parent / "data" / "visusta.db"
 def get_connection() -> sqlite3.Connection:
     """Open and configure a raw SQLite connection to DB_PATH."""
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(str(DB_PATH))
+    # timeout=30 raises Python's wait-for-lock from the 5s default. Backed up
+    # by busy_timeout so concurrent writers also wait at the SQLite layer.
+    conn = sqlite3.connect(str(DB_PATH), timeout=30.0)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA busy_timeout=30000")
     conn.execute("PRAGMA foreign_keys=ON")
     return conn
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { use, useState } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -43,7 +44,7 @@ function deriveQuarterlyPeriods(monthlyPeriods: string[]): string[] {
 }
 
 interface ReportsPageProps {
-  params: Promise<{ clientId: string }>
+  params: Promise<{ clientId: string; lang: string }>
 }
 
 function PeriodSkeleton() {
@@ -57,7 +58,7 @@ function PeriodSkeleton() {
 }
 
 export default function ReportsPage({ params }: ReportsPageProps) {
-  const { clientId } = use(params)
+  const { clientId, lang } = use(params)
   const monthlyMutation = useGenerateMonthlyReport(clientId)
   const quarterlyMutation = useGenerateQuarterlyReport(clientId)
   const { data: changelogsData, isLoading: changelogsLoading } = useChangelogs(clientId)
@@ -273,17 +274,47 @@ export default function ReportsPage({ params }: ReportsPageProps) {
                 {screeningMutation.error?.message ?? 'Screening failed'}
               </div>
             )}
-            {screeningMutation.isSuccess && (
-              <div
-                className="mt-2 text-xs px-2 py-1.5 rounded"
-                style={{
-                  background: 'color-mix(in srgb, var(--brand) 10%, transparent)',
-                  color: 'var(--brand)',
-                }}
-              >
-                Screening complete. Select a period above to generate reports.
-              </div>
-            )}
+            {screeningMutation.isSuccess && screeningMutation.data && (() => {
+              const { screening_period, previous_period, total_regulations_tracked, total_changes_detected } = screeningMutation.data
+              const priorLabel = previous_period ?? 'the prior period'
+              if (total_regulations_tracked === 0) {
+                return (
+                  <div
+                    className="mt-2 text-xs px-2 py-1.5 rounded leading-relaxed"
+                    style={{
+                      background: 'color-mix(in srgb, var(--severity-medium) 14%, transparent)',
+                      color: 'var(--severity-medium)',
+                    }}
+                  >
+                    Screening ran but found 0 regulations for {screening_period}. No feed returned data — <Link href={`/${lang}/clients/${clientId}/sources`} style={{ textDecoration: 'underline' }}>check Sources</Link>.
+                  </div>
+                )
+              }
+              if (total_changes_detected === 0) {
+                return (
+                  <div
+                    className="mt-2 text-xs px-2 py-1.5 rounded"
+                    style={{
+                      background: 'color-mix(in srgb, var(--text-muted) 10%, transparent)',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    Screening complete — {total_regulations_tracked} regulations tracked, no changes since {priorLabel}.
+                  </div>
+                )
+              }
+              return (
+                <div
+                  className="mt-2 text-xs px-2 py-1.5 rounded"
+                  style={{
+                    background: 'color-mix(in srgb, var(--brand-accent) 12%, transparent)',
+                    color: 'var(--brand-accent)',
+                  }}
+                >
+                  Screening complete — {total_changes_detected} changes across {total_regulations_tracked} regulations.
+                </div>
+              )
+            })()}
           </div>
 
         {/* PDF preview */}
@@ -327,21 +358,6 @@ export default function ReportsPage({ params }: ReportsPageProps) {
           )}
         </AnimatePresence>
 
-        {/* Recent reports */}
-        <ErrorBoundary>
-          <div>
-            <div className="text-xs font-medium mb-3" style={{ color: 'var(--text-muted)' }}>
-              Recent Reports
-            </div>
-            <div className="rounded-lg overflow-hidden" style={{ border: '1px solid var(--border-color)' }}>
-              <div className="px-5 py-8 text-center" style={{ background: 'var(--bg-surface)' }}>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  No reports generated yet. Use the builders above.
-                </p>
-              </div>
-            </div>
-          </div>
-        </ErrorBoundary>
       </div>
     </PageTransition>
   )

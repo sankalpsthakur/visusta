@@ -366,11 +366,19 @@ export function useUploadEvidence(clientId: string) {
 
 // Screening
 
+export interface ScreeningRunResponse {
+  screening_period: string
+  previous_period: string | null
+  total_regulations_tracked: number
+  total_changes_detected: number
+  executive_summary?: string
+}
+
 export function useRunScreening(clientId: string) {
   const queryClient = useQueryClient()
-  return useMutation<{ period: string; status: string }, Error, { period: string }>({
+  return useMutation<ScreeningRunResponse, Error, { period: string }>({
     mutationFn: ({ period }) =>
-      apiPost<{ period: string; status: string }>(`/api/clients/${clientId}/screening/run`, { period }),
+      apiPost<ScreeningRunResponse>(`/api/clients/${clientId}/screening/run`, { period }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['changelogs', clientId] })
     },

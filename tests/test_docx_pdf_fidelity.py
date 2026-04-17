@@ -14,6 +14,7 @@ from __future__ import annotations
 import io
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import List
 from unittest.mock import MagicMock, patch
@@ -34,6 +35,7 @@ from mars.docx_export import export_sections_to_docx
 from mars.docx_import import parse_docx_to_sections
 from mars.pdf_export import export_sections_to_pdf
 
+
 def _usable_soffice() -> str | None:
     candidate = shutil.which("soffice")
     if not candidate:
@@ -45,9 +47,37 @@ def _usable_soffice() -> str | None:
             capture_output=True,
             stdin=subprocess.DEVNULL,
         )
+        if probe.returncode != 0:
+            return None
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            docx_path = temp_path / "probe.docx"
+            Document().save(str(docx_path))
+            convert = subprocess.run(
+                [
+                    candidate,
+                    "--headless",
+                    "--invisible",
+                    "--nologo",
+                    "--nodefault",
+                    "--nolockcheck",
+                    "--nofirststartwizard",
+                    "--norestore",
+                    "--convert-to",
+                    "pdf",
+                    "--outdir",
+                    str(temp_path),
+                    str(docx_path),
+                ],
+                timeout=20,
+                capture_output=True,
+                stdin=subprocess.DEVNULL,
+            )
+            pdf_produced = convert.returncode == 0 and (temp_path / "probe.pdf").exists()
     except (OSError, subprocess.SubprocessError):
         return None
-    return candidate if probe.returncode == 0 else None
+    return candidate if pdf_produced else None
 
 
 SOFFICE = _usable_soffice()
@@ -95,6 +125,10 @@ def _make_full_section(section_id: str = "s1", heading: str = "Overview") -> Dra
         facts=["Revenue up 12%", "Scope 1 emissions reduced by 8%"],
         citations=["IPCC AR6, 2021", "EU Taxonomy Regulation 2020/852"],
     )
+
+
+def _citation_label(citation: object) -> str:
+    return str(getattr(citation, "label", citation))
 
 
 @pytest.fixture
@@ -218,7 +252,7 @@ class TestPdfExport:
 
     @pytest.mark.skipif(
         SOFFICE is None,
-        reason="LibreOffice (soffice) not found on PATH",
+        reason="LibreOffice (soffice) conversion is unavailable",
     )
     def test_pdf_has_magic_bytes_and_nonzero_size(
         self, tmp_path: Path, single_full_section: List[DraftSection]
@@ -245,7 +279,7 @@ class TestPdfExport:
 
     @pytest.mark.skipif(
         SOFFICE is None,
-        reason="LibreOffice (soffice) not found on PATH",
+        reason="LibreOffice (soffice) conversion is unavailable",
     )
     def test_pdf_with_branding(self, tmp_path: Path) -> None:
         sections = [_make_full_section()]
@@ -408,7 +442,7 @@ class TestRoundTrip:
         export_sections_to_docx(sections, out)
         recovered, _ = parse_docx_to_sections(out.read_bytes())
         assert recovered
-        recovered_citations = [c for s in recovered for c in s.citations]
+        recovered_citations = [_citation_label(c) for s in recovered for c in s.citations]
         # Citations round-trip without synthetic [N] prefix
         assert "Author A, 2024" in recovered_citations
         assert "Author B, 2025" in recovered_citations

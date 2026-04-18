@@ -46,7 +46,7 @@ def test_migrations_applied_once(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     first_run = run_migrations()
     second_run = run_migrations()
 
-    assert len(first_run) == 2          # 001 + 002
+    assert len(first_run) == 3          # 001 + 002 + 003
     assert second_run == []             # nothing left to apply
 
 
@@ -80,11 +80,11 @@ def test_all_tables_created(isolated_db: Path) -> None:
 
 # ── Locales seed ───────────────────────────────────────────────────────────────
 
-def test_24_eu_locales_seeded(isolated_db: Path) -> None:
+def test_26_locales_seeded(isolated_db: Path) -> None:
     conn = sqlite3.connect(str(isolated_db))
     count = conn.execute("SELECT COUNT(*) FROM locales").fetchone()[0]
     conn.close()
-    assert count == 24
+    assert count == 26
 
 
 def test_english_locale_exists(isolated_db: Path) -> None:
@@ -99,7 +99,7 @@ def test_all_expected_locale_codes_present(isolated_db: Path) -> None:
     expected_codes = {
         "bg", "hr", "cs", "da", "nl", "en", "et", "fi", "fr", "de",
         "el", "hu", "ga", "it", "lv", "lt", "mt", "pl", "pt", "ro",
-        "sk", "sl", "es", "sv",
+        "sk", "sl", "es", "sv", "nb", "nn",
     }
     conn = sqlite3.connect(str(isolated_db))
     codes = {row[0] for row in conn.execute("SELECT code FROM locales").fetchall()}

@@ -1,0 +1,234 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - button "Collapse sidebar" [ref=e3]:
+      - img [ref=e4]
+    - generic [ref=e7]:
+      - generic [ref=e8]: V
+      - generic [ref=e9]: Visusta
+    - button "G Gerold & Team" [ref=e11]:
+      - generic [ref=e12]: G
+      - generic [ref=e13]: Gerold & Team
+      - img [ref=e14]
+    - navigation [ref=e16]:
+      - generic [ref=e17]:
+        - link "Overview" [ref=e18] [cursor=pointer]:
+          - /url: /en
+          - generic [ref=e19]:
+            - img [ref=e21]
+            - generic [ref=e24]: Overview
+        - link "Clients" [ref=e25] [cursor=pointer]:
+          - /url: /en/clients
+          - generic [ref=e26]:
+            - img [ref=e28]
+            - generic [ref=e33]: Clients
+        - link "Templates" [ref=e34] [cursor=pointer]:
+          - /url: /en/templates
+          - generic [ref=e35]:
+            - img [ref=e37]
+            - generic [ref=e41]: Templates
+      - generic [ref=e43]: Gerold & Team
+      - generic [ref=e44]:
+        - link "Dashboard" [ref=e45] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods
+          - generic [ref=e46]:
+            - img [ref=e48]
+            - generic [ref=e53]: Dashboard
+        - link "Regulatory" [ref=e54] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/regulatory
+          - generic [ref=e55]:
+            - img [ref=e57]
+            - generic [ref=e61]: Regulatory
+        - link "Reports" [ref=e62] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/reports
+          - generic [ref=e63]:
+            - img [ref=e65]
+            - generic [ref=e68]: Reports
+        - link "Audit" [ref=e69] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/audit
+          - generic [ref=e70]:
+            - img [ref=e72]
+            - generic [ref=e75]: Audit
+        - link "Settings" [ref=e76] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/settings
+          - generic [ref=e77]:
+            - img [ref=e79]
+            - generic [ref=e82]: Settings
+        - link "Drafts" [ref=e83] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/drafts
+          - generic [ref=e84]:
+            - img [ref=e87]
+            - generic [ref=e89]: Drafts
+        - link "Sources" [ref=e90] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/sources
+          - generic [ref=e91]:
+            - img [ref=e93]
+            - generic [ref=e99]: Sources
+    - generic [ref=e102]: System operational
+    - generic [ref=e104]:
+      - img [ref=e105]
+      - combobox "Select language" [ref=e108] [cursor=pointer]:
+        - option "English" [selected]
+        - option "Български"
+        - option "Čeština"
+        - option "Dansk"
+        - option "Deutsch"
+        - option "Ελληνικά"
+        - option "Español"
+        - option "Eesti"
+        - option "Suomi"
+        - option "Français"
+        - option "Gaeilge"
+        - option "Hrvatski"
+        - option "Magyar"
+        - option "Italiano"
+        - option "Lietuvių"
+        - option "Latviešu"
+        - option "Malti"
+        - option "Nederlands"
+        - option "Polski"
+        - option "Português"
+        - option "Română"
+        - option "Slovenčina"
+        - option "Slovenščina"
+        - option "Svenska"
+  - main [ref=e109]:
+    - generic [ref=e110]:
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - link "Clients" [ref=e113] [cursor=pointer]:
+            - /url: /en/clients
+          - generic [ref=e114]: /
+          - generic [ref=e115]: Gerold & Team
+        - generic [ref=e116]:
+          - generic [ref=e117]: EU
+          - generic [ref=e118]: DE
+      - generic [ref=e119]:
+        - link "Dashboard" [ref=e120] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods
+        - link "Regulatory" [ref=e121] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/regulatory
+        - link "Evidence" [ref=e122] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/evidence
+        - link "Reports" [ref=e123] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/reports
+        - link "Audit" [ref=e124] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/audit
+        - link "Settings" [ref=e125] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/settings
+        - link "Drafts" [ref=e126] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/drafts
+          - text: Drafts
+        - link "Sources" [ref=e128] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/sources
+      - generic [ref=e656]:
+        - generic [ref=e658]:
+          - button [ref=e659] [cursor=pointer]:
+            - img [ref=e660]
+          - generic [ref=e662]:
+            - generic [ref=e663]:
+              - generic [ref=e664]: Playwright Draft 1776116427043
+              - generic [ref=e665]: Approved
+            - generic [ref=e667]: 2026-02 · DE · Rev 3
+          - generic [ref=e668]:
+            - button "Compose" [ref=e669] [cursor=pointer]
+            - combobox "Target translation language" [ref=e670]:
+              - option "English" [selected]
+              - option "Български"
+              - option "Čeština"
+              - option "Dansk"
+              - option "Ελληνικά"
+              - option "Español"
+              - option "Eesti"
+              - option "Suomi"
+              - option "Français"
+              - option "Gaeilge"
+              - option "Hrvatski"
+              - option "Magyar"
+              - option "Italiano"
+              - option "Lietuvių"
+              - option "Latviešu"
+              - option "Malti"
+              - option "Nederlands"
+              - option "Polski"
+              - option "Português"
+              - option "Română"
+              - option "Slovenčina"
+              - option "Slovenščina"
+              - option "Svenska"
+            - button "Translate" [ref=e671] [cursor=pointer]
+            - button "Complete Delivery" [ref=e672] [cursor=pointer]
+            - button "Export" [ref=e673] [cursor=pointer]:
+              - img [ref=e674]
+              - text: Export
+            - button [ref=e677] [cursor=pointer]:
+              - img [ref=e678]
+        - generic [ref=e682]:
+          - generic [ref=e683]:
+            - generic [ref=e684]: Sections
+            - generic [ref=e686] [cursor=pointer]:
+              - button [ref=e687]:
+                - img [ref=e688]
+              - generic [ref=e691]: Executive Summary
+              - generic [ref=e692]: Approved
+              - button [ref=e694]:
+                - img [ref=e695]
+            - generic [ref=e698] [cursor=pointer]:
+              - button [ref=e699]:
+                - img [ref=e700]
+              - img [ref=e702]
+              - generic [ref=e704]: Critical Actions
+              - generic [ref=e705]: Approved
+              - button [ref=e707]:
+                - img [ref=e708]
+          - generic [ref=e712]:
+            - generic [ref=e713]:
+              - generic [ref=e714]:
+                - img [ref=e715]
+                - generic [ref=e717]: 2026-02 · DE
+              - heading "Playwright Draft 1776116427043" [level=1] [ref=e718]
+            - generic [ref=e719]:
+              - generic [ref=e720] [cursor=pointer]:
+                - heading "Executive Summary" [level=2] [ref=e721]
+                - paragraph [ref=e722]: Updated section content based on feedback.
+              - generic [ref=e723] [cursor=pointer]:
+                - heading "Critical Actions" [level=2] [ref=e724]
+                - paragraph [ref=e725]: "[translated content]"
+          - generic [ref=e726]:
+            - generic [ref=e727]:
+              - button "AI" [ref=e728] [cursor=pointer]:
+                - img [ref=e729]
+                - text: AI
+              - button "History" [ref=e733] [cursor=pointer]:
+                - img [ref=e734]
+                - text: History
+              - button "Diff" [ref=e737] [cursor=pointer]:
+                - img [ref=e738]
+                - text: Diff
+            - generic [ref=e745]:
+              - generic [ref=e746]:
+                - img [ref=e747]
+                - generic [ref=e749]: AI assistant
+                - generic [ref=e750]: Section context
+              - generic [ref=e751]:
+                - generic [ref=e752]:
+                  - img [ref=e754]
+                  - generic [ref=e757]:
+                    - generic [ref=e758]: Tighten the executive summary and make it more action-oriented.
+                    - generic [ref=e759]:
+                      - text: 03:10
+                      - generic [ref=e760]: · executive_summary
+                - generic [ref=e761]:
+                  - img [ref=e763]
+                  - generic [ref=e766]:
+                    - generic [ref=e767]: Applied requested changes.
+                    - generic [ref=e768]:
+                      - text: 03:10
+                      - generic [ref=e769]: · executive_summary
+              - generic [ref=e772]:
+                - img [ref=e774]
+                - textbox "Ask the AI… (⌘↵ to send)" [ref=e777]
+                - button [disabled] [ref=e778]:
+                  - img [ref=e779]
+  - button "Open Next.js Dev Tools" [ref=e648] [cursor=pointer]:
+    - img [ref=e649]
+  - alert [ref=e652]

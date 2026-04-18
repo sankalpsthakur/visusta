@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - button "Collapse sidebar" [ref=e3]:
+      - img [ref=e4]
+    - generic [ref=e7]:
+      - generic [ref=e8]: V
+      - generic: Visusta
+    - button "V Select client" [ref=e10]:
+      - generic [ref=e11]: V
+      - generic [ref=e12]: Select client
+      - img [ref=e13]
+    - navigation [ref=e15]:
+      - generic [ref=e16]:
+        - link "Overview" [ref=e17] [cursor=pointer]:
+          - /url: /en
+          - generic [ref=e18]:
+            - img [ref=e21]
+            - generic [ref=e24]: Overview
+        - link "Clients" [ref=e25] [cursor=pointer]:
+          - /url: /en/clients
+          - generic [ref=e26]:
+            - img [ref=e28]
+            - generic [ref=e33]: Clients
+        - link "Templates" [ref=e34] [cursor=pointer]:
+          - /url: /en/templates
+          - generic [ref=e35]:
+            - img [ref=e37]
+            - generic [ref=e41]: Templates
+    - generic [ref=e42]:
+      - generic: Backend offline
+    - generic [ref=e45]:
+      - img [ref=e46]
+      - combobox "Select language" [ref=e49] [cursor=pointer]:
+        - option "English" [selected]
+        - option "Български"
+        - option "Čeština"
+        - option "Dansk"
+        - option "Deutsch"
+        - option "Ελληνικά"
+        - option "Español"
+        - option "Eesti"
+        - option "Suomi"
+        - option "Français"
+        - option "Gaeilge"
+        - option "Hrvatski"
+        - option "Magyar"
+        - option "Italiano"
+        - option "Lietuvių"
+        - option "Latviešu"
+        - option "Malti"
+        - option "Nederlands"
+        - option "Polski"
+        - option "Português"
+        - option "Română"
+        - option "Slovenčina"
+        - option "Slovenščina"
+        - option "Svenska"
+  - main [ref=e50]:
+    - generic [ref=e53]:
+      - heading "Visusta" [level=1] [ref=e54]
+      - paragraph [ref=e55]: ESG Regulatory Intelligence — … active clients
+  - button "Open Next.js Dev Tools" [ref=e86] [cursor=pointer]:
+    - img [ref=e87]
+  - alert [ref=e90]

@@ -5,6 +5,7 @@ All LLM calls go through StubLLM, which returns deterministic responses.
 """
 from __future__ import annotations
 
+import copy
 import uuid
 from unittest.mock import MagicMock
 
@@ -18,6 +19,24 @@ from agents.source_scout import SourceScoutAgent
 
 
 # ── Fixtures ───────────────────────────────────────────────────────────────────
+
+def _block_text(block: dict) -> str:
+    content = block.get("content", block.get("text", ""))
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        rendered = []
+        for item in content:
+            if isinstance(item, list):
+                rendered.append(" | ".join(str(cell) for cell in item))
+            else:
+                rendered.append(str(item))
+        return "\n".join(rendered)
+    return str(content)
+
+
+def _render_blocks(blocks: list[dict]) -> str:
+    return " ".join(_block_text(block) for block in blocks)
 
 @pytest.fixture()
 def stub_llm() -> StubLLM:
@@ -257,13 +276,44 @@ class TestDraftComposerAgent:
             "locale": "en",
         })
         rendered = " ".join(
-            str(block.get("text", ""))
+            _block_text(block)
             for section in result["sections"]
             for block in section.get("blocks", [])
         )
         assert "Stub executive summary." not in rendered
         assert "February 2026 introduces urgent packaging and CSRD actions." in rendered
         assert "PCR clause" in rendered or "PPWR recycled content requirements" in rendered
+
+    def test_llm_path_hydrates_citations_to_dicts(self, template_sections):
+        mock_llm = MagicMock(spec=LLMInterface)
+        mock_llm.generate_structured.return_value = {
+            "sections": [
+                {
+                    "heading": "Executive Summary",
+                    "blocks": [{"type": "paragraph", "text": "Summary"}],
+                    "facts": [],
+                    "citations": ["Reference A"],
+                }
+            ]
+        }
+        agent = DraftComposerAgent(llm=mock_llm)
+        result = agent.run({
+            "changelog": [{"executive_summary": "Summary"}],
+            "changelog_payload": {
+                "references": [
+                    {"citation": "Reference A", "url": "https://example.com/reference-a"}
+                ]
+            },
+            "evidence": [],
+            "template_sections": template_sections,
+            "locale": "en",
+        })
+        assert result["sections"][0]["citations"] == [
+            {
+                "label": "Reference A",
+                "url": "https://example.com/reference-a",
+            }
+        ]
 
 
 # ── TranslationAgent ───────────────────────────────────────────────────────────
@@ -340,7 +390,14 @@ class TestTranslationAgent:
 
     def test_glossary_included_in_prompt(self, sample_sections):
         mock_llm = MagicMock(spec=LLMInterface)
-        mock_llm.generate_structured.return_value = {"translated_blocks": [], "confidence": 1.0}
+        mock_llm.generate_structured.return_value = {
+            "translated_heading": "Zusammenfassung",
+            "translated_blocks": [
+                {"block_type": "paragraph", "content": "Dies ist die Zusammenfassung."}
+            ],
+            "confidence": 0.9,
+            "low_confidence_terms": [],
+        }
         agent = TranslationAgent(llm=mock_llm)
         agent.run({
             "sections": sample_sections,
@@ -351,13 +408,96 @@ class TestTranslationAgent:
             prompt = call[0][0]
             assert "GHG" in prompt or "THG" in prompt
 
-    def test_fallback_to_original_blocks_when_llm_returns_empty(self, sample_sections):
+    def test_llm_translation_uses_translated_heading_and_blocks(self, sample_sections):
         mock_llm = MagicMock(spec=LLMInterface)
-        mock_llm.generate_structured.return_value = {"translated_blocks": [], "confidence": 1.0}
+        mock_llm.generate_structured.return_value = {
+            "translated_heading": "Zusammenfassung",
+            "translated_blocks": [
+                {"block_type": "paragraph", "content": "Dies ist die Zusammenfassung."}
+            ],
+            "confidence": 0.92,
+            "low_confidence_terms": [],
+        }
         agent = TranslationAgent(llm=mock_llm)
-        result = agent.run({"sections": sample_sections, "target_locale": "pl"})
-        for orig, translated in zip(sample_sections, result["sections"]):
-            assert translated["blocks"] == orig["blocks"]
+        result = agent.run({"sections": sample_sections, "target_locale": "de"})
+        translated = result["sections"][0]
+        assert translated["heading"] == "Zusammenfassung"
+        assert translated["blocks"][0]["content"] == "Dies ist die Zusammenfassung."
+        assert translated["translation_status"] == "translated"
+
+    def test_noop_llm_translation_raises(self, sample_sections):
+        mock_llm = MagicMock(spec=LLMInterface)
+        original_blocks = sample_sections[0]["blocks"]
+        mock_llm.generate_structured.side_effect = [
+            {
+                "translated_heading": sample_sections[0]["heading"],
+                "translated_blocks": copy.deepcopy(original_blocks),
+                "confidence": 0.99,
+                "low_confidence_terms": [],
+            },
+            {
+                "translated_heading": sample_sections[0]["heading"],
+                "translated_blocks": copy.deepcopy(original_blocks),
+                "confidence": 0.99,
+                "low_confidence_terms": [],
+            },
+        ]
+        agent = TranslationAgent(llm=mock_llm)
+        with pytest.raises(RuntimeError, match="unchanged source-language content"):
+            agent.run({"sections": sample_sections, "target_locale": "nb"})
+        assert mock_llm.generate_structured.call_count == 2
+
+    def test_malformed_block_shape_raises(self, sample_sections):
+        mock_llm = MagicMock(spec=LLMInterface)
+        mock_llm.generate_structured.side_effect = [
+            {
+                "translated_heading": "Zusammenfassung",
+                "translated_blocks": [
+                    {"block_type": "paragraph", "content": "Nur ein Block."}
+                ],
+                "confidence": 0.9,
+                "low_confidence_terms": [],
+            },
+            {
+                "translated_heading": "Zusammenfassung",
+                "translated_blocks": [
+                    {"block_type": "paragraph", "content": "Nur ein Block."}
+                ],
+                "confidence": 0.9,
+                "low_confidence_terms": [],
+            },
+        ]
+        sample_sections[0]["blocks"] = [
+            {"block_type": "paragraph", "content": "First paragraph."},
+            {"block_type": "paragraph", "content": "Second paragraph."},
+        ]
+        agent = TranslationAgent(llm=mock_llm)
+        with pytest.raises(RuntimeError, match="malformed or unchanged"):
+            agent.run({"sections": sample_sections, "target_locale": "de"})
+        assert mock_llm.generate_structured.call_count == 2
+
+    def test_fallback_translates_nested_list_content(self):
+        agent = TranslationAgent()
+        sections = [
+            {
+                "section_id": str(uuid.uuid4()),
+                "heading": "Critical Actions",
+                "locale": "en",
+                "blocks": [
+                    {
+                        "block_type": "bullet_list",
+                        "content": ["Action required", "Deadline"],
+                    }
+                ],
+                "facts": [],
+                "citations": [],
+                "translation_status": "original",
+                "approval_status": "pending",
+            }
+        ]
+        result = agent.run({"sections": sections, "target_locale": "nb"})
+        translated_items = result["sections"][0]["blocks"][0]["content"]
+        assert translated_items == ["Tiltak kreves", "Frist"]
 
     def test_default_translation_does_not_return_placeholder_marker(self, sample_sections):
         agent = TranslationAgent()
@@ -478,6 +618,14 @@ class TestDraftChatAgent:
 
     def test_fallback_blocks_when_llm_returns_empty(self, sample_sections):
         target_id = sample_sections[0]["section_id"]
+        sample_sections[0]["blocks"] = [
+            {
+                "block_id": "b1",
+                "block_type": "bullet_list",
+                "content": ["Keep this item", "Keep that item"],
+                "metadata": {"source": "fixture"},
+            }
+        ]
         original_blocks = sample_sections[0]["blocks"]
         mock_llm = MagicMock(spec=LLMInterface)
         mock_llm.generate_structured.return_value = {"updated_blocks": [], "explanation": ""}
@@ -509,9 +657,37 @@ class TestDraftChatAgent:
             "user_message": "Make this more concise and action oriented.",
         })
         edited = next(s for s in result["sections"] if s["section_id"] == result["edited_section_id"])
-        rendered = " ".join(str(block.get("text", "")) for block in edited["blocks"])
+        rendered = _render_blocks(edited["blocks"])
         assert "Updated section content based on feedback." not in rendered
         assert "2026-09-30" in rendered or "Supplier evidence" in rendered
+
+    def test_prompt_handles_non_string_block_content(self, sample_sections):
+        target_id = sample_sections[0]["section_id"]
+        sample_sections[0]["blocks"] = [
+            {
+                "block_id": "b1",
+                "block_type": "bullet_list",
+                "content": ["First bullet", "Second bullet"],
+                "metadata": {},
+            },
+            {
+                "block_id": "b2",
+                "block_type": "table",
+                "content": [["Column A", "Column B"], ["Value A", "Value B"]],
+                "metadata": {},
+            },
+        ]
+        mock_llm = MagicMock(spec=LLMInterface)
+        mock_llm.generate_structured.return_value = {"updated_blocks": [], "explanation": ""}
+        agent = DraftChatAgent(llm=mock_llm)
+        agent.run({
+            "sections": sample_sections,
+            "section_id": target_id,
+            "user_message": "Summarize the key items.",
+        })
+        prompt = mock_llm.generate_structured.call_args[0][0]
+        assert "First bullet" in prompt
+        assert "Column A | Column B" in prompt
 
 
 # ── SourceScoutAgent (extended) ────────────────────────────────────────────────

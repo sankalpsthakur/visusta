@@ -632,6 +632,8 @@ class TestLocaleWorkflow:
         rev = _translate(client, draft["id"], "fr")
         for sec in rev["sections"]:
             assert sec["locale"] == "fr"
+        headings = {sec["heading"] for sec in rev["sections"]}
+        assert "Résumé exécutif" in headings or "Actions critiques" in headings
 
     def test_translate_increments_revision_number(self, client: TestClient) -> None:
         draft = _create_draft(client, locale="en")

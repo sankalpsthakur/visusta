@@ -43,6 +43,37 @@ from quarterly_consolidator import (
 FROZEN_DATE = "2026-02-15"
 
 
+# ── Native dependency shims ────────────────────────────────────────────────
+
+@pytest.fixture
+def stub_pdf_export(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Stub router-level PDF export for API/integration tests.
+
+    Route tests should verify draft/export workflow behavior without depending
+    on a working local LibreOffice install. Native PDF conversion fidelity is
+    covered separately in tests/test_docx_pdf_fidelity.py.
+    """
+    import api.routers.exports as exports_router_module
+
+    def fake_export_sections_to_pdf(
+        sections,
+        output_path: Path,
+        locale: str = "en",
+        client_branding: dict | None = None,
+    ) -> Path:
+        del sections, locale, client_branding
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_bytes(b"%PDF-1.4\n% stub export\n")
+        return output_path
+
+    monkeypatch.setattr(
+        exports_router_module,
+        "export_sections_to_pdf",
+        fake_export_sections_to_pdf,
+    )
+
+
 # ── regulatory_screening fixtures ───────────────────────────────────────────
 
 def make_screening_item(

@@ -1,0 +1,109 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - button "Collapse sidebar" [ref=e3]:
+      - img [ref=e4]
+    - generic [ref=e7]:
+      - generic [ref=e8]: V
+      - generic: Visusta
+    - button "V Select client" [ref=e10]:
+      - generic [ref=e11]: V
+      - generic [ref=e12]: Select client
+      - img [ref=e13]
+    - navigation [ref=e15]:
+      - generic [ref=e16]:
+        - link "Overview" [ref=e17] [cursor=pointer]:
+          - /url: /en
+          - generic [ref=e18]:
+            - img [ref=e20]
+            - generic [ref=e23]: Overview
+        - link "Clients" [ref=e24] [cursor=pointer]:
+          - /url: /en/clients
+          - generic [ref=e25]:
+            - img [ref=e28]
+            - generic [ref=e33]: Clients
+        - link "Templates" [ref=e34] [cursor=pointer]:
+          - /url: /en/templates
+          - generic [ref=e35]:
+            - img [ref=e37]
+            - generic [ref=e41]: Templates
+    - generic [ref=e42]:
+      - generic: Backend offline
+    - generic [ref=e45]:
+      - img [ref=e46]
+      - combobox "Select language" [ref=e49] [cursor=pointer]:
+        - option "English" [selected]
+        - option "Български"
+        - option "Čeština"
+        - option "Dansk"
+        - option "Deutsch"
+        - option "Ελληνικά"
+        - option "Español"
+        - option "Eesti"
+        - option "Suomi"
+        - option "Français"
+        - option "Gaeilge"
+        - option "Hrvatski"
+        - option "Magyar"
+        - option "Italiano"
+        - option "Lietuvių"
+        - option "Latviešu"
+        - option "Malti"
+        - option "Nederlands"
+        - option "Polski"
+        - option "Português"
+        - option "Română"
+        - option "Slovenčina"
+        - option "Slovenščina"
+        - option "Svenska"
+  - main [ref=e50]:
+    - generic [ref=e51]:
+      - generic [ref=e53]:
+        - link "Clients" [ref=e54] [cursor=pointer]:
+          - /url: /en/clients
+        - generic [ref=e55]: /
+        - generic [ref=e56]: gerold-foods
+      - generic [ref=e57]:
+        - link "Dashboard" [ref=e58] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods
+        - link "Regulatory" [ref=e59] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/regulatory
+        - link "Evidence" [ref=e60] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/evidence
+        - link "Reports" [ref=e61] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/reports
+        - link "Audit" [ref=e62] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/audit
+        - link "Settings" [ref=e63] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/settings
+        - link "Drafts" [ref=e64] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/drafts
+          - text: Drafts
+        - link "Sources" [ref=e66] [cursor=pointer]:
+          - /url: /en/clients/gerold-foods/sources
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - heading "Drafts" [level=1] [ref=e72]
+            - paragraph [ref=e73]: Compose and manage regulatory intelligence reports.
+          - button "New draft" [ref=e74] [cursor=pointer]:
+            - img [ref=e75]
+            - text: New draft
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - img [ref=e78]
+            - textbox "Search drafts…" [ref=e81]
+          - button "All" [ref=e82] [cursor=pointer]
+          - button "Composing" [ref=e83] [cursor=pointer]:
+            - generic [ref=e84]: Composing
+          - button "Review" [ref=e86] [cursor=pointer]:
+            - generic [ref=e87]: Review
+          - button "Revision" [ref=e89] [cursor=pointer]:
+            - generic [ref=e90]: Revision
+          - button "Approval" [ref=e92] [cursor=pointer]:
+            - generic [ref=e93]: Approval
+          - button "Approved" [ref=e95] [cursor=pointer]:
+            - generic [ref=e96]: Approved
+          - button "Exported" [ref=e98] [cursor=pointer]:
+            - generic [ref=e99]: Exported
+          - button "Archived" [ref=e101] [cursor=pointer]:
+            - generic [ref=e102]: Archived

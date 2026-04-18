@@ -606,6 +606,8 @@ class TestDraftsRouter:
         _compose_and_wait(client, "gerold-foods", created["id"])
         rev = _translate_and_wait(client, "gerold-foods", created["id"], "de")
         assert rev["revision_number"] == 2
+        headings = {section["heading"] for section in rev["sections"]}
+        assert "Zusammenfassung" in headings or "Kritische Maßnahmen" in headings
         for section in rev["sections"]:
             assert section["locale"] == "de"
             assert section["translation_status"] in {"translated", "low_confidence"}

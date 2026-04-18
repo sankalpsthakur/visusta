@@ -1,0 +1,20 @@
+{
+  "screening_period": "2026-04",
+  "screening_date": "2026-04-16",
+  "screened_by": "Automated Screening System",
+  "topics_covered": [
+    "ghg",
+    "packaging",
+    "water",
+    "waste",
+    "social_human_rights"
+  ],
+  "data_quality_flags": [
+    "no_items_for_topic:ghg",
+    "no_items_for_topic:packaging",
+    "no_items_for_topic:water",
+    "no_items_for_topic:waste",
+    "no_items_for_topic:social_human_rights"
+  ],
+  "regulations": []
+}
